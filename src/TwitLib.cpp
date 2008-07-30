@@ -1,5 +1,6 @@
 
 #include "TwitLib.h"
+#include "Core.h"
 
 //=====================================================================
 TwitLib::TwitLib(ITwitReply *obj)

@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include "Server.h"
-#include "Core.h"
 
+class Core;
 class ITwitReply;
 
 class TwitLib
