@@ -10,6 +10,9 @@ How to use TwitLib
 
 
 1. Include the library 'Twit' to your GUI application (i.e. -lTwit).
+
 2. Make sure you create a class which derives from ITwitReply which object should be passed into TwitLib's constructor.
+
 3. Include the TwitLib.h header file to be able to call the desired routines.
+
 4. Include the Server.h header file in order to use the options available for certain routines.
