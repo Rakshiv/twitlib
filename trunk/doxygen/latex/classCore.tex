@@ -1,0 +1,479 @@
+\hypertarget{classCore}{
+\section{Core Class Reference}
+\label{classCore}\index{Core@{Core}}
+}
+{\tt \#include $<$Core.h$>$}
+
+Inheritance diagram for Core::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classCore}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{CompactItemize}
+\item 
+void \hyperlink{classCore_2e3b63ac22f8fef5f2d2d5e9adc42cdd}{RequestStarted} (int id)
+\item 
+void \hyperlink{classCore_7b649f8d3aeae37e3f2e0eff65ab189f}{ReqFinished} (int id, bool error)
+\item 
+void \hyperlink{classCore_77844f4e1b5e81ff4a13bc22328a4258}{DataReadProgress} (int done, int total)
+\item 
+void \hyperlink{classCore_299d2e5e288da339e11f30500f473b16}{Done} (bool error)
+\end{CompactItemize}
+\subsection*{Signals}
+\begin{CompactItemize}
+\item 
+void \hyperlink{classCore_c74c19f85f549851d3d7afd7e449770b}{QueryDone} ()
+\end{CompactItemize}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{classCore_4d99e39664e6f9a1b885742f92d83ade}{Core} (\hyperlink{classITwitReply}{ITwitReply} $\ast$obj)
+\item 
+virtual \hyperlink{classCore_776f8c46504b14183883c6273f93eaed}{$\sim$Core} ()
+\item 
+void \hyperlink{classCore_e07b32f495c64e768eb74cf50585352c}{GetPublicTimeline} ()
+\item 
+void \hyperlink{classCore_88d775139d0168f3fa24b4b4fda83386}{GetSingleStatus} (QString id)
+\item 
+void \hyperlink{classCore_c5f77029d34a1427c6b8a491c646e80b}{GetFeaturedUsers} ()
+\item 
+void \hyperlink{classCore_e4ec033e04b6490ac08d6f07507bc9c2}{Logout} ()
+\item 
+void \hyperlink{classCore_4570f9ad07c0ba58ce6326eb76568bf6}{Login} (QString user, QString passw)
+\item 
+void \hyperlink{classCore_7ba2a526280dcfc427480956f90f29cb}{GetDowntimeSchedule} ()
+\item 
+void \hyperlink{classCore_eeaa4a9429ac0a0dd2c2d11c0c0eea81}{IsTwitterUp} ()
+\item 
+void \hyperlink{classCore_7308eb02f04bd6da071db62f291c9def}{GetUsersTimeline} (\hyperlink{structSERVER_1_1Option2}{SERVER::Option2} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_a896aea28b564e4841df4cf527fb0247}{GetFavorites} (QString user=\char`\"{}\char`\"{}, int page=1)
+\item 
+void \hyperlink{classCore_bc64aa3de63d39a878db543d8d5df9f5}{GetFriendsTimeline} (\hyperlink{structSERVER_1_1Option1}{SERVER::Option1} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_7023af805b629e90a7aa2978366ee344}{PostNewStatus} (QString status)
+\item 
+void \hyperlink{classCore_b95dc3fca63c84496f6a487d845e7ba9}{GetRecentReplies} (\hyperlink{structSERVER_1_1Option3}{SERVER::Option3} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_d881d4987b2845589443f74fb81da766}{RemoveStatus} (QString id)
+\item 
+void \hyperlink{classCore_2d41bfdcb5a2dff232ee299e83a7c8e6}{GetFriends} (\hyperlink{structSERVER_1_1Option4}{SERVER::Option4} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_635c5c7bb0b6d2c2c6250ac050b466d6}{GetFollowers} (\hyperlink{structSERVER_1_1Option5}{SERVER::Option5} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_572cef51b68ea351bdda246b5070c399}{GetUserDetails} (QString user)
+\item 
+void \hyperlink{classCore_1b43e65adc3ba72ae2bb344bec27eb53}{GetSentDirectMessages} (\hyperlink{structSERVER_1_1Option6}{SERVER::Option6} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_5496ee42ce9d32aa0f98a2d56e3bbddf}{GetReceivedDirectMessages} (\hyperlink{structSERVER_1_1Option6}{SERVER::Option6} $\ast$opt=NULL)
+\item 
+void \hyperlink{classCore_f6afb71b9114a90e9b9856f64a6fe9cf}{SendDirectMessage} (QString user, QString text)
+\item 
+void \hyperlink{classCore_d98d496c44ebff775698737f8edbde44}{RemoveDirectMessage} (QString id)
+\item 
+void \hyperlink{classCore_3df3b62fa5366492a3eb4bba99f1849a}{AddFriendship} (QString user)
+\item 
+void \hyperlink{classCore_95ce85046d01f3d5d6928f06e8aab99c}{RemoveFriendship} (QString user)
+\item 
+void \hyperlink{classCore_0430da6765198a4f763ea7528f8e1e86}{FriendshipExist} (QString user\_\-a, QString user\_\-b)
+\item 
+void \hyperlink{classCore_e7b7355b923afe51411e3c949679904d}{VerifyCredentials} ()
+\item 
+void \hyperlink{classCore_62635d6cffb1fbef9f5c650518f83c67}{UpdateLocation} (QString location)
+\item 
+void \hyperlink{classCore_291a15a3ec5ebadc314c991f74cde776}{UpdateDeliveryDevice} (\hyperlink{namespaceSERVER_354160f0b752453a760c63ec882c8c87}{SERVER::DEVICES} device)
+\item 
+void \hyperlink{classCore_0cf4c10e33b1158e651977210312ea13}{RemainingApiRequests} ()
+\item 
+void \hyperlink{classCore_dbeb18bcc46253950b7660582d2eb5f5}{AddFavorite} (QString id)
+\item 
+void \hyperlink{classCore_c12e1d495cfea0a38c4adb38f258d27c}{RemoveFavorite} (QString id)
+\item 
+void \hyperlink{classCore_5cd0ceaff4b8d19b40f9b2e00839a286}{StartFollow} (QString user)
+\item 
+void \hyperlink{classCore_9a55db5cfe7788972b20d6a6bdc91218}{StopFollow} (QString user)
+\item 
+void \hyperlink{classCore_e715888efd76cc27271e4050ebed4c0b}{BlockUser} (QString user)
+\item 
+void \hyperlink{classCore_abc783553ec1e543435b8dc06f64939f}{UnBlockUser} (QString user)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12 of file Core.h.
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classCore_4d99e39664e6f9a1b885742f92d83ade}{
+\index{Core@{Core}!Core@{Core}}
+\index{Core@{Core}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Core::Core ({\bf ITwitReply} $\ast$ {\em obj})}}
+\label{classCore_4d99e39664e6f9a1b885742f92d83ade}
+
+
+
+
+Definition at line 43 of file Core.cpp.\hypertarget{classCore_776f8c46504b14183883c6273f93eaed}{
+\index{Core@{Core}!$\sim$Core@{$\sim$Core}}
+\index{$\sim$Core@{$\sim$Core}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Core::$\sim$Core ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{classCore_776f8c46504b14183883c6273f93eaed}
+
+
+
+
+Definition at line 53 of file Core.cpp.
+
+\subsection{Member Function Documentation}
+\hypertarget{classCore_e07b32f495c64e768eb74cf50585352c}{
+\index{Core@{Core}!GetPublicTimeline@{GetPublicTimeline}}
+\index{GetPublicTimeline@{GetPublicTimeline}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetPublicTimeline ()}}
+\label{classCore_e07b32f495c64e768eb74cf50585352c}
+
+
+
+
+Definition at line 180 of file Core.cpp.\hypertarget{classCore_88d775139d0168f3fa24b4b4fda83386}{
+\index{Core@{Core}!GetSingleStatus@{GetSingleStatus}}
+\index{GetSingleStatus@{GetSingleStatus}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetSingleStatus (QString {\em id})}}
+\label{classCore_88d775139d0168f3fa24b4b4fda83386}
+
+
+
+
+Definition at line 186 of file Core.cpp.\hypertarget{classCore_c5f77029d34a1427c6b8a491c646e80b}{
+\index{Core@{Core}!GetFeaturedUsers@{GetFeaturedUsers}}
+\index{GetFeaturedUsers@{GetFeaturedUsers}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetFeaturedUsers ()}}
+\label{classCore_c5f77029d34a1427c6b8a491c646e80b}
+
+
+
+
+Definition at line 195 of file Core.cpp.\hypertarget{classCore_e4ec033e04b6490ac08d6f07507bc9c2}{
+\index{Core@{Core}!Logout@{Logout}}
+\index{Logout@{Logout}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::Logout ()}}
+\label{classCore_e4ec033e04b6490ac08d6f07507bc9c2}
+
+
+
+
+Definition at line 201 of file Core.cpp.\hypertarget{classCore_4570f9ad07c0ba58ce6326eb76568bf6}{
+\index{Core@{Core}!Login@{Login}}
+\index{Login@{Login}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::Login (QString {\em user}, \/  QString {\em passw})}}
+\label{classCore_4570f9ad07c0ba58ce6326eb76568bf6}
+
+
+
+
+Definition at line 207 of file Core.cpp.\hypertarget{classCore_7ba2a526280dcfc427480956f90f29cb}{
+\index{Core@{Core}!GetDowntimeSchedule@{GetDowntimeSchedule}}
+\index{GetDowntimeSchedule@{GetDowntimeSchedule}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetDowntimeSchedule ()}}
+\label{classCore_7ba2a526280dcfc427480956f90f29cb}
+
+
+
+
+Definition at line 213 of file Core.cpp.\hypertarget{classCore_eeaa4a9429ac0a0dd2c2d11c0c0eea81}{
+\index{Core@{Core}!IsTwitterUp@{IsTwitterUp}}
+\index{IsTwitterUp@{IsTwitterUp}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::IsTwitterUp ()}}
+\label{classCore_eeaa4a9429ac0a0dd2c2d11c0c0eea81}
+
+
+
+
+Definition at line 219 of file Core.cpp.\hypertarget{classCore_7308eb02f04bd6da071db62f291c9def}{
+\index{Core@{Core}!GetUsersTimeline@{GetUsersTimeline}}
+\index{GetUsersTimeline@{GetUsersTimeline}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetUsersTimeline ({\bf SERVER::Option2} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_7308eb02f04bd6da071db62f291c9def}
+
+
+
+
+Definition at line 225 of file Core.cpp.\hypertarget{classCore_a896aea28b564e4841df4cf527fb0247}{
+\index{Core@{Core}!GetFavorites@{GetFavorites}}
+\index{GetFavorites@{GetFavorites}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetFavorites (QString {\em user} = {\tt \char`\"{}\char`\"{}}, \/  int {\em page} = {\tt 1})}}
+\label{classCore_a896aea28b564e4841df4cf527fb0247}
+
+
+
+
+Definition at line 256 of file Core.cpp.\hypertarget{classCore_bc64aa3de63d39a878db543d8d5df9f5}{
+\index{Core@{Core}!GetFriendsTimeline@{GetFriendsTimeline}}
+\index{GetFriendsTimeline@{GetFriendsTimeline}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetFriendsTimeline ({\bf SERVER::Option1} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_bc64aa3de63d39a878db543d8d5df9f5}
+
+
+
+
+Definition at line 271 of file Core.cpp.\hypertarget{classCore_7023af805b629e90a7aa2978366ee344}{
+\index{Core@{Core}!PostNewStatus@{PostNewStatus}}
+\index{PostNewStatus@{PostNewStatus}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::PostNewStatus (QString {\em status})}}
+\label{classCore_7023af805b629e90a7aa2978366ee344}
+
+
+
+
+Definition at line 292 of file Core.cpp.\hypertarget{classCore_b95dc3fca63c84496f6a487d845e7ba9}{
+\index{Core@{Core}!GetRecentReplies@{GetRecentReplies}}
+\index{GetRecentReplies@{GetRecentReplies}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetRecentReplies ({\bf SERVER::Option3} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_b95dc3fca63c84496f6a487d845e7ba9}
+
+
+
+
+Definition at line 304 of file Core.cpp.\hypertarget{classCore_d881d4987b2845589443f74fb81da766}{
+\index{Core@{Core}!RemoveStatus@{RemoveStatus}}
+\index{RemoveStatus@{RemoveStatus}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::RemoveStatus (QString {\em id})}}
+\label{classCore_d881d4987b2845589443f74fb81da766}
+
+
+
+
+Definition at line 323 of file Core.cpp.\hypertarget{classCore_2d41bfdcb5a2dff232ee299e83a7c8e6}{
+\index{Core@{Core}!GetFriends@{GetFriends}}
+\index{GetFriends@{GetFriends}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetFriends ({\bf SERVER::Option4} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_2d41bfdcb5a2dff232ee299e83a7c8e6}
+
+
+
+
+Definition at line 333 of file Core.cpp.\hypertarget{classCore_635c5c7bb0b6d2c2c6250ac050b466d6}{
+\index{Core@{Core}!GetFollowers@{GetFollowers}}
+\index{GetFollowers@{GetFollowers}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetFollowers ({\bf SERVER::Option5} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_635c5c7bb0b6d2c2c6250ac050b466d6}
+
+
+
+
+Definition at line 362 of file Core.cpp.\hypertarget{classCore_572cef51b68ea351bdda246b5070c399}{
+\index{Core@{Core}!GetUserDetails@{GetUserDetails}}
+\index{GetUserDetails@{GetUserDetails}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetUserDetails (QString {\em user})}}
+\label{classCore_572cef51b68ea351bdda246b5070c399}
+
+
+
+
+Definition at line 389 of file Core.cpp.\hypertarget{classCore_1b43e65adc3ba72ae2bb344bec27eb53}{
+\index{Core@{Core}!GetSentDirectMessages@{GetSentDirectMessages}}
+\index{GetSentDirectMessages@{GetSentDirectMessages}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetSentDirectMessages ({\bf SERVER::Option6} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_1b43e65adc3ba72ae2bb344bec27eb53}
+
+
+
+
+Definition at line 399 of file Core.cpp.\hypertarget{classCore_5496ee42ce9d32aa0f98a2d56e3bbddf}{
+\index{Core@{Core}!GetReceivedDirectMessages@{GetReceivedDirectMessages}}
+\index{GetReceivedDirectMessages@{GetReceivedDirectMessages}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::GetReceivedDirectMessages ({\bf SERVER::Option6} $\ast$ {\em opt} = {\tt NULL})}}
+\label{classCore_5496ee42ce9d32aa0f98a2d56e3bbddf}
+
+
+
+
+Definition at line 418 of file Core.cpp.\hypertarget{classCore_f6afb71b9114a90e9b9856f64a6fe9cf}{
+\index{Core@{Core}!SendDirectMessage@{SendDirectMessage}}
+\index{SendDirectMessage@{SendDirectMessage}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::SendDirectMessage (QString {\em user}, \/  QString {\em text})}}
+\label{classCore_f6afb71b9114a90e9b9856f64a6fe9cf}
+
+
+
+
+Definition at line 437 of file Core.cpp.\hypertarget{classCore_d98d496c44ebff775698737f8edbde44}{
+\index{Core@{Core}!RemoveDirectMessage@{RemoveDirectMessage}}
+\index{RemoveDirectMessage@{RemoveDirectMessage}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::RemoveDirectMessage (QString {\em id})}}
+\label{classCore_d98d496c44ebff775698737f8edbde44}
+
+
+
+
+Definition at line 452 of file Core.cpp.\hypertarget{classCore_3df3b62fa5366492a3eb4bba99f1849a}{
+\index{Core@{Core}!AddFriendship@{AddFriendship}}
+\index{AddFriendship@{AddFriendship}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::AddFriendship (QString {\em user})}}
+\label{classCore_3df3b62fa5366492a3eb4bba99f1849a}
+
+
+
+
+Definition at line 462 of file Core.cpp.\hypertarget{classCore_95ce85046d01f3d5d6928f06e8aab99c}{
+\index{Core@{Core}!RemoveFriendship@{RemoveFriendship}}
+\index{RemoveFriendship@{RemoveFriendship}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::RemoveFriendship (QString {\em user})}}
+\label{classCore_95ce85046d01f3d5d6928f06e8aab99c}
+
+
+
+
+Definition at line 472 of file Core.cpp.\hypertarget{classCore_0430da6765198a4f763ea7528f8e1e86}{
+\index{Core@{Core}!FriendshipExist@{FriendshipExist}}
+\index{FriendshipExist@{FriendshipExist}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::FriendshipExist (QString {\em user\_\-a}, \/  QString {\em user\_\-b})}}
+\label{classCore_0430da6765198a4f763ea7528f8e1e86}
+
+
+
+
+Definition at line 482 of file Core.cpp.\hypertarget{classCore_e7b7355b923afe51411e3c949679904d}{
+\index{Core@{Core}!VerifyCredentials@{VerifyCredentials}}
+\index{VerifyCredentials@{VerifyCredentials}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::VerifyCredentials ()}}
+\label{classCore_e7b7355b923afe51411e3c949679904d}
+
+
+
+
+Definition at line 493 of file Core.cpp.\hypertarget{classCore_62635d6cffb1fbef9f5c650518f83c67}{
+\index{Core@{Core}!UpdateLocation@{UpdateLocation}}
+\index{UpdateLocation@{UpdateLocation}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::UpdateLocation (QString {\em location})}}
+\label{classCore_62635d6cffb1fbef9f5c650518f83c67}
+
+
+
+
+Definition at line 499 of file Core.cpp.\hypertarget{classCore_291a15a3ec5ebadc314c991f74cde776}{
+\index{Core@{Core}!UpdateDeliveryDevice@{UpdateDeliveryDevice}}
+\index{UpdateDeliveryDevice@{UpdateDeliveryDevice}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::UpdateDeliveryDevice ({\bf SERVER::DEVICES} {\em device})}}
+\label{classCore_291a15a3ec5ebadc314c991f74cde776}
+
+
+
+
+Definition at line 511 of file Core.cpp.\hypertarget{classCore_0cf4c10e33b1158e651977210312ea13}{
+\index{Core@{Core}!RemainingApiRequests@{RemainingApiRequests}}
+\index{RemainingApiRequests@{RemainingApiRequests}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::RemainingApiRequests ()}}
+\label{classCore_0cf4c10e33b1158e651977210312ea13}
+
+
+
+
+Definition at line 532 of file Core.cpp.\hypertarget{classCore_dbeb18bcc46253950b7660582d2eb5f5}{
+\index{Core@{Core}!AddFavorite@{AddFavorite}}
+\index{AddFavorite@{AddFavorite}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::AddFavorite (QString {\em id})}}
+\label{classCore_dbeb18bcc46253950b7660582d2eb5f5}
+
+
+
+
+Definition at line 538 of file Core.cpp.\hypertarget{classCore_c12e1d495cfea0a38c4adb38f258d27c}{
+\index{Core@{Core}!RemoveFavorite@{RemoveFavorite}}
+\index{RemoveFavorite@{RemoveFavorite}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::RemoveFavorite (QString {\em id})}}
+\label{classCore_c12e1d495cfea0a38c4adb38f258d27c}
+
+
+
+
+Definition at line 548 of file Core.cpp.\hypertarget{classCore_5cd0ceaff4b8d19b40f9b2e00839a286}{
+\index{Core@{Core}!StartFollow@{StartFollow}}
+\index{StartFollow@{StartFollow}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::StartFollow (QString {\em user})}}
+\label{classCore_5cd0ceaff4b8d19b40f9b2e00839a286}
+
+
+
+
+Definition at line 558 of file Core.cpp.\hypertarget{classCore_9a55db5cfe7788972b20d6a6bdc91218}{
+\index{Core@{Core}!StopFollow@{StopFollow}}
+\index{StopFollow@{StopFollow}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::StopFollow (QString {\em user})}}
+\label{classCore_9a55db5cfe7788972b20d6a6bdc91218}
+
+
+
+
+Definition at line 568 of file Core.cpp.\hypertarget{classCore_e715888efd76cc27271e4050ebed4c0b}{
+\index{Core@{Core}!BlockUser@{BlockUser}}
+\index{BlockUser@{BlockUser}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::BlockUser (QString {\em user})}}
+\label{classCore_e715888efd76cc27271e4050ebed4c0b}
+
+
+
+
+Definition at line 578 of file Core.cpp.\hypertarget{classCore_abc783553ec1e543435b8dc06f64939f}{
+\index{Core@{Core}!UnBlockUser@{UnBlockUser}}
+\index{UnBlockUser@{UnBlockUser}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::UnBlockUser (QString {\em user})}}
+\label{classCore_abc783553ec1e543435b8dc06f64939f}
+
+
+
+
+Definition at line 588 of file Core.cpp.\hypertarget{classCore_2e3b63ac22f8fef5f2d2d5e9adc42cdd}{
+\index{Core@{Core}!RequestStarted@{RequestStarted}}
+\index{RequestStarted@{RequestStarted}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::RequestStarted (int {\em id})\hspace{0.3cm}{\tt  \mbox{[}slot\mbox{]}}}}
+\label{classCore_2e3b63ac22f8fef5f2d2d5e9adc42cdd}
+
+
+
+
+Definition at line 98 of file Core.cpp.\hypertarget{classCore_7b649f8d3aeae37e3f2e0eff65ab189f}{
+\index{Core@{Core}!ReqFinished@{ReqFinished}}
+\index{ReqFinished@{ReqFinished}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::ReqFinished (int {\em id}, \/  bool {\em error})\hspace{0.3cm}{\tt  \mbox{[}slot\mbox{]}}}}
+\label{classCore_7b649f8d3aeae37e3f2e0eff65ab189f}
+
+
+
+
+Definition at line 101 of file Core.cpp.\hypertarget{classCore_77844f4e1b5e81ff4a13bc22328a4258}{
+\index{Core@{Core}!DataReadProgress@{DataReadProgress}}
+\index{DataReadProgress@{DataReadProgress}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::DataReadProgress (int {\em done}, \/  int {\em total})\hspace{0.3cm}{\tt  \mbox{[}slot\mbox{]}}}}
+\label{classCore_77844f4e1b5e81ff4a13bc22328a4258}
+
+
+
+
+Definition at line 75 of file Core.cpp.\hypertarget{classCore_299d2e5e288da339e11f30500f473b16}{
+\index{Core@{Core}!Done@{Done}}
+\index{Done@{Done}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::Done (bool {\em error})\hspace{0.3cm}{\tt  \mbox{[}slot\mbox{]}}}}
+\label{classCore_299d2e5e288da339e11f30500f473b16}
+
+
+
+
+Definition at line 70 of file Core.cpp.\hypertarget{classCore_c74c19f85f549851d3d7afd7e449770b}{
+\index{Core@{Core}!QueryDone@{QueryDone}}
+\index{QueryDone@{QueryDone}!Core@{Core}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Core::QueryDone ()\hspace{0.3cm}{\tt  \mbox{[}signal\mbox{]}}}}
+\label{classCore_c74c19f85f549851d3d7afd7e449770b}
+
+
+
+
+Definition at line 88 of file moc\_\-Core.cpp.
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+include/\hyperlink{Core_8h}{Core.h}\item 
+generated/\hyperlink{moc__Core_8cpp}{moc\_\-Core.cpp}\item 
+src/\hyperlink{Core_8cpp}{Core.cpp}\end{CompactItemize}
