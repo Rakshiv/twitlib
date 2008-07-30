@@ -47,7 +47,6 @@ Core::Core(ITwitReply *obj)
 	m_http = new QHttp(TWITTER_HOST);
 
 	MakeConnections();
-    Login("blackey02", "magersd");
 }
 //=====================================================================
 Core::~Core()
