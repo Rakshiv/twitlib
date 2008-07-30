@@ -1,0 +1,19 @@
+#labels Phase-Requirements
+How to build TwitLib...
+
+= Introduction =
+
+* In order to build TwitLib you must follow these instructions...
+
+1. Checkout the repository. 
+i.e. - svn co http://twitlib.googlecode.com/svn/trunk/
+
+2. Qt4 must be installed (currently 4.4.0)
+
+3. Linux must be used (currently Ubuntu 8.04)
+
+4. From the root directory type command 'qmake'
+
+5. From the root directory type command 'make'
+
+6. The lib will be produced into "rootdir"/release
