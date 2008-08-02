@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+if [ ! -f DevGui ]
+then
+    echo "Make sure to build DevGui before running it :("
+else
+    export LD_LIBRARY_PATH=.
+    ./DevGui &
+fi
+
+
+
