@@ -83,6 +83,7 @@ int Core::MakeGetRequest(QString req)
     tempBuffer->open(QIODevice::ReadWrite);
     reqId = m_http->get(req,tempBuffer);
     m_buffer[reqId] = tempBuffer;
+	return reqId;
 }
 //=====================================================================
 int Core::MakePostRequest(QString path,QByteArray req)
@@ -92,6 +93,7 @@ int Core::MakePostRequest(QString path,QByteArray req)
     tempBuffer->open(QIODevice::ReadWrite);
     reqId = m_http->post(path,req,tempBuffer);
     m_buffer[reqId] = tempBuffer;
+	return reqId;
 }
 //=====================================================================
 void Core::RequestStarted(int id)
