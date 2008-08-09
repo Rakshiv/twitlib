@@ -9,7 +9,7 @@ DEPENDPATH += include generated
 INCLUDEPATH += include generated
 
 QT = core network xml
-TARGET = QTwit
+TARGET = QTwitLib
 MOC_DIR = generated
 OBJECTS_DIR = intermediates
 DESTDIR = release
