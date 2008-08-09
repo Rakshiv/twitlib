@@ -3,7 +3,7 @@
 
 #include <QtGui/QMessageBox>
 #include "ui_example.h"
-#include "TwitLib.h"
+#include "QTwitLib.h"
 #include "Server.h"
 #include "ITwitReply.h"
 
@@ -36,7 +36,7 @@ class Example : public QWidget,
 	
 	private:
 		Ui::Form m_gui;
-		TwitLib  *m_twitLib;
+		QTwitLib  *m_twitLib;
 		
 };
 

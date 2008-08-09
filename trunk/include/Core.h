@@ -69,10 +69,10 @@ class Core : public QObject,
         int MakePostRequest(QString path,QByteArray req);
         
     private:  //Interface functions
-        void OnError(std::string error) {}
-        void OnMessageReceived(std::string message) {}
-        void OnStatusReceived(SERVER::RESP response) {}
-        void OnLoginStatus(bool isLoggedIn) {}
+        void OnError(std::string /*error*/) {}
+        void OnMessageReceived(std::string /*message*/) {}
+        void OnStatusReceived(SERVER::RESP /*response*/) {}
+        void OnLoginStatus(bool /*isLoggedIn*/) {}
         
 	private:
         QMap<int,QBuffer*> m_buffer;

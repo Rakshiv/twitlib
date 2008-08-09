@@ -66,12 +66,12 @@ void Core::MakeConnections()
     connect(this, SIGNAL(QueryDone()), m_eventLoop, SLOT(quit()));
 }
 //=====================================================================
-void Core::Done ( bool error )
+void Core::Done ( bool /*error*/ )
 {
     emit QueryDone();
 }
 //=====================================================================
-void Core::DataReadProgress ( int done, int total )
+void Core::DataReadProgress ( int /*done*/, int /*total*/ )
 {
     //m_subscriber->OnMessageReceived(QString::number(done).toStdString()+" / "+QString::number(total).toStdString());
 }
@@ -96,7 +96,7 @@ int Core::MakePostRequest(QString path,QByteArray req)
 	return reqId;
 }
 //=====================================================================
-void Core::RequestStarted(int id)
+void Core::RequestStarted(int /*id*/)
 {}
 //=====================================================================
 void Core::ReqFinished(int id, bool error)
