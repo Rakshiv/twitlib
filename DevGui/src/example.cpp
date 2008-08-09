@@ -13,7 +13,7 @@ Example::Example()
 	
 	m_gui.pushButton->setText("Public Timeline");
 	m_gui.pushButton_2->setText("Login");
-	m_gui.pushButton_3->setText("STUFF");
+	m_gui.pushButton_3->setText("Friends Timeline");
 	m_gui.pushButton_4->setText("Clear Text Area");
 }
 //=====================================================================
@@ -58,7 +58,7 @@ void Example::Button2Event()
 // testing all
 void Example::Button3Event()
 {	
-	m_twitLib->VerifyCredentials();
+	m_twitLib->GetFriendsTimeline();
 }
 //=====================================================================
 // Clear Text area
