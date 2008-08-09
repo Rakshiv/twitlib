@@ -8,7 +8,7 @@
 Example::Example()
 {
 	m_gui.setupUi(this);
-	m_twitLib = new TwitLib(this);
+	m_twitLib = new QTwitLib(this);
 	MakeConnections();
 	
 	m_gui.pushButton->setText("Public Timeline");
