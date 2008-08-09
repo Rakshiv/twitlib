@@ -11,8 +11,8 @@ MOC_DIR = generated
 UI_DIR = generated
 OBJECTS_DIR = intermediates
 DESTDIR = release
-unix:LIBS += -L../release -lQTwit
-win32:LIBS += -L../debug -lQTwit
+unix:LIBS += -L../release -lQTwitLib
+win32:LIBS += -L../debug -lQTwitLib
 
 # Input
 HEADERS += include/example.h
