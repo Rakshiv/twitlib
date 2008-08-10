@@ -201,7 +201,8 @@ void Core::GetFeaturedUsers()
 //=====================================================================
 void Core::Logout()
 {
-    MakeGetRequest(LOGOUT_URL);
+    MakePostRequest(LOGOUT_URL,"");
+    m_http->setUser("","");
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
