@@ -11,7 +11,6 @@
 #include "Server.h"
 #include "Core.h"
 
-
 class QTwitLib : public Core
 {
     public:
