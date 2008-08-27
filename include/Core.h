@@ -6,16 +6,14 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QMap>
 #include <QtNetwork/QHttp>
-#include "ITwitReply.h"
 #include "Server.h"
 
-class Core : public QObject,
-                    public ITwitReply
+class Core : public QObject
 {
 	Q_OBJECT;
           
 	public:
-		Core(ITwitReply *obj);
+		Core();
 		virtual ~Core();
         
     public:
@@ -61,24 +59,21 @@ class Core : public QObject,
         
     signals:
         void QueryDone();
+        void OnError(QString error);
+        void OnMessageReceived(QString message);
+        void OnStatusReceived(SERVER::RESP response);
+        void OnLoginStatus(bool isLoggedIn);
 
     private:
         void MakeConnections();
 		void responseHeaderReceived(const QHttpResponseHeader &resp);
         int MakeGetRequest(QString req);
         int MakePostRequest(QString path,QByteArray req);
-        
-    private:  //Interface functions
-        void OnError(std::string /*error*/) {}
-        void OnMessageReceived(std::string /*message*/) {}
-        void OnStatusReceived(SERVER::RESP /*response*/) {}
-        void OnLoginStatus(bool /*isLoggedIn*/) {}
-        
+               
 	private:
         QMap<int,QBuffer*> m_buffer;
         QEventLoop  *m_eventLoop;
 		QHttp             *m_http;
-        ITwitReply      *m_subscriber;
         int                  m_loginId;
         int                  m_credentialsId;
 		
@@ -108,8 +103,8 @@ class Core : public QObject,
         static QString REMOVE_FRIENDSHIP_URL;
         static QString FRIENDSHIP_EXIST_URL;
         static QString UPDATE_LOCATION_URL;
-        static QString UPDATE_DELIVERY_DEVICE;
-        static QString REMAINING_API_REQUESTS;
+        static QString UPDATE_DELIVERY_DEVICE_URL;
+        static QString REMAINING_API_REQUESTS_URL;
         static QString ADD_FAVORITE_URL;
         static QString REMOVE_FAVORITE_URL;
         static QString START_FOLLOW_URL;

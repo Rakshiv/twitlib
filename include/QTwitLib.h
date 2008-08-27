@@ -7,16 +7,15 @@
 	#define EXPORT
 #endif
 
-#include <iostream>
+#include <QtCore/QString>
 #include "Server.h"
+#include "Core.h"
 
-class Core;
-class ITwitReply;
 
-class QTwitLib
+class QTwitLib : public Core
 {
     public:
-        EXPORT QTwitLib(ITwitReply *obj);
+        EXPORT QTwitLib();
         virtual ~QTwitLib();
         
 //=====================================================================
@@ -48,7 +47,7 @@ class QTwitLib
         /**
          * Attempts to establish an authorized connection with Twitter.
          */
-        EXPORT void Login(std::string user, std::string password);
+        EXPORT void Login(QString user, QString password);
 //=====================================================================
         /**
          * Returns the same text displayed on http://twitter.com/home when a maintenance window is scheduled, in the requested format.
@@ -78,7 +77,7 @@ class QTwitLib
          * Returns the 20 most recent favorite statuses for the authenticating user or user specified by the ID parameter in the requested format.
          * @param user Optional.  The ID or screen name of the user for whom to request a list of favorite statuses.
          */
-        EXPORT void GetFavorites(std::string user="", int page=1);
+        EXPORT void GetFavorites(QString user="", int page=1);
 //=====================================================================
 //=====================================================================
 
@@ -98,7 +97,7 @@ class QTwitLib
          * @param status Required.  The text of your status update.  Be sure to URL encode as necessary.
          * Must not be more than 160 characters and should not be more than 140 characters to ensure optimal display.
          */
-        EXPORT void PostNewStatus(std::string status);                                                
+        EXPORT void PostNewStatus(QString status);                                                
 //=====================================================================
         /**
          * Returns the 20 most recent @replies (status updates prefixed with @username) for the authenticating user.
@@ -132,7 +131,7 @@ class QTwitLib
          * You must be properly authenticated to request the page of a protected user.
          * @param user Required.  The ID or screen name of a user.
          */
-        EXPORT void GetUserDetails(std::string user);
+        EXPORT void GetUserDetails(QString user);
 //=====================================================================
         /**
          * Returns a list of the 20 most recent direct messages sent by the authenticating user.
@@ -156,7 +155,7 @@ class QTwitLib
          * @param text Required.  The text of your direct message.
          * Be sure to URL encode as necessary, and keep it under 140 characters.
          */
-        EXPORT void SendDirectMessage(std::string user, std::string text);
+        EXPORT void SendDirectMessage(QString user, QString text);
 //=====================================================================
         /**
          * Destroys the direct message specified in the required ID parameter.
@@ -171,21 +170,21 @@ class QTwitLib
          * Returns a string describing the failure condition when unsuccessful.
          * @param user Required.  The ID or screen name of the user to befriend.
          */
-        EXPORT void AddFriendship(std::string user);
+        EXPORT void AddFriendship(QString user);
 //=====================================================================
         /**
          * Discontinues friendship with the user specified in the ID parameter as the authenticating user.
          * Returns the un-friended user in the requested format when successful.  Returns a string describing the failure condition when unsuccessful.
          * @param user Required.  The ID or screen name of the user with whom to discontinue friendship.
          */
-        EXPORT void RemoveFriendship(std::string user);
+        EXPORT void RemoveFriendship(QString user);
 //=====================================================================
         /**
          * Tests if a friendship exists between two users.
          * @param user_a Required.  The ID or screen_name of the first user to test friendship for.
          * @param user_b Required.  The ID or screen_name of the second user to test friendship for.
          */
-        EXPORT void FriendshipExist(std::string user_a, std::string user_b);
+        EXPORT void FriendshipExist(QString user_a, QString user_b);
 //=====================================================================
         /**
          * Returns an HTTP 200 OK response code and a format-specific response if authentication was successful.
@@ -198,7 +197,7 @@ class QTwitLib
          * Works as either a POST or a GET.
          * @param location Required.  The location of the user.  Please note this is not normalized, geocoded, or translated to latitude/longitude at this time.
          */
-        EXPORT void UpdateLocation(std::string location);
+        EXPORT void UpdateLocation(QString location);
 //=====================================================================
         /**
          * Sets which device Twitter delivers updates to for the authenticating user.
@@ -230,29 +229,26 @@ class QTwitLib
          * Enables notifications for updates from the specified user to the authenticating user.  Returns the specified user when successful.
          * @param user Required.  The ID or screen name of the user to follow.
          */
-        EXPORT void StartFollow(std::string user);
+        EXPORT void StartFollow(QString user);
 //=====================================================================
         /**
          * Disables notifications for updates from the specified user to the authenticating user.  Returns the specified user when successful.
          * @param user Required.  The ID or screen name of the user to leave.
          */
-        EXPORT void StopFollow(std::string user);
+        EXPORT void StopFollow(QString user);
 //=====================================================================
         /**
          * Blocks the user specified in the ID parameter as the authenticating user.  Returns the blocked user in the requested format when successful.
          * @param user Required.  The ID or screen_name of the user to block.
          */
-        EXPORT void BlockUser(std::string user);
+        EXPORT void BlockUser(QString user);
 //=====================================================================
         /**
          * Un-blocks the user specified in the ID parameter as the authenticating user.  Returns the un-blocked user in the requested format when successful.
          * @param user Required.  The ID or screen_name of the user to un-block.
          */
-        EXPORT void UnBlockUser(std::string user);
-//=====================================================================
-        
-    private:
-        Core *m_core;
+        EXPORT void UnBlockUser(QString user);
+//=====================================================================      
 };
 
 

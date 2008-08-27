@@ -30,8 +30,8 @@ QString Core::CREATE_FRIENDSHIP_URL = "/friendships/create/[req-user].xml";
 QString Core::REMOVE_FRIENDSHIP_URL = "/friendships/destroy/[req-user].xml";
 QString Core::FRIENDSHIP_EXIST_URL = "http://twitter.com/friendships/exists.xml";
 QString Core::UPDATE_LOCATION_URL = "/account/update_location.xml";
-QString Core::UPDATE_DELIVERY_DEVICE = "/account/update_delivery_device.xml";
-QString Core::REMAINING_API_REQUESTS = "/account/rate_limit_status.xml";
+QString Core::UPDATE_DELIVERY_DEVICE_URL = "/account/update_delivery_device.xml";
+QString Core::REMAINING_API_REQUESTS_URL = "/account/rate_limit_status.xml";
 QString Core::ADD_FAVORITE_URL = "/favorites/create/[req-id].xml";
 QString Core::REMOVE_FAVORITE_URL = "/favorites/destroy/[req-id].xml";
 QString Core::START_FOLLOW_URL = "/notifications/follow/[req-user].xml";
@@ -40,9 +40,8 @@ QString Core::START_BLOCK_URL = "/blocks/create/[req-user].xml";
 QString Core::STOP_BLOCK_URL = "/blocks/destroy/[req-user].xml";
 
 //=====================================================================
-Core::Core(ITwitReply *obj)
+Core::Core()
 {
-    m_subscriber = obj;
     m_eventLoop = new QEventLoop(this);
 	m_http = new QHttp(TWITTER_HOST);
 
@@ -73,7 +72,7 @@ void Core::Done ( bool /*error*/ )
 //=====================================================================
 void Core::DataReadProgress ( int /*done*/, int /*total*/ )
 {
-    //m_subscriber->OnMessageReceived(QString::number(done).toStdString()+" / "+QString::number(total).toStdString());
+    //emit OnMessageReceived(QString::number(done).toStdString()+" / "+QString::number(total).toStdString());
 }
 //=====================================================================
 int Core::MakeGetRequest(QString req)
@@ -101,7 +100,7 @@ void Core::RequestStarted(int /*id*/)
 //=====================================================================
 void Core::ReqFinished(int id, bool error)
 {
-    QByteArray resp;
+    QString response;
     QHttpResponseHeader head;
     
     head = m_http->lastResponse();
@@ -109,11 +108,11 @@ void Core::ReqFinished(int id, bool error)
         responseHeaderReceived(head);
      
     if(m_buffer[id])
-        resp = m_buffer[id]->data();
+        response = QString(m_buffer[id]->data());
      
     if(error)
     {
-        m_subscriber->OnError(m_http->errorString().toStdString());
+        emit OnError(m_http->errorString());
     }
     else if(id == m_loginId)
     {      
@@ -121,15 +120,14 @@ void Core::ReqFinished(int id, bool error)
     }
     else if(id == m_credentialsId)
     {
-        QString buffer = QString(resp);
-        if(buffer.contains("true"))
-            m_subscriber->OnLoginStatus(true);
+        if(response.contains("true"))
+            emit OnLoginStatus(true);
         else
-            m_subscriber->OnLoginStatus(false);
+            emit OnLoginStatus(false);
     }
     else
     {
-        m_subscriber->OnMessageReceived(QString(resp).toStdString());
+        emit OnMessageReceived(response);
     }
     
     if(m_buffer[id])
@@ -145,35 +143,35 @@ void Core::responseHeaderReceived(const QHttpResponseHeader &resp)
 	switch(resp.statusCode())
 	{
 		case SERVER::OK:
-            m_subscriber->OnStatusReceived(SERVER::OK);
+            emit OnStatusReceived(SERVER::OK);
 			break;
 		case SERVER::NOT_MODIFIED:
-            m_subscriber->OnStatusReceived(SERVER::NOT_MODIFIED);
+            emit OnStatusReceived(SERVER::NOT_MODIFIED);
 			break;
 		case SERVER::BAD_REQUEST:
-            m_subscriber->OnStatusReceived(SERVER::BAD_REQUEST);
+            emit OnStatusReceived(SERVER::BAD_REQUEST);
 			break;
 		case SERVER::NOT_AUTHORIZED:
-            m_subscriber->OnLoginStatus(false);
-            m_subscriber->OnStatusReceived(SERVER::NOT_AUTHORIZED);
+            emit OnLoginStatus(false);
+            emit OnStatusReceived(SERVER::NOT_AUTHORIZED);
 			break;
 		case SERVER::FORBIDDEN:
-            m_subscriber->OnStatusReceived(SERVER::FORBIDDEN);
+            emit OnStatusReceived(SERVER::FORBIDDEN);
 			break;
 		case SERVER::NOT_FOUND:
-            m_subscriber->OnStatusReceived(SERVER::NOT_FOUND);
+            emit OnStatusReceived(SERVER::NOT_FOUND);
 			break;
 		case SERVER::INTERNAL_SERVER_ERROR:
-            m_subscriber->OnStatusReceived(SERVER::INTERNAL_SERVER_ERROR);
+            emit OnStatusReceived(SERVER::INTERNAL_SERVER_ERROR);
 			break;
 		case SERVER::BAD_GATEWAY:
-            m_subscriber->OnStatusReceived(SERVER::BAD_GATEWAY);
+            emit OnStatusReceived(SERVER::BAD_GATEWAY);
 			break;
 		case SERVER::SERVICE_UNAVAILABLE:
-            m_subscriber->OnStatusReceived(SERVER::SERVICE_UNAVAILABLE);
+            emit OnStatusReceived(SERVER::SERVICE_UNAVAILABLE);
 			break;
 		default:
-            m_subscriber->OnStatusReceived(SERVER::UNKNOWN);
+            emit OnStatusReceived(SERVER::UNKNOWN);
 			break;
 	}
 }
@@ -512,7 +510,7 @@ void Core::UpdateLocation(QString location)
 //=====================================================================
 void Core::UpdateDeliveryDevice(SERVER::DEVICES device)
 {
-    QString buildUrl = UPDATE_DELIVERY_DEVICE;
+    QString buildUrl = UPDATE_DELIVERY_DEVICE_URL;
 
     switch(device)
     {
@@ -533,7 +531,7 @@ void Core::UpdateDeliveryDevice(SERVER::DEVICES device)
 //=====================================================================
 void Core::RemainingApiRequests()
 {
-    MakeGetRequest(REMAINING_API_REQUESTS);
+    MakeGetRequest(REMAINING_API_REQUESTS_URL);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
