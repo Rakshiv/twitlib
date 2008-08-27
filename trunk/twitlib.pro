@@ -16,9 +16,11 @@ DESTDIR = release
 
 # Input
 HEADERS += include/Core.h \
-		   include/ITwitReply.h \
 		   include/Server.h \
-		   include/QTwitLib.h
+		   include/QTwitLib.h \
+           include/Decipher.h \
+           include/Returnables.h
 		   
 SOURCES += src/Core.cpp \
-		   src/QTwitLib.cpp
+		   src/QTwitLib.cpp \
+           src/Decipher.cpp

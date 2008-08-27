@@ -1,16 +1,13 @@
 #ifndef EXAMPLE_H
 #define EXAMPLE_H
 
-#include <QtGui/QMessageBox>
+#include <QtCore/QString>
 #include "ui_example.h"
 #include "QTwitLib.h"
 #include "Server.h"
-#include "ITwitReply.h"
 
 
-class Example : public QWidget,
-				public ITwitReply
-
+class Example : public QWidget
 {
 	Q_OBJECT;
 	public:
@@ -22,23 +19,22 @@ class Example : public QWidget,
 		QString GetUsername();
 		QString GetPassword();
 		
-	public: //callback from libTwit
-        void OnError(std::string error); 
-        void OnMessageReceived(std::string message); 
-        void OnStatusReceived(SERVER::RESP response); 
-        void OnLoginStatus(bool isLoggedIn); 
-		
 	public slots:
 		void Button1Event();
 		void Button2Event();
 		void Button3Event();
 		void Button4Event();
+        void Button5Event();
+        void OnError(QString error); 
+        void OnMessageReceived(QString message);
+        void OnStatusReceived(SERVER::RESP response);
+        void OnLoginStatus(bool isLoggedIn);
 	
 	private:
 		Ui::Form m_gui;
 		QTwitLib  *m_twitLib;
-		
 };
+
 
 #endif // EXAMPLE_H
 

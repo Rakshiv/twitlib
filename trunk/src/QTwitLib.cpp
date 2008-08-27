@@ -3,183 +3,175 @@
 #include "Core.h"
 
 //=====================================================================
-QTwitLib::QTwitLib(ITwitReply *obj)
-{
-    m_core = new Core(obj);
-}
+QTwitLib::QTwitLib()
+{}
 //=====================================================================
 QTwitLib::~QTwitLib()
-{
-    if(m_core)
-    {
-        delete m_core;
-        m_core = NULL;
-    }
-}
+{}
 //=====================================================================
 void QTwitLib::GetPublicTimeline()
 {
-    m_core->GetPublicTimeline();
+    Core::GetPublicTimeline();
 }
 //=====================================================================
 void QTwitLib::GetSingleStatus(int id)
 {
-    m_core->GetSingleStatus(QString::number(id));
+    Core::GetSingleStatus(QString::number(id));
 }
 //=====================================================================
 void QTwitLib::GetFeaturedUsers()
 {
-    m_core->GetFeaturedUsers();
+    Core::GetFeaturedUsers();
 }
 //=====================================================================
 void QTwitLib::Logout()
 {
-    m_core->Logout();
+    Core::Logout();
 }
 //=====================================================================
-void QTwitLib::Login(std::string user, std::string password)
+void QTwitLib::Login(QString user, QString password)
 {
-    m_core->Login(QString(user.c_str()),QString(password.c_str()));
+    Core::Login(user, password);
 }
 //=====================================================================
 void QTwitLib::GetDowntimeSchedule()
 {
-    m_core->GetDowntimeSchedule();
+    Core::GetDowntimeSchedule();
 }
 //=====================================================================
 void QTwitLib::IsTwitterUp()
 {
-    m_core->IsTwitterUp();
+    Core::IsTwitterUp();
 }
 //=====================================================================
 void QTwitLib::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
 {
-    m_core->GetUsersTimeline(opt);
+    Core::GetUsersTimeline(opt);
 }
 //=====================================================================
-void QTwitLib::GetFavorites(std::string user  /*=""*/, int page  /*=1*/)
+void QTwitLib::GetFavorites(QString user  /*=""*/, int page  /*=1*/)
 {
-    m_core->GetFavorites(QString(user.c_str()),page);
+    Core::GetFavorites(user, page);
 }
 //=====================================================================
 void QTwitLib::GetFriendsTimeline(SERVER::Option1 *opt  /*=NULL*/)
 {
-    m_core->GetFriendsTimeline(opt);
+    Core::GetFriendsTimeline(opt);
 }
 //=====================================================================
-void QTwitLib::PostNewStatus(std::string status)                                                
+void QTwitLib::PostNewStatus(QString status)                                                
 {
-    m_core->PostNewStatus(QString(status.c_str()));
+    Core::PostNewStatus(status);
 }
 //=====================================================================
 void QTwitLib::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
 {
-    m_core->GetRecentReplies(opt);
+    Core::GetRecentReplies(opt);
 }
 //=====================================================================
 void QTwitLib::RemoveStatus(int id)
 {
-    m_core->RemoveStatus(QString::number(id));
+    Core::RemoveStatus(QString::number(id));
 }
 //=====================================================================
 void QTwitLib::GetFriends(SERVER::Option4 *opt  /*=NULL*/)
 {
-    m_core->GetFriends(opt);
+    Core::GetFriends(opt);
 }
 //=====================================================================
 void QTwitLib::GetFollowers(SERVER::Option5 *opt  /*=NULL*/)
 {
-    m_core->GetFollowers(opt);
+    Core::GetFollowers(opt);
 }
 //=====================================================================
-void QTwitLib::GetUserDetails(std::string user)
+void QTwitLib::GetUserDetails(QString user)
 {
-    m_core->GetUserDetails(QString(user.c_str()));
+    Core::GetUserDetails(user);
 }
 //=====================================================================
 void QTwitLib::GetSentDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
 {
-    m_core->GetSentDirectMessages(opt);
+    Core::GetSentDirectMessages(opt);
 }
 //=====================================================================
 void QTwitLib::GetReceivedDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
 {
-    m_core->GetReceivedDirectMessages(opt);
+    Core::GetReceivedDirectMessages(opt);
 }
 //=====================================================================
-void QTwitLib::SendDirectMessage(std::string user, std::string text)
+void QTwitLib::SendDirectMessage(QString user, QString text)
 {
-    m_core->SendDirectMessage(QString(user.c_str()), QString(text.c_str()));
+    Core::SendDirectMessage(user, text);
 }
 //=====================================================================
 void QTwitLib::RemoveDirectMessage(int id)
 {
-    m_core->RemoveDirectMessage(QString::number(id));
+    Core::RemoveDirectMessage(QString::number(id));
 }
 //=====================================================================
-void QTwitLib::AddFriendship(std::string user)
+void QTwitLib::AddFriendship(QString user)
 {
-    m_core->AddFriendship(QString(user.c_str()));
+    Core::AddFriendship(user);
 }
 //=====================================================================
-void QTwitLib::RemoveFriendship(std::string user)
+void QTwitLib::RemoveFriendship(QString user)
 {
-    m_core->RemoveFriendship(QString(user.c_str()));
+    Core::RemoveFriendship(user);
 }
 //=====================================================================
-void QTwitLib::FriendshipExist(std::string user_a, std::string user_b)
+void QTwitLib::FriendshipExist(QString user_a, QString user_b)
 {
-    m_core->FriendshipExist(QString(user_a.c_str()), QString(user_b.c_str()));
+    Core::FriendshipExist(user_a, user_b);
 }
 //=====================================================================
 void QTwitLib::VerifyCredentials()
 {
-    m_core->VerifyCredentials();
+    Core::VerifyCredentials();
 }
 //=====================================================================
-void QTwitLib::UpdateLocation(std::string location)
+void QTwitLib::UpdateLocation(QString location)
 {
-    m_core->UpdateLocation(QString(location.c_str()));
+    Core::UpdateLocation(location);
 }
 //=====================================================================
 void QTwitLib::UpdateDeliveryDevice(SERVER::DEVICES device)
 {
-    m_core->UpdateDeliveryDevice(device);
+    Core::UpdateDeliveryDevice(device);
 }
 //=====================================================================
 void QTwitLib::RemainingApiRequests()
 {
-    m_core->RemainingApiRequests();
+    Core::RemainingApiRequests();
 }
 //=====================================================================
 void QTwitLib::AddFavorite(int id)
 {
-    m_core->AddFavorite(QString::number(id));
+    Core::AddFavorite(QString::number(id));
 }
 //=====================================================================
 void QTwitLib::RemoveFavorite(int id)
 {
-    m_core->RemoveFavorite(QString::number(id));
+    Core::RemoveFavorite(QString::number(id));
 }
 //=====================================================================
-void QTwitLib::StartFollow(std::string user)
+void QTwitLib::StartFollow(QString user)
 {
-    m_core->StartFollow(QString(user.c_str()));
+    Core::StartFollow(user);
 }
 //=====================================================================
-void QTwitLib::StopFollow(std::string user)
+void QTwitLib::StopFollow(QString user)
 {
-    m_core->StopFollow(QString(user.c_str()));
+    Core::StopFollow(user);
 }
 //=====================================================================
-void QTwitLib::BlockUser(std::string user)
+void QTwitLib::BlockUser(QString user)
 {
-    m_core->BlockUser(QString(user.c_str()));
+    Core::BlockUser(user);
 }
 //=====================================================================
-void QTwitLib::UnBlockUser(std::string user)
+void QTwitLib::UnBlockUser(QString user)
 {
-    m_core->UnBlockUser(QString(user.c_str()));
+    Core::UnBlockUser(user);
 }
 //=====================================================================
 
