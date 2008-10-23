@@ -34,11 +34,6 @@ void QTwitLib::Login(QString user, QString password)
     Core::Login(user, password);
 }
 //=====================================================================
-void QTwitLib::GetDowntimeSchedule()
-{
-    Core::GetDowntimeSchedule();
-}
-//=====================================================================
 void QTwitLib::IsTwitterUp()
 {
     Core::IsTwitterUp();

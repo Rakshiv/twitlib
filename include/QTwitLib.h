@@ -49,11 +49,6 @@ class QTwitLib : public Core
         EXPORT void Login(QString user, QString password);
 //=====================================================================
         /**
-         * Returns the same text displayed on http://twitter.com/home when a maintenance window is scheduled, in the requested format.
-         */
-        EXPORT void GetDowntimeSchedule();
-//=====================================================================
-        /**
          * Returns the string "ok" in the requested format with a 200 OK HTTP status code.
          */
         EXPORT void IsTwitterUp();

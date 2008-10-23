@@ -18,6 +18,9 @@ class Decipher
 		static Returnables::PublicTimeline* PublicTimeline(const QString &xml);
 		static Returnables::SingleStatus* SingleStatus(const QString &xml);
 		static Returnables::FeaturedUsers* FeaturedUsers(const QString &xml);
+		static Returnables::Login* Login(const QString &xml);
+		static Returnables::TwitterUp* twitterUp(const QString &xml);
+		static Returnables::UserTimeline* userTimeline(const QString &xml);
 
 	private:
 		static enum Parent {USER, STATUS};
@@ -45,6 +48,8 @@ class Decipher
 		static QString nUserUrl;
 		static QString nUserProtected;
 		static QString nUserFollowersCount;
+		static QString nAuthorized;
+		static QString nOk;
 };
 
 

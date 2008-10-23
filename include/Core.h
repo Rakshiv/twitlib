@@ -24,7 +24,6 @@ class Core : public QObject
         void GetFeaturedUsers();
         void Logout();
         void Login(QString user, QString passw);
-        void GetDowntimeSchedule();
         void IsTwitterUp();
         void GetUsersTimeline(SERVER::Option2 *opt=NULL);
         void GetFavorites(QString user="", int page=1);
@@ -63,15 +62,19 @@ class Core : public QObject
 		void PublicTimeline(Returnables::PublicTimeline *pTimeline);
 		void FriendsTimeline(Returnables::FriendsTimeline *fTimeline);
 		void SingleStatus(Returnables::SingleStatus *singleStatus);
+		void FeaturedUsers(Returnables::FeaturedUsers *featuredUsers);
+		void Login(Returnables::Login *login);
+		void TwitterUp(Returnables::TwitterUp *twitterUp);
+		void UserTimeline(Returnables::UserTimeline *userTimeline);
 
         void QueryDone();
         void OnError(QString error);
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);
-        void OnLoginStatus(bool isLoggedIn);
 
 	private:
-		enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, LOGOUT };
+		enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, LOGOUT, FEATURED_USERS, VERIFY_CREDENTIALS, \
+						 TWITTER_UP, USER_TIMELINE, };
 		struct Info
 		{
 			Info() { buffer = NULL; }
@@ -89,8 +92,6 @@ class Core : public QObject
         QMap<int,Info> m_buffer;
         QEventLoop  *m_eventLoop;
 		QHttp       *m_http;
-        int         m_loginId;
-        int         m_credentialsId;
 		
 	private:
 		static QString TWITTER_HOST;

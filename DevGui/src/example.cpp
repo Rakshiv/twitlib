@@ -27,12 +27,11 @@ Example::~Example()
 //=====================================================================
 void Example::MakeConnections()
 {
-	connect(m_twitLib, SIGNAL(SingleStatus(Returnables::SingleStatus *)), this, SLOT(TestReturn(Returnables::SingleStatus *)));
+	connect(m_twitLib, SIGNAL(UserTimeline(Returnables::UserTimeline *)), this, SLOT(TestReturn(Returnables::UserTimeline *)));
 
     connect(m_twitLib, SIGNAL(OnError(QString)), this, SLOT(OnError(QString)));
     connect(m_twitLib, SIGNAL(OnMessageReceived(QString)), this, SLOT(OnMessageReceived(QString)));
     connect(m_twitLib, SIGNAL(OnStatusReceived(SERVER::RESP)), this, SLOT(OnStatusReceived(SERVER::RESP)));
-    connect(m_twitLib, SIGNAL(OnLoginStatus(bool)), this, SLOT(OnLoginStatus(bool)));
     connect(m_gui.pushButton, SIGNAL(clicked()), this, SLOT(Button1Event()));
 	connect(m_gui.pushButton_2, SIGNAL(clicked()), this, SLOT(Button2Event()));
 	connect(m_gui.pushButton_3, SIGNAL(clicked()), this, SLOT(Button3Event()));
@@ -85,16 +84,23 @@ void Example::Button5Event()
 // Extra Event
 void Example::Button6Event()
 {	
-	m_twitLib->GetSingleStatus(970970746);
+	//m_twitLib->GetSingleStatus(970970746);
 	//m_twitLib->GetFeaturedUsers();
+	//m_twitLib->Logout();
+	m_twitLib->GetUsersTimeline();
 }
 //=====================================================================
-void Example::TestReturn(Returnables::SingleStatus* status)
+void Example::TestReturn(Returnables::UserTimeline *userTimeline)
 {
-	QString message;
+	QString message = "* ";
 
-	message = "Name: "+status->status->user.name+"\n";
-	message += "Message: "+status->status->status.text;
+	message += "Name: "+userTimeline->statuses.first()->user.name+"\n";
+	message += "Message: "+userTimeline->statuses.first()->status.text;
+
+	//if(twitUp->up)
+	//	message = "Twitter's working!!";
+	//else
+	//	message = "Twitter's down!";
 
 	m_gui.plainTextEdit->appendPlainText("Message "+message);
 }
@@ -114,11 +120,5 @@ void Example::OnStatusReceived(SERVER::RESP response)
     m_gui.plainTextEdit->appendPlainText("STATUS REC "+QString::number(response)); 
 }
 //=====================================================================
-void Example::OnLoginStatus(bool isLoggedIn)
-{ 
-    if(isLoggedIn)
-        m_gui.plainTextEdit->appendPlainText("LOGIN STATUS GOOD"); 
-    else
-        m_gui.plainTextEdit->appendPlainText("LOGIN STATUS BAD"); 
-}
+
 //=====================================================================

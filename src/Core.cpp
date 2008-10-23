@@ -109,21 +109,9 @@ void Core::ReqFinished(int id, bool error)
 	if(error)
 	{
 		emit OnError(m_http->errorString());
-		return;
 	}
-    else if(id == m_loginId)
-    {      
-        m_credentialsId = MakeGetRequest(VERIFY_CREDENTIALS_URL);
-    }
-    else if(id == m_credentialsId)
-    {
-        if(response.contains("true"))
-            emit OnLoginStatus(true);
-        else
-            emit OnLoginStatus(false);
-    }
     
-    head = m_http->lastResponse(); 
+	head = m_http->lastResponse(); 
     if(head.isValid())
         responseHeaderReceived(head);
      
@@ -151,13 +139,30 @@ void Core::ReqFinished(int id, bool error)
 			singleStatus = Decipher::SingleStatus(response);
 			emit SingleStatus(singleStatus);
 			break;
+		case FEATURED_USERS:
+			Returnables::FeaturedUsers *featuredUsers;
+			featuredUsers = Decipher::FeaturedUsers(response);
+			emit FeaturedUsers(featuredUsers);
+			break;
+		case VERIFY_CREDENTIALS:
+			Returnables::Login *login;
+			login = Decipher::Login(response);
+			emit Login(login);
+			break;
+		case TWITTER_UP:
+			Returnables::TwitterUp *twitterUp;
+			twitterUp = Decipher::twitterUp(response);
+			emit TwitterUp(twitterUp);
+			break;
+		case USER_TIMELINE:
+			Returnables::UserTimeline *userTimeline;
+			userTimeline = Decipher::userTimeline(response);
+			emit UserTimeline(userTimeline);
+			break;
 		default:
 			emit OnMessageReceived(response);
 		}
 	}
-    
-
-
 
 	if(m_buffer[id].buffer)
     {
@@ -181,7 +186,6 @@ void Core::responseHeaderReceived(const QHttpResponseHeader &resp)
             emit OnStatusReceived(SERVER::BAD_REQUEST);
 			break;
 		case SERVER::NOT_AUTHORIZED:
-            emit OnLoginStatus(false);
             emit OnStatusReceived(SERVER::NOT_AUTHORIZED);
 			break;
 		case SERVER::FORBIDDEN:
@@ -222,31 +226,26 @@ void Core::GetSingleStatus(QString id)
 //=====================================================================
 void Core::GetFeaturedUsers()
 {
-    MakeGetRequest(FEATURED_USERS_URL);
+    MakeGetRequest(FEATURED_USERS_URL, FEATURED_USERS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::Logout()
 {
-    MakePostRequest(LOGOUT_URL,"",LOGOUT);
     m_http->setUser("","");
+	MakePostRequest(LOGOUT_URL,"",LOGOUT);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::Login(QString user, QString passw)
 {
-    m_loginId = m_http->setUser(user, passw);
-}
-//=====================================================================
-void Core::GetDowntimeSchedule()
-{
-    MakeGetRequest(DOWNTIME_SCH_URL);
-    m_eventLoop->exec(QEventLoop::AllEvents);
+    m_http->setUser(user, passw);
+    MakeGetRequest(VERIFY_CREDENTIALS_URL,VERIFY_CREDENTIALS);
 }
 //=====================================================================
 void Core::IsTwitterUp()
 {
-    MakeGetRequest(IS_TWITTER_UP_URL);
+    MakeGetRequest(IS_TWITTER_UP_URL,TWITTER_UP);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -277,7 +276,7 @@ void Core::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
         buildUrl.replace("[/opt-user]","");
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,USER_TIMELINE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
