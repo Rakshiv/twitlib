@@ -32,7 +32,7 @@ class Example : public QWidget
         void OnStatusReceived(SERVER::RESP response);
         void OnLoginStatus(bool isLoggedIn);
 
-		void FriendsTimeline(Returnables::FriendsTimeline* fTimeLine);
+		void TestReturn(Returnables::SingleStatus *status);
 	
 	private:
 		Ui::Form m_gui;
