@@ -5,6 +5,7 @@
 #include "ui_example.h"
 #include "QTwitLib.h"
 #include "Server.h"
+#include "Returnables.h"
 
 
 class Example : public QWidget
@@ -30,6 +31,8 @@ class Example : public QWidget
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);
         void OnLoginStatus(bool isLoggedIn);
+
+		void FriendsTimeline(Returnables::FriendsTimeline* fTimeLine);
 	
 	private:
 		Ui::Form m_gui;

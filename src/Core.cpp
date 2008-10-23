@@ -4,7 +4,6 @@
 #include <QtGui/QMessageBox>
 #include <QtCore/QUrl>
 #include <QtCore/QFile>
-#include "Decipher.h"
 
 //=====================================================================
 QString Core::TWITTER_HOST = "twitter.com";
@@ -114,20 +113,12 @@ void Core::ReqFinished(int id, bool error)
 {
     QString response;
     QHttpResponseHeader head;
-    
-    head = m_http->lastResponse();
-    if(head.isValid())
-        responseHeaderReceived(head);
-     
-	if(m_buffer[id].buffer)
-		response = QString(m_buffer[id].buffer->data());
-	else
+
+	if(error)
+	{
+		emit OnError(m_http->errorString());
 		return;
-     
-    if(error)
-    {
-        emit OnError(m_http->errorString());
-    }
+	}
     else if(id == m_loginId)
     {      
         m_credentialsId = MakeGetRequest(VERIFY_CREDENTIALS_URL);
@@ -139,26 +130,29 @@ void Core::ReqFinished(int id, bool error)
         else
             emit OnLoginStatus(false);
     }
-    else
+    
+    head = m_http->lastResponse(); 
+    if(head.isValid())
+        responseHeaderReceived(head);
+     
+	if(m_buffer[id].buffer)
+		response = QString(m_buffer[id].buffer->data());
+	else
+		response = QString::null;
+     
+	if(!response.isNull())
     {
-		QLinkedList<Status*> list;
-
-		if(m_buffer[id].requestUrl == FRIENDS_TIMELINE_URL)
+		if(m_buffer[id].requestUrl == PUBLIC_TIMELINE_URL)
 		{
-			list = Decipher::FriendsTimeline(response);
-			QFile file("C:\\Documents and Settings\\evan\\Desktop\\test.txt");
-			file.open(QIODevice::WriteOnly);
-			for(int i=0; i<list.count(); i++)
-			{
-				Status *status = list.takeFirst();
-				file.write(status->createdAt.toAscii());
-				file.write(status->source.toAscii());
-				file.write(status->text.toAscii());
-				file.write(status->userInfo.location.toAscii());
-				file.write(status->userInfo.name.toAscii());
-				delete status;
-			}
-			file.close();
+			Returnables::PublicTimeline *pTimeline;
+			pTimeline = Decipher::PublicTimeline(response);
+			emit PublicTimeline(pTimeline);
+		}
+		else if(m_buffer[id].requestUrl == FRIENDS_TIMELINE_URL)
+		{
+			Returnables::FriendsTimeline *fTimeline;
+			fTimeline = Decipher::FriendsTimeline(response);
+			emit FriendsTimeline(fTimeline);
 		}
 		else
 		{
@@ -246,7 +240,7 @@ void Core::Logout()
 void Core::Login(QString user, QString passw)
 {
     m_loginId = m_http->setUser(user, passw);
-    m_eventLoop->exec(QEventLoop::AllEvents);
+	m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::GetDowntimeSchedule()

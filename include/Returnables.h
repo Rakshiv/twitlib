@@ -1,22 +1,55 @@
 #ifndef Returnables_H
 #define Returnables_H
 
+#include <QtCore/QLinkedList>
 #include "Server.h"
-#include "Decipher.h"
 
 namespace Returnables
 {
-    class FriendsTimeline()
-    {
+	struct User
+	{
+		unsigned int id;
+		QString name;
+		QString screenName;
+		QString location;
+		QString description;
+		QString profileImageUrl;
+		QString url;
+		bool isProtected;
+		unsigned int followersCount;
+	};
 
+	struct Status
+	{
+		QString createdAt;
+		unsigned int id;
+		QString text;
+		QString source;
+		bool truncated;
+		unsigned int inReplyToStatusId;
+		unsigned int inReplyToUserId;
+		bool favorited;
+		User userInfo;
+	};
+
+    class FriendsTimeline
+    {
+		public:
+			QLinkedList<Status*> statuses; 
     };
+
+	class PublicTimeline
+	{
+		public:
+			QLinkedList<Status*> statuses;
+	};
 };
 
 
 #endif //Returnables_H
 
 /*
-        void GetPublicTimeline();
+
         void GetSingleStatus(QString id);
         void GetFeaturedUsers();
         void Logout();
@@ -25,7 +58,6 @@ namespace Returnables
         void IsTwitterUp();
         void GetUsersTimeline(SERVER::Option2 *opt=NULL);
         void GetFavorites(QString user="", int page=1);
-        void GetFriendsTimeline(SERVER::Option1 *opt=NULL);
         void PostNewStatus(QString status);
         void GetRecentReplies(SERVER::Option3 *opt=NULL);
         void RemoveStatus(QString id);
