@@ -25,6 +25,7 @@ class Example : public QWidget
 		void Button3Event();
 		void Button4Event();
         void Button5Event();
+		void Button6Event();
         void OnError(QString error); 
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);

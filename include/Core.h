@@ -71,11 +71,16 @@ class Core : public QObject
         int MakePostRequest(QString path,QByteArray req);
                
 	private:
-        QMap<int,QBuffer*> m_buffer;
+		struct info
+		{
+			QBuffer *buffer;
+			QString requestUrl;
+		};
+        QMap<int,info> m_buffer;
         QEventLoop  *m_eventLoop;
-		QHttp             *m_http;
-        int                  m_loginId;
-        int                  m_credentialsId;
+		QHttp       *m_http;
+        int         m_loginId;
+        int         m_credentialsId;
 		
 	private:
 		static QString TWITTER_HOST;
