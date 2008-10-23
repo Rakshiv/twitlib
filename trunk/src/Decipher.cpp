@@ -24,6 +24,8 @@ QString Decipher::nUserProfileImageUrl = "profile_image_url";
 QString Decipher::nUserUrl = "url";
 QString Decipher::nUserProtected = "protected";
 QString Decipher::nUserFollowersCount = "followers_count";
+QString Decipher::nAuthorized = "authorized";
+QString Decipher::nOk = "ok";
 //=====================================================================
 Decipher::Decipher()
 {}
@@ -125,16 +127,39 @@ Returnables::SingleStatus* Decipher::SingleStatus(const QString &xml)
 Returnables::FeaturedUsers* Decipher::FeaturedUsers(const QString &xml)
 {
 	Returnables::FeaturedUsers *featuredUsers = new Returnables::FeaturedUsers();
-	QLinkedList<Returnables::StatusUser*> list = GetStatuses(xml);
-	
-
-
+	featuredUsers->users = GetStatuses(xml,USER);
 	return featuredUsers;
 }
-
-
-
-
 //=====================================================================
+Returnables::Login* Decipher::Login(const QString &xml)
+{
+	Returnables::Login *login = new Returnables::Login();
+	QDomDocument doc;
+	QDomElement elem;
+
+	doc.setContent(xml);
+	elem = doc.namedItem(nAuthorized).toElement();
+	login->authorized = (elem.text().toLower().contains("true")) ? true : false;
+	return login;
+}
+//=====================================================================
+Returnables::TwitterUp* Decipher::twitterUp(const QString &xml)
+{
+	Returnables::TwitterUp *twitterUp = new Returnables::TwitterUp();
+	QDomDocument doc;
+	QDomElement elem;
+
+	doc.setContent(xml);
+	elem = doc.namedItem(nOk).toElement();
+	twitterUp->up = (elem.text().toLower().contains("true")) ? true : false;
+	return twitterUp;
+}
+//=====================================================================
+Returnables::UserTimeline* Decipher::userTimeline(const QString &xml)
+{
+	Returnables::UserTimeline *userTimeline = new Returnables::UserTimeline();
+	userTimeline->statuses = GetStatuses(xml);
+	return userTimeline;
+}
 //=====================================================================
 

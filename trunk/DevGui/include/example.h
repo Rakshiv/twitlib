@@ -30,9 +30,8 @@ class Example : public QWidget
         void OnError(QString error); 
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);
-        void OnLoginStatus(bool isLoggedIn);
 
-		void TestReturn(Returnables::SingleStatus *status);
+		void TestReturn(Returnables::UserTimeline *);
 	
 	private:
 		Ui::Form m_gui;

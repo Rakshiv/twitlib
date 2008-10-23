@@ -58,6 +58,21 @@ namespace Returnables
 		public:
 			QLinkedList<StatusUser*> users;
 	};
+	class Login
+	{
+		public:
+			bool authorized;
+	};
+	class TwitterUp
+	{
+		public:
+			bool up;
+	};
+	class UserTimeline
+	{
+		public:
+			QLinkedList<StatusUser*> statuses;
+	};
 
 
 };
@@ -67,14 +82,9 @@ namespace Returnables
 
 /*
 
-        void GetFeaturedUsers();
-
-        void Logout();
-        void Login(QString user, QString passw);
-        void GetDowntimeSchedule();
-        void IsTwitterUp();
         void GetUsersTimeline(SERVER::Option2 *opt=NULL);
-        void GetFavorites(QString user="", int page=1);
+
+		void GetFavorites(QString user="", int page=1);
         void PostNewStatus(QString status);
         void GetRecentReplies(SERVER::Option3 *opt=NULL);
         void RemoveStatus(QString id);
