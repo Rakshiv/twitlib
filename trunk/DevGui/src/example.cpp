@@ -27,7 +27,7 @@ Example::~Example()
 //=====================================================================
 void Example::MakeConnections()
 {
-	connect(m_twitLib, SIGNAL(FriendsTimeline(Returnables::FriendsTimeline*)), this, SLOT(FriendsTimeline(Returnables::FriendsTimeline*)));
+	connect(m_twitLib, SIGNAL(SingleStatus(Returnables::SingleStatus *)), this, SLOT(TestReturn(Returnables::SingleStatus *)));
 
     connect(m_twitLib, SIGNAL(OnError(QString)), this, SLOT(OnError(QString)));
     connect(m_twitLib, SIGNAL(OnMessageReceived(QString)), this, SLOT(OnMessageReceived(QString)));
@@ -85,15 +85,16 @@ void Example::Button5Event()
 // Extra Event
 void Example::Button6Event()
 {	
-
+	m_twitLib->GetSingleStatus(970970746);
+	//m_twitLib->GetFeaturedUsers();
 }
 //=====================================================================
-void Example::FriendsTimeline(Returnables::FriendsTimeline *fTimeLine)
+void Example::TestReturn(Returnables::SingleStatus* status)
 {
 	QString message;
 
-	message = "Name: "+fTimeLine->statuses.first()->userInfo.name+"\n";
-	message += "Message: "+fTimeLine->statuses.first()->text;
+	message = "Name: "+status->status->user.name+"\n";
+	message += "Message: "+status->status->status.text;
 
 	m_gui.plainTextEdit->appendPlainText("Message "+message);
 }

@@ -2,6 +2,7 @@
 #define Returnables_H
 
 #include <QtCore/QLinkedList>
+#include <QtCore/QMap>
 #include "Server.h"
 
 namespace Returnables
@@ -29,20 +30,36 @@ namespace Returnables
 		unsigned int inReplyToStatusId;
 		unsigned int inReplyToUserId;
 		bool favorited;
-		User userInfo;
+	};
+
+	struct StatusUser
+	{
+		Status status;
+		User user;
 	};
 
     class FriendsTimeline
     {
 		public:
-			QLinkedList<Status*> statuses; 
+			QLinkedList<StatusUser*> statuses; 
     };
-
 	class PublicTimeline
 	{
 		public:
-			QLinkedList<Status*> statuses;
+			QLinkedList<StatusUser*> statuses;
 	};
+	class SingleStatus
+	{
+		public:
+			StatusUser* status;
+	};
+	class FeaturedUsers
+	{
+		public:
+			QLinkedList<StatusUser*> users;
+	};
+
+
 };
 
 
@@ -50,8 +67,8 @@ namespace Returnables
 
 /*
 
-        void GetSingleStatus(QString id);
         void GetFeaturedUsers();
+
         void Logout();
         void Login(QString user, QString passw);
         void GetDowntimeSchedule();

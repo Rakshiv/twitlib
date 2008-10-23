@@ -76,34 +76,26 @@ void Core::DataReadProgress ( int /*done*/, int /*total*/ )
     //emit OnMessageReceived(QString::number(done).toStdString()+" / "+QString::number(total).toStdString());
 }
 //=====================================================================
-int Core::MakeGetRequest(QString req)
+int Core::MakeGetRequest(QString req,RequestId reqId)
 {
-    int reqId;
+    int id;
     QBuffer *tempBuffer = new QBuffer;
     tempBuffer->open(QIODevice::ReadWrite);
-    reqId = m_http->get(req,tempBuffer);
-	m_buffer[reqId].buffer = tempBuffer;
-	if(req.contains("?"))
-	{
-		int idx = req.indexOf("?");
-		m_buffer[reqId].requestUrl = req.left(idx+1);
-	}
-	else
-	{
-		m_buffer[reqId].requestUrl = req;
-	}
-	return reqId;
+    id = m_http->get(req,tempBuffer);
+	m_buffer[id].buffer = tempBuffer;
+	m_buffer[id].requestid = reqId;
+	return id;
 }
 //=====================================================================
-int Core::MakePostRequest(QString path,QByteArray req)
+int Core::MakePostRequest(QString path,QByteArray req,RequestId reqId)
 {
-    int reqId;
+    int id;
     QBuffer *tempBuffer = new QBuffer;
     tempBuffer->open(QIODevice::ReadWrite);
-    reqId = m_http->post(path,req,tempBuffer);
-	m_buffer[reqId].buffer = tempBuffer;
-	m_buffer[reqId].requestUrl = path;
-	return reqId;
+    id = m_http->post(path,req,tempBuffer);
+	m_buffer[id].buffer = tempBuffer;
+	m_buffer[id].requestid = reqId;
+	return id;
 }
 //=====================================================================
 void Core::RequestStarted(int /*id*/)
@@ -142,23 +134,27 @@ void Core::ReqFinished(int id, bool error)
      
 	if(!response.isNull())
     {
-		if(m_buffer[id].requestUrl == PUBLIC_TIMELINE_URL)
+		switch(m_buffer[id].requestid)
 		{
+		case PUBLIC_TIMELINE:
 			Returnables::PublicTimeline *pTimeline;
 			pTimeline = Decipher::PublicTimeline(response);
 			emit PublicTimeline(pTimeline);
-		}
-		else if(m_buffer[id].requestUrl == FRIENDS_TIMELINE_URL)
-		{
+			break;
+		case FRIENDS_TIMELINE:
 			Returnables::FriendsTimeline *fTimeline;
 			fTimeline = Decipher::FriendsTimeline(response);
 			emit FriendsTimeline(fTimeline);
-		}
-		else
-		{
+			break;
+		case SINGLE_STATUS:
+			Returnables::SingleStatus *singleStatus;
+			singleStatus = Decipher::SingleStatus(response);
+			emit SingleStatus(singleStatus);
+			break;
+		default:
 			emit OnMessageReceived(response);
 		}
-    }
+	}
     
 
 
@@ -211,7 +207,7 @@ void Core::responseHeaderReceived(const QHttpResponseHeader &resp)
 //=====================================================================
 void Core::GetPublicTimeline()
 {
-    MakeGetRequest(PUBLIC_TIMELINE_URL);
+    MakeGetRequest(PUBLIC_TIMELINE_URL,PUBLIC_TIMELINE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -220,7 +216,7 @@ void Core::GetSingleStatus(QString id)
     QString req;
     req = GET_SINGLE_STATUS_URL;
     req.replace("[req-id]",id);
-    MakeGetRequest(req);
+    MakeGetRequest(req,SINGLE_STATUS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -232,7 +228,7 @@ void Core::GetFeaturedUsers()
 //=====================================================================
 void Core::Logout()
 {
-    MakePostRequest(LOGOUT_URL,"");
+    MakePostRequest(LOGOUT_URL,"",LOGOUT);
     m_http->setUser("","");
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
@@ -240,7 +236,6 @@ void Core::Logout()
 void Core::Login(QString user, QString passw)
 {
     m_loginId = m_http->setUser(user, passw);
-	m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::GetDowntimeSchedule()
@@ -318,7 +313,7 @@ void Core::GetFriendsTimeline(SERVER::Option1 *opt  /*=NULL*/)
         buildUrl += "&page="+page;
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,FRIENDS_TIMELINE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================

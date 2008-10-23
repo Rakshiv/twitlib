@@ -62,6 +62,7 @@ class Core : public QObject
     signals:
 		void PublicTimeline(Returnables::PublicTimeline *pTimeline);
 		void FriendsTimeline(Returnables::FriendsTimeline *fTimeline);
+		void SingleStatus(Returnables::SingleStatus *singleStatus);
 
         void QueryDone();
         void OnError(QString error);
@@ -69,22 +70,22 @@ class Core : public QObject
         void OnStatusReceived(SERVER::RESP response);
         void OnLoginStatus(bool isLoggedIn);
 
+	private:
+		enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, LOGOUT };
+		struct Info
+		{
+			Info() { buffer = NULL; }
+			QBuffer *buffer;
+			RequestId requestid;
+		};
+
     private:
         void MakeConnections();
 		void responseHeaderReceived(const QHttpResponseHeader &resp);
-        int MakeGetRequest(QString req);
-        int MakePostRequest(QString path,QByteArray req);
+        int MakeGetRequest(QString req,RequestId reqId = LOGOUT);
+        int MakePostRequest(QString path,QByteArray req,RequestId reqId = LOGOUT);
                
 	private:
-		struct Info
-		{
-			Info()
-			{
-				buffer = NULL;
-			}
-			QBuffer *buffer;
-			QString requestUrl;
-		};
         QMap<int,Info> m_buffer;
         QEventLoop  *m_eventLoop;
 		QHttp       *m_http;
