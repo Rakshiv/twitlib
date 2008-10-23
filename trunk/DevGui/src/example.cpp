@@ -16,6 +16,7 @@ Example::Example()
 	m_gui.pushButton_3->setText("Friends Timeline");
 	m_gui.pushButton_4->setText("Clear Text Area");
     m_gui.pushButton_5->setText("Logout");
+	m_gui.pushButton_6->setText("Test Event");
 }
 //=====================================================================
 Example::~Example()
@@ -34,7 +35,8 @@ void Example::MakeConnections()
 	connect(m_gui.pushButton_2, SIGNAL(clicked()), this, SLOT(Button2Event()));
 	connect(m_gui.pushButton_3, SIGNAL(clicked()), this, SLOT(Button3Event()));
 	connect(m_gui.pushButton_4, SIGNAL(clicked()), this, SLOT(Button4Event()));	  
-    connect(m_gui.pushButton_5, SIGNAL(clicked()), this, SLOT(Button5Event()));	
+    connect(m_gui.pushButton_5, SIGNAL(clicked()), this, SLOT(Button5Event()));
+	connect(m_gui.pushButton_6, SIGNAL(clicked()), this, SLOT(Button6Event()));	
 }
 //=====================================================================
 QString Example::GetUsername()
@@ -76,6 +78,12 @@ void Example::Button5Event()
 {	
 	m_gui.plainTextEdit->setPlainText("");
 	m_twitLib->Logout();
+}
+//=====================================================================
+// Extra Event
+void Example::Button6Event()
+{	
+
 }
 //=====================================================================
 void Example::OnError(QString error) 

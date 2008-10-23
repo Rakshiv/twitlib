@@ -3,6 +3,8 @@
 #include <QtXml/QDomDocument>
 #include <QtGui/QMessageBox>
 #include <QtCore/QUrl>
+#include <QtCore/QFile>
+#include "Decipher.h"
 
 //=====================================================================
 QString Core::TWITTER_HOST = "twitter.com";
@@ -81,7 +83,16 @@ int Core::MakeGetRequest(QString req)
     QBuffer *tempBuffer = new QBuffer;
     tempBuffer->open(QIODevice::ReadWrite);
     reqId = m_http->get(req,tempBuffer);
-    m_buffer[reqId] = tempBuffer;
+	m_buffer[reqId].buffer = tempBuffer;
+	if(req.contains("?"))
+	{
+		int idx = req.indexOf("?");
+		m_buffer[reqId].requestUrl = req.left(idx+1);
+	}
+	else
+	{
+		m_buffer[reqId].requestUrl = req;
+	}
 	return reqId;
 }
 //=====================================================================
@@ -91,7 +102,8 @@ int Core::MakePostRequest(QString path,QByteArray req)
     QBuffer *tempBuffer = new QBuffer;
     tempBuffer->open(QIODevice::ReadWrite);
     reqId = m_http->post(path,req,tempBuffer);
-    m_buffer[reqId] = tempBuffer;
+	m_buffer[reqId].buffer = tempBuffer;
+	m_buffer[reqId].requestUrl = path;
 	return reqId;
 }
 //=====================================================================
@@ -107,8 +119,10 @@ void Core::ReqFinished(int id, bool error)
     if(head.isValid())
         responseHeaderReceived(head);
      
-    if(m_buffer[id])
-        response = QString(m_buffer[id]->data());
+	if(m_buffer[id].buffer)
+		response = QString(m_buffer[id].buffer->data());
+	else
+		return;
      
     if(error)
     {
@@ -127,14 +141,39 @@ void Core::ReqFinished(int id, bool error)
     }
     else
     {
-        emit OnMessageReceived(response);
+		QLinkedList<Status*> list;
+
+		if(m_buffer[id].requestUrl == FRIENDS_TIMELINE_URL)
+		{
+			list = Decipher::FriendsTimeline(response);
+			QFile file("C:\\Documents and Settings\\evan\\Desktop\\test.txt");
+			file.open(QIODevice::WriteOnly);
+			for(int i=0; i<list.count(); i++)
+			{
+				Status *status = list.takeFirst();
+				file.write(status->createdAt.toAscii());
+				file.write(status->source.toAscii());
+				file.write(status->text.toAscii());
+				file.write(status->userInfo.location.toAscii());
+				file.write(status->userInfo.name.toAscii());
+				delete status;
+			}
+			file.close();
+		}
+		else
+		{
+			emit OnMessageReceived(response);
+		}
     }
     
-    if(m_buffer[id])
+
+
+
+	if(m_buffer[id].buffer)
     {
-        m_buffer[id]->close();
-        delete m_buffer[id];
-        m_buffer[id] = NULL;
+		m_buffer[id].buffer->close();
+		delete m_buffer[id].buffer;
+		m_buffer[id].buffer = NULL;
     }
 }
 //=====================================================================
