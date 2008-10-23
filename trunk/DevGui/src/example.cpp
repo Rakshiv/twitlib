@@ -1,6 +1,6 @@
 #include <QtGui/QMessageBox>
 #include "example.h"
-
+#include "Decipher.h"
 
 //=====================================================================
 
@@ -27,6 +27,8 @@ Example::~Example()
 //=====================================================================
 void Example::MakeConnections()
 {
+	connect(m_twitLib, SIGNAL(FriendsTimeline(Returnables::FriendsTimeline*)), this, SLOT(FriendsTimeline(Returnables::FriendsTimeline*)));
+
     connect(m_twitLib, SIGNAL(OnError(QString)), this, SLOT(OnError(QString)));
     connect(m_twitLib, SIGNAL(OnMessageReceived(QString)), this, SLOT(OnMessageReceived(QString)));
     connect(m_twitLib, SIGNAL(OnStatusReceived(SERVER::RESP)), this, SLOT(OnStatusReceived(SERVER::RESP)));
@@ -84,6 +86,16 @@ void Example::Button5Event()
 void Example::Button6Event()
 {	
 
+}
+//=====================================================================
+void Example::FriendsTimeline(Returnables::FriendsTimeline *fTimeLine)
+{
+	QString message;
+
+	message = "Name: "+fTimeLine->statuses.first()->userInfo.name+"\n";
+	message += "Message: "+fTimeLine->statuses.first()->text;
+
+	m_gui.plainTextEdit->appendPlainText("Message "+message);
 }
 //=====================================================================
 void Example::OnError(QString error) 

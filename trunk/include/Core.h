@@ -7,6 +7,8 @@
 #include <QtCore/QMap>
 #include <QtNetwork/QHttp>
 #include "Server.h"
+#include "Decipher.h"
+#include "Returnables.h"
 
 class Core : public QObject
 {
@@ -58,6 +60,9 @@ class Core : public QObject
         void Done(bool error);
         
     signals:
+		void PublicTimeline(Returnables::PublicTimeline *pTimeline);
+		void FriendsTimeline(Returnables::FriendsTimeline *fTimeline);
+
         void QueryDone();
         void OnError(QString error);
         void OnMessageReceived(QString message);
@@ -71,12 +76,16 @@ class Core : public QObject
         int MakePostRequest(QString path,QByteArray req);
                
 	private:
-		struct info
+		struct Info
 		{
+			Info()
+			{
+				buffer = NULL;
+			}
 			QBuffer *buffer;
 			QString requestUrl;
 		};
-        QMap<int,info> m_buffer;
+        QMap<int,Info> m_buffer;
         QEventLoop  *m_eventLoop;
 		QHttp       *m_http;
         int         m_loginId;
