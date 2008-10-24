@@ -27,7 +27,7 @@ Example::~Example()
 //=====================================================================
 void Example::MakeConnections()
 {
-	connect(m_twitLib, SIGNAL(UserTimeline(Returnables::UserTimeline *)), this, SLOT(TestReturn(Returnables::UserTimeline *)));
+	connect(m_twitLib, SIGNAL(NewStatus(Returnables::NewStatus *)), this, SLOT(TestReturn(Returnables::NewStatus *)));
 
     connect(m_twitLib, SIGNAL(OnError(QString)), this, SLOT(OnError(QString)));
     connect(m_twitLib, SIGNAL(OnMessageReceived(QString)), this, SLOT(OnMessageReceived(QString)));
@@ -84,18 +84,21 @@ void Example::Button5Event()
 // Extra Event
 void Example::Button6Event()
 {	
-	//m_twitLib->GetSingleStatus(970970746);
-	//m_twitLib->GetFeaturedUsers();
-	//m_twitLib->Logout();
-	m_twitLib->GetUsersTimeline();
+	//m_twitLib->GetSingleStatus(970970746); //work is ovah 972857964
+	m_twitLib->PostNewStatus("Work is ovah! good times!");
 }
 //=====================================================================
-void Example::TestReturn(Returnables::UserTimeline *userTimeline)
+void Example::TestReturn(Returnables::NewStatus *newStatus)
 {
 	QString message = "* ";
 
-	message += "Name: "+userTimeline->statuses.first()->user.name+"\n";
-	message += "Message: "+userTimeline->statuses.first()->status.text;
+	if(newStatus->status)
+	{
+		message += "Name: "+newStatus->status->user.name+"\n";
+		message += "Message: "+newStatus->status->status.text;
+
+		delete newStatus;
+	}
 
 	//if(twitUp->up)
 	//	message = "Twitter's working!!";

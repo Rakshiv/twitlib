@@ -66,6 +66,8 @@ class Core : public QObject
 		void Login(Returnables::Login *login);
 		void TwitterUp(Returnables::TwitterUp *twitterUp);
 		void UserTimeline(Returnables::UserTimeline *userTimeline);
+		void Favorites(Returnables::Favorites *favorites);
+		void NewStatus(Returnables::NewStatus *newStatus);
 
         void QueryDone();
         void OnError(QString error);
@@ -74,7 +76,7 @@ class Core : public QObject
 
 	private:
 		enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, LOGOUT, FEATURED_USERS, VERIFY_CREDENTIALS, \
-						 TWITTER_UP, USER_TIMELINE, };
+						 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS };
 		struct Info
 		{
 			Info() { buffer = NULL; }
@@ -100,7 +102,6 @@ class Core : public QObject
         static QString GET_SINGLE_STATUS_URL;
         static QString FEATURED_USERS_URL;        
         static QString LOGOUT_URL;
-        static QString DOWNTIME_SCH_URL;
         static QString IS_TWITTER_UP_URL;        
         static QString USERS_TIMELINE_URL;
         static QString GET_FAVORITES_URL;
