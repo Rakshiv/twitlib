@@ -27,7 +27,7 @@ Example::~Example()
 //=====================================================================
 void Example::MakeConnections()
 {
-	connect(m_twitLib, SIGNAL(NewStatus(Returnables::NewStatus *)), this, SLOT(TestReturn(Returnables::NewStatus *)));
+	connect(m_twitLib, SIGNAL(ReceivedDirectMessages(Returnables::ReceivedDirectMessages *)), this, SLOT(TestReturn(Returnables::ReceivedDirectMessages *)));
 
     connect(m_twitLib, SIGNAL(OnError(QString)), this, SLOT(OnError(QString)));
     connect(m_twitLib, SIGNAL(OnMessageReceived(QString)), this, SLOT(OnMessageReceived(QString)));
@@ -85,19 +85,23 @@ void Example::Button5Event()
 void Example::Button6Event()
 {	
 	//m_twitLib->GetSingleStatus(970970746); //work is ovah 972857964
-	m_twitLib->PostNewStatus("Work is ovah! good times!");
+	m_twitLib->GetReceivedDirectMessages();
 }
 //=====================================================================
-void Example::TestReturn(Returnables::NewStatus *newStatus)
+void Example::TestReturn(Returnables::ReceivedDirectMessages *direct)
 {
-	QString message = "* ";
+	QString message = "";
 
-	if(newStatus->status)
+	if(!direct->list.isEmpty())
+	//if(!followers->list.isEmpty())
 	{
-		message += "Name: "+newStatus->status->user.name+"\n";
-		message += "Message: "+newStatus->status->status.text;
+		//message += "Name: "+removed->removedStatus->user.name+"\n";
+		//message += "Message: "+removed->removedStatus->status.text;
 
-		delete newStatus;
+		message += "sender name: "+direct->list.first()->headerInfo.senderScreenName+"\n";
+		message += "recipient name: "+direct->list.first()->recipient.screenName+"\n";
+
+		delete direct;
 	}
 
 	//if(twitUp->up)

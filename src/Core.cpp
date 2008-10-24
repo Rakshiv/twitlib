@@ -168,6 +168,41 @@ void Core::ReqFinished(int id, bool error)
 			newStatus = Decipher::NewStatus(response);
 			emit NewStatus(newStatus);
 			break;
+		case RECENT_REPLIES:
+			Returnables::RecentReplies *replies;
+			replies = Decipher::RecentReplies(response);
+			emit RecentReplies(replies);
+			break;
+		case REMOVE_STATUS:
+			Returnables::RemoveStatus *removedStatus;
+			removedStatus = Decipher::RemoveStatus(response);
+			emit RemoveStatus(removedStatus);
+			break;
+		case FRIENDS:
+			Returnables::Friends *friends;
+			friends = Decipher::Friends(response);
+			emit Friends(friends);
+			break;
+		case FOLLOWERS:
+			Returnables::Followers *followers;
+			followers = Decipher::Followers(response);
+			emit Followers(followers);
+			break;
+		case USER_DETAILS:
+			Returnables::UserDetails *userDetails;
+			userDetails = Decipher::UserDetails(response);
+			emit UserDetails(userDetails);
+			break;
+		case SENT_DIRECT_MESSAGES:
+			Returnables::SentDirectMessages *sentDirectMessages;
+			sentDirectMessages = Decipher::SentDirectMessages(response);
+			emit SentDirectMessages(sentDirectMessages);
+			break;
+		case RECEIVED_DIRECT_MESSAGES:
+			Returnables::ReceivedDirectMessages *receivedDirectMessages;
+			receivedDirectMessages = Decipher::ReceivedDirectMessages(response);
+			emit ReceivedDirectMessages(receivedDirectMessages);
+			break;
 		default:
 			emit OnMessageReceived(response);
 		}
@@ -352,17 +387,16 @@ void Core::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
         buildUrl += "&sinceId="+sinceId;
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,RECENT_REPLIES);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::RemoveStatus(QString id)
 {
-    QString buildUrl = REMOVE_STATUS_URL;
+	QString buildUrl = REMOVE_STATUS_URL;
+	buildUrl = buildUrl.replace("[req-id]",id);
     
-    buildUrl = buildUrl.replace("[req-id]",id);
-    
-    MakeGetRequest(buildUrl);
+	MakePostRequest(buildUrl,"",REMOVE_STATUS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -391,7 +425,7 @@ void Core::GetFriends(SERVER::Option4 *opt  /*=NULL*/)
         buildUrl.replace("[/opt-user]","");
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,FRIENDS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -418,7 +452,7 @@ void Core::GetFollowers(SERVER::Option5 *opt  /*=NULL*/)
         buildUrl.replace("[/opt-user]","");
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,FOLLOWERS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -428,7 +462,7 @@ void Core::GetUserDetails(QString user)
     
     buildUrl = buildUrl.replace("[req-user]",user);
     
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,USER_DETAILS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -447,7 +481,7 @@ void Core::GetSentDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
         buildUrl += "&page="+page;
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,SENT_DIRECT_MESSAGES);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -466,7 +500,7 @@ void Core::GetReceivedDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
         buildUrl += "&page="+page;
     }
 
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,RECEIVED_DIRECT_MESSAGES);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================

@@ -59,15 +59,22 @@ class Core : public QObject
         void Done(bool error);
         
     signals:
-		void PublicTimeline(Returnables::PublicTimeline *pTimeline);
-		void FriendsTimeline(Returnables::FriendsTimeline *fTimeline);
-		void SingleStatus(Returnables::SingleStatus *singleStatus);
-		void FeaturedUsers(Returnables::FeaturedUsers *featuredUsers);
-		void Login(Returnables::Login *login);
-		void TwitterUp(Returnables::TwitterUp *twitterUp);
-		void UserTimeline(Returnables::UserTimeline *userTimeline);
-		void Favorites(Returnables::Favorites *favorites);
-		void NewStatus(Returnables::NewStatus *newStatus);
+		void PublicTimeline(Returnables::PublicTimeline *);
+		void FriendsTimeline(Returnables::FriendsTimeline *);
+		void SingleStatus(Returnables::SingleStatus *);
+		void FeaturedUsers(Returnables::FeaturedUsers *);
+		void Login(Returnables::Login *);
+		void TwitterUp(Returnables::TwitterUp *);
+		void UserTimeline(Returnables::UserTimeline *);
+		void Favorites(Returnables::Favorites *);
+		void NewStatus(Returnables::NewStatus *);
+		void RecentReplies(Returnables::RecentReplies *);
+		void RemoveStatus(Returnables::RemoveStatus *);
+		void Friends(Returnables::Friends *);
+		void Followers(Returnables::Followers *);
+		void UserDetails(Returnables::UserDetails *);
+		void SentDirectMessages(Returnables::SentDirectMessages *);
+		void ReceivedDirectMessages(Returnables::ReceivedDirectMessages *);
 
         void QueryDone();
         void OnError(QString error);
@@ -76,7 +83,8 @@ class Core : public QObject
 
 	private:
 		enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, LOGOUT, FEATURED_USERS, VERIFY_CREDENTIALS, \
-						 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS };
+						 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS, RECENT_REPLIES, REMOVE_STATUS, FRIENDS, \
+						 FOLLOWERS, USER_DETAILS, SENT_DIRECT_MESSAGES, RECEIVED_DIRECT_MESSAGES, };
 		struct Info
 		{
 			Info() { buffer = NULL; }

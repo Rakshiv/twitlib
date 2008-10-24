@@ -30,7 +30,7 @@ class QTwitLib : public Core
          * Returns a single status, specified by the id parameter below.  The status's author will be returned inline.
          * @param id Required.  The numerical ID of the status you're trying to retrieve.
          */
-        EXPORT void GetSingleStatus(int id);
+        EXPORT void GetSingleStatus(unsigned int id);
 //=====================================================================
         /**
          * Returns a list of the users currently featured on the site with their current statuses inline.
@@ -71,7 +71,7 @@ class QTwitLib : public Core
          * Returns the 20 most recent favorite statuses for the authenticating user or user specified by the ID parameter in the requested format.
          * @param user Optional.  The ID or screen name of the user for whom to request a list of favorite statuses.
          */
-        EXPORT void GetFavorites(QString user="", int page=1);
+        EXPORT void GetFavorites(QString user="", unsigned int page=1);
 //=====================================================================
 //=====================================================================
 
@@ -103,7 +103,7 @@ class QTwitLib : public Core
          * Destroys the status specified by the required ID parameter.  The authenticating user must be the author of the specified status.
          * @param id Required.  The ID of the status to destroy.
          */
-        EXPORT void RemoveStatus(int id);
+        EXPORT void RemoveStatus(unsigned int id);
 //=====================================================================
         /**
          * Returns up to 100 of the authenticating user's friends who have most recently updated, each with current status inline.
@@ -156,7 +156,7 @@ class QTwitLib : public Core
          * The authenticating user must be the recipient of the specified direct message.
          * @param id Required.  The ID of the direct message to destroy.
          */
-        EXPORT void RemoveDirectMessage(int id);
+        EXPORT void RemoveDirectMessage(unsigned int id);
 //=====================================================================
         /**
          * Befriends the user specified in the ID parameter as the authenticating user.
@@ -210,14 +210,14 @@ class QTwitLib : public Core
          * Favorites the status specified in the ID parameter as the authenticating user.  Returns the favorite status when successful.
          * @param id  Required.  The ID of the status to favorite.
          */
-        EXPORT void AddFavorite(int id);
+        EXPORT void AddFavorite(unsigned int id);
 //=====================================================================
         /**
          * Un-favorites the status specified in the ID parameter as the authenticating user.
          * Returns the un-favorited status in the requested format when successful.
          * @param id Required.  The ID of the status to un-favorite.
          */
-        EXPORT void RemoveFavorite(int id);
+        EXPORT void RemoveFavorite(unsigned int id);
 //=====================================================================
         /**
          * Enables notifications for updates from the specified user to the authenticating user.  Returns the specified user when successful.

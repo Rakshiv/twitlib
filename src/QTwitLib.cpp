@@ -14,7 +14,7 @@ void QTwitLib::GetPublicTimeline()
     Core::GetPublicTimeline();
 }
 //=====================================================================
-void QTwitLib::GetSingleStatus(int id)
+void QTwitLib::GetSingleStatus(unsigned int id)
 {
     Core::GetSingleStatus(QString::number(id));
 }
@@ -44,7 +44,7 @@ void QTwitLib::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
     Core::GetUsersTimeline(opt);
 }
 //=====================================================================
-void QTwitLib::GetFavorites(QString user  /*=""*/, int page  /*=1*/)
+void QTwitLib::GetFavorites(QString user  /*=""*/, unsigned int page  /*=1*/)
 {
     Core::GetFavorites(user, page);
 }
@@ -64,7 +64,7 @@ void QTwitLib::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
     Core::GetRecentReplies(opt);
 }
 //=====================================================================
-void QTwitLib::RemoveStatus(int id)
+void QTwitLib::RemoveStatus(unsigned int id)
 {
     Core::RemoveStatus(QString::number(id));
 }
@@ -99,7 +99,7 @@ void QTwitLib::SendDirectMessage(QString user, QString text)
     Core::SendDirectMessage(user, text);
 }
 //=====================================================================
-void QTwitLib::RemoveDirectMessage(int id)
+void QTwitLib::RemoveDirectMessage(unsigned int id)
 {
     Core::RemoveDirectMessage(QString::number(id));
 }
@@ -139,12 +139,12 @@ void QTwitLib::RemainingApiRequests()
     Core::RemainingApiRequests();
 }
 //=====================================================================
-void QTwitLib::AddFavorite(int id)
+void QTwitLib::AddFavorite(unsigned int id)
 {
     Core::AddFavorite(QString::number(id));
 }
 //=====================================================================
-void QTwitLib::RemoveFavorite(int id)
+void QTwitLib::RemoveFavorite(unsigned int id)
 {
     Core::RemoveFavorite(QString::number(id));
 }

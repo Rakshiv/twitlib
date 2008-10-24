@@ -31,7 +31,7 @@ class Example : public QWidget
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);
 
-		void TestReturn(Returnables::NewStatus *);
+		void TestReturn(Returnables::ReceivedDirectMessages *);
 	
 	private:
 		Ui::Form m_gui;
