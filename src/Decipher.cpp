@@ -61,7 +61,6 @@ QLinkedList<Returnables::StatusUser*> Decipher::GetStatuses(const QString &xml, 
 			PopulateUser(user,node);
 			item->status = status;
 			item->user = user;
-
 			break;
 		case USER:
 			PopulateUser(user,node);
@@ -120,7 +119,8 @@ Returnables::FriendsTimeline* Decipher::FriendsTimeline(const QString &xml)
 Returnables::SingleStatus* Decipher::SingleStatus(const QString &xml)
 {
 	Returnables::SingleStatus *singleStatus = new Returnables::SingleStatus();
-	singleStatus->status = GetStatuses(xml).takeFirst();
+	QLinkedList<Returnables::StatusUser*> list = GetStatuses(xml);
+	singleStatus->status = (list.isEmpty()) ? NULL : list.first();
 	return singleStatus;
 }
 //=====================================================================
@@ -143,7 +143,7 @@ Returnables::Login* Decipher::Login(const QString &xml)
 	return login;
 }
 //=====================================================================
-Returnables::TwitterUp* Decipher::twitterUp(const QString &xml)
+Returnables::TwitterUp* Decipher::TwitterUp(const QString &xml)
 {
 	Returnables::TwitterUp *twitterUp = new Returnables::TwitterUp();
 	QDomDocument doc;
@@ -155,11 +155,33 @@ Returnables::TwitterUp* Decipher::twitterUp(const QString &xml)
 	return twitterUp;
 }
 //=====================================================================
-Returnables::UserTimeline* Decipher::userTimeline(const QString &xml)
+Returnables::UserTimeline* Decipher::UserTimeline(const QString &xml)
 {
 	Returnables::UserTimeline *userTimeline = new Returnables::UserTimeline();
 	userTimeline->statuses = GetStatuses(xml);
 	return userTimeline;
 }
 //=====================================================================
+Returnables::Favorites* Decipher::Favorites(const QString &xml)
+{
+	Returnables::Favorites *favorites = new Returnables::Favorites();
+	favorites->statuses = GetStatuses(xml);
+	return favorites;
+}
+//=====================================================================
+Returnables::NewStatus* Decipher::NewStatus(const QString &xml)
+{
+	Returnables::NewStatus *newStatus = new Returnables::NewStatus();
+	QLinkedList<Returnables::StatusUser*> list = GetStatuses(xml);
+	newStatus->status = (list.isEmpty()) ? NULL : list.first();
+	return newStatus;
+}
 
+
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================

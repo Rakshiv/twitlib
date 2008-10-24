@@ -41,37 +41,58 @@ namespace Returnables
     class FriendsTimeline
     {
 		public:
-			QLinkedList<StatusUser*> statuses; 
+			FriendsTimeline() {}
+			QLinkedList<StatusUser*> statuses;
     };
 	class PublicTimeline
 	{
 		public:
+			PublicTimeline() {}
 			QLinkedList<StatusUser*> statuses;
 	};
 	class SingleStatus
 	{
 		public:
+			SingleStatus() { status = NULL; }
+			~SingleStatus() { if(status) delete status; }
 			StatusUser* status;
 	};
 	class FeaturedUsers
 	{
 		public:
+			FeaturedUsers() {}
 			QLinkedList<StatusUser*> users;
 	};
 	class Login
 	{
 		public:
+			Login() {}
 			bool authorized;
 	};
 	class TwitterUp
 	{
 		public:
+			TwitterUp() {}
 			bool up;
 	};
 	class UserTimeline
 	{
 		public:
+			UserTimeline() {}
 			QLinkedList<StatusUser*> statuses;
+	};
+	class Favorites
+	{
+		public:
+			Favorites() {}
+			QLinkedList<StatusUser*> statuses;
+	};
+	class NewStatus
+	{
+		public:
+			NewStatus() { status = NULL; }
+			~NewStatus() { if(status) delete status; }
+			StatusUser* status;
 	};
 
 
@@ -82,11 +103,9 @@ namespace Returnables
 
 /*
 
-        void GetUsersTimeline(SERVER::Option2 *opt=NULL);
-
-		void GetFavorites(QString user="", int page=1);
         void PostNewStatus(QString status);
-        void GetRecentReplies(SERVER::Option3 *opt=NULL);
+
+		void GetRecentReplies(SERVER::Option3 *opt=NULL);
         void RemoveStatus(QString id);
         void GetFriends(SERVER::Option4 *opt=NULL);
         void GetFollowers(SERVER::Option5 *opt=NULL);

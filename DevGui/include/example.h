@@ -31,7 +31,7 @@ class Example : public QWidget
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);
 
-		void TestReturn(Returnables::UserTimeline *);
+		void TestReturn(Returnables::NewStatus *);
 	
 	private:
 		Ui::Form m_gui;

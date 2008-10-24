@@ -12,7 +12,6 @@ QString Core::PUBLIC_TIMELINE_URL = "/statuses/public_timeline.xml";
 QString Core::GET_SINGLE_STATUS_URL = "/statuses/show/[req-id].xml";
 QString Core::FEATURED_USERS_URL = "/statuses/featured.xml";
 QString Core::LOGOUT_URL = "/account/end_session";
-QString Core::DOWNTIME_SCH_URL = "/downtime_schedule.xml";
 QString Core::IS_TWITTER_UP_URL = "/help/test.xml";
 QString Core::USERS_TIMELINE_URL = "/statuses/user_timeline[/opt-user].xml";
 QString Core::GET_FAVORITES_URL = "/favorites[/opt-user].xml";
@@ -151,13 +150,23 @@ void Core::ReqFinished(int id, bool error)
 			break;
 		case TWITTER_UP:
 			Returnables::TwitterUp *twitterUp;
-			twitterUp = Decipher::twitterUp(response);
+			twitterUp = Decipher::TwitterUp(response);
 			emit TwitterUp(twitterUp);
 			break;
 		case USER_TIMELINE:
 			Returnables::UserTimeline *userTimeline;
-			userTimeline = Decipher::userTimeline(response);
+			userTimeline = Decipher::UserTimeline(response);
 			emit UserTimeline(userTimeline);
+			break;
+		case FAVORITES:
+			Returnables::Favorites *favorites;
+			favorites = Decipher::Favorites(response);
+			emit Favorites(favorites);
+			break;
+		case NEW_STATUS:
+			Returnables::NewStatus *newStatus;
+			newStatus = Decipher::NewStatus(response);
+			emit NewStatus(newStatus);
 			break;
 		default:
 			emit OnMessageReceived(response);
@@ -289,9 +298,9 @@ void Core::GetFavorites(QString user  /*=""*/, int page  /*=1*/)
     else
         buildUrl.replace("[/opt-user]","");
     
-    buildUrl += "?page="+page;
-    
-    MakeGetRequest(buildUrl);    
+	buildUrl += "?page="+QString::number(page);
+
+    MakeGetRequest(buildUrl,FAVORITES);    
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -324,7 +333,7 @@ void Core::PostNewStatus(QString status)
     req = "status=";
     req += encodedUrl;
     
-    MakePostRequest(POST_NEW_STATUS_URL,req);
+    MakePostRequest(POST_NEW_STATUS_URL,req,NEW_STATUS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
