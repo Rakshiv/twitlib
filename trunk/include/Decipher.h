@@ -23,35 +23,64 @@ class Decipher
 		static Returnables::UserTimeline* UserTimeline(const QString &xml);
 		static Returnables::Favorites* Favorites(const QString &xml);
 		static Returnables::NewStatus* NewStatus(const QString &xml);
+		static Returnables::RecentReplies* RecentReplies(const QString &xml);
+		static Returnables::RemoveStatus* RemoveStatus(const QString &xml);
+		static Returnables::Friends* Friends(const QString &xml);
+		static Returnables::Followers* Followers(const QString &xml);
+		static Returnables::UserDetails* UserDetails(const QString &xml);
+		static Returnables::SentDirectMessages* SentDirectMessages(const QString &xml);
+		static Returnables::ReceivedDirectMessages* ReceivedDirectMessages(const QString &xml);
+
 
 	private:
-		static enum Parent {USER, STATUS};
-		static QLinkedList<Returnables::StatusUser*> GetStatuses(const QString &xml, Parent parent = STATUS);
-		static void PopulateStatus(Returnables::Status &status, QDomElement elem);
-		static void PopulateUser(Returnables::User &user, QDomElement elem);
+		static enum Parent { USER, STATUS };
+		static QLinkedList<Returnables::StatusUser*> GetStatusUserList(const QString &xml, Parent parent=STATUS);
+		static QLinkedList<Returnables::DirectMessage*> GetDirectMessageList(const QString &xml);
+		static void PopulateStatus(Returnables::Status &status, const QDomElement &node);
+		static void PopulateUser(Returnables::User &user, const QDomElement &node);
+		static void PopulateDetails(Returnables::Details &details, const QDomElement &node);
+		static void PopulateDirectHeader(Returnables::DirectHeader &header, const QDomElement &node);
 
 	private:
 		static QString nStatus;
-		static QString nStatusCreatedAt;
-		static QString nStatusId;
-		static QString nStatusText;
-		static QString nStatusSource;
-		static QString nStatusTruncated;
-		static QString nStatusInReplyToStatusId;
-		static QString nStatusInReplyToUserId;
-		static QString nStatusFavorited;
+		static QString nCreatedAt;
+		static QString nId;
+		static QString nText;
+		static QString nSource;
+		static QString nTruncated;
+		static QString nInReplyToStatusId;
+		static QString nInReplyToUserId;
+		static QString nFavorited;
 		static QString nUser;
-		static QString nUserId;
-		static QString nUserName;
-		static QString nUserScreenName;
-		static QString nUserDescription;
-		static QString nUserLocation;
-		static QString nUserProfileImageUrl;
-		static QString nUserUrl;
-		static QString nUserProtected;
-		static QString nUserFollowersCount;
+		static QString nName;
+		static QString nScreenName;
+		static QString nDescription;
+		static QString nLocation;
+		static QString nProfileImageUrl;
+		static QString nUrl;
+		static QString nProtected;
+		static QString nFollowersCount;
 		static QString nAuthorized;
 		static QString nOk;
+		static QString nProfileBackgroundColor;
+		static QString nProfileTextColor;
+		static QString nProfileLinkColor;
+		static QString nProfileSidebarFillColor;
+		static QString nProfileSidebarBorderColor;
+		static QString nFriendsCount;
+		static QString nFavoritesCount;
+		static QString nUtcOffset;
+		static QString nTimeZone;
+		static QString nProfileBackgroundImageUrl;
+		static QString nProfileBackgroundTiled;
+		static QString nStatusesCount;
+		static QString nDirectMessage;
+		static QString nSenderId;
+		static QString nRecipientId;
+		static QString nSenderScreenName;
+		static QString nRecipientScreenName;
+		static QString nSender;
+		static QString nRecipient;
 };
 
 

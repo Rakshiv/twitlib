@@ -20,6 +20,23 @@ namespace Returnables
 		unsigned int followersCount;
 	};
 
+	struct Details
+	{
+		QString profileBackgroundColor;
+		QString profileTextColor;
+		QString profileLinkColor;
+		QString profileSidebarFillColor;
+		QString profileSidebarBorderColor;
+		unsigned int friendsCount;
+		QString createdAt;
+		unsigned int favoritesCount;
+		int utcOffset;
+		QString timeZone;
+		QString profileBackgroundImageUrl;
+		bool profileBackgroundTiled;
+		unsigned int statusesCount;
+	};
+
 	struct Status
 	{
 		QString createdAt;
@@ -32,6 +49,24 @@ namespace Returnables
 		bool favorited;
 	};
 
+	struct DirectHeader
+	{
+		unsigned int id;
+		unsigned int senderId;
+		QString text;
+		unsigned int recipientId;
+		QString createdAt;
+		QString senderScreenName;
+		QString recipientScreenName;
+	};
+
+	struct DirectMessage
+	{
+		DirectHeader headerInfo;
+		User sender;
+		User recipient;
+	};
+
 	struct StatusUser
 	{
 		Status status;
@@ -42,90 +77,148 @@ namespace Returnables
     {
 		public:
 			FriendsTimeline() {}
-			QLinkedList<StatusUser*> statuses;
+			~FriendsTimeline() {}
+			QLinkedList<StatusUser*> list;
     };
 	class PublicTimeline
 	{
 		public:
 			PublicTimeline() {}
-			QLinkedList<StatusUser*> statuses;
+			~PublicTimeline() {}
+			QLinkedList<StatusUser*> list;
 	};
 	class SingleStatus
 	{
 		public:
-			SingleStatus() { status = NULL; }
-			~SingleStatus() { if(status) delete status; }
-			StatusUser* status;
+			SingleStatus() { status = new Status(); user = new User(); }
+			~SingleStatus() { if(status) delete status; if(user) delete user; }
+			Status* status;
+			User* user;
 	};
 	class FeaturedUsers
 	{
 		public:
 			FeaturedUsers() {}
-			QLinkedList<StatusUser*> users;
+			~FeaturedUsers() {}
+			QLinkedList<StatusUser*> list;
 	};
 	class Login
 	{
 		public:
 			Login() {}
+			~Login() {}
 			bool authorized;
 	};
 	class TwitterUp
 	{
 		public:
 			TwitterUp() {}
+			~TwitterUp() {}
 			bool up;
 	};
 	class UserTimeline
 	{
 		public:
 			UserTimeline() {}
-			QLinkedList<StatusUser*> statuses;
+			~UserTimeline() {}
+			QLinkedList<StatusUser*> list;
 	};
 	class Favorites
 	{
 		public:
 			Favorites() {}
-			QLinkedList<StatusUser*> statuses;
+			~Favorites() {}
+			QLinkedList<StatusUser*> list;
 	};
 	class NewStatus
 	{
 		public:
-			NewStatus() { status = NULL; }
-			~NewStatus() { if(status) delete status; }
-			StatusUser* status;
+			NewStatus() { newStatus = new Status(); user = new User(); }
+			~NewStatus() { if(newStatus) delete newStatus; if(user) delete user; }
+			Status* newStatus;
+			User* user;
 	};
-
-
+	class RecentReplies
+	{
+		public:
+			RecentReplies() {}
+			~RecentReplies() {}
+			QLinkedList<StatusUser*> list;
+	};
+	class RemoveStatus
+	{
+		public:
+			RemoveStatus() { removedStatus = new Status(); user = new User(); }
+			~RemoveStatus() { if(removedStatus) delete removedStatus; if(user) delete user; }
+			Status *removedStatus;
+			User *user;
+	};
+	class Friends
+	{
+		public:
+			Friends() {}
+			~Friends() {}
+			QLinkedList<StatusUser*> list;
+	};
+	class Followers
+	{
+		public:
+			Followers() {}
+			~Followers() {}
+			QLinkedList<StatusUser*> list;
+	};
+	class UserDetails
+	{
+		public:
+			UserDetails() { user = new User(); details = new Details(); status = new Status(); }
+			~UserDetails() { if(user) delete user; if(details) delete details; if(status) delete status; }
+			User *user;
+			Details *details;
+			Status *status;
+	};
+	class SentDirectMessages
+	{
+		public:
+			SentDirectMessages() {}
+			~SentDirectMessages() {}
+			QLinkedList<DirectMessage*> list;
+	};
+	class ReceivedDirectMessages
+	{
+		public:
+			ReceivedDirectMessages() {}
+			~ReceivedDirectMessages() {}
+			QLinkedList<DirectMessage*> list;
+	};
+	class SendDirectMessage
+	{};
+	class RemoveDirectMessage
+	{};
+	class AddFriendship
+	{};
+	class RemoveFriendship
+	{};
+	class FriendshipExist
+	{};
+	class UpdateLocation
+	{};
+	class UpdateDeliveryDevice
+	{};
+	class RemainingApiRequests
+	{};
+	class AddFavorite
+	{};
+	class RemoveFavorite
+	{};
+	class StartFollow
+	{};
+	class StopFollow
+	{};
+	class BlockUser
+	{};
+	class UnBlockUser
+	{};
 };
 
 
 #endif //Returnables_H
-
-/*
-
-        void PostNewStatus(QString status);
-
-		void GetRecentReplies(SERVER::Option3 *opt=NULL);
-        void RemoveStatus(QString id);
-        void GetFriends(SERVER::Option4 *opt=NULL);
-        void GetFollowers(SERVER::Option5 *opt=NULL);
-        void GetUserDetails(QString user);
-        void GetSentDirectMessages(SERVER::Option6 *opt=NULL);
-        void GetReceivedDirectMessages(SERVER::Option6 *opt=NULL);
-        void SendDirectMessage(QString user, QString text);
-        void RemoveDirectMessage(QString id);
-        void AddFriendship(QString user);
-        void RemoveFriendship(QString user);
-        void FriendshipExist(QString user_a, QString user_b);
-        void VerifyCredentials();
-        void UpdateLocation(QString location);
-        void UpdateDeliveryDevice(SERVER::DEVICES device);
-        void RemainingApiRequests();
-        void AddFavorite(QString id);
-        void RemoveFavorite(QString id);
-        void StartFollow(QString user);
-        void StopFollow(QString user);
-        void BlockUser(QString user);
-        void UnBlockUser(QString user);
-
-*/
