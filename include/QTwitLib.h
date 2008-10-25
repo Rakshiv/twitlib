@@ -164,7 +164,7 @@ class QTwitLib : public Core
          * Returns a string describing the failure condition when unsuccessful.
          * @param user Required.  The ID or screen name of the user to befriend.
          */
-        EXPORT void AddFriendship(QString user);
+        EXPORT void AddFriendship(QString user, bool follow=true);
 //=====================================================================
         /**
          * Discontinues friendship with the user specified in the ID parameter as the authenticating user.

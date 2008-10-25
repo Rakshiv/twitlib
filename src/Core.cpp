@@ -203,6 +203,56 @@ void Core::ReqFinished(int id, bool error)
 			receivedDirectMessages = Decipher::ReceivedDirectMessages(response);
 			emit ReceivedDirectMessages(receivedDirectMessages);
 			break;
+		case SEND_DIRECT_MESSAGE:
+			Returnables::SendDirectMessage *sendDirectMessage;
+			sendDirectMessage = Decipher::SendDirectMessage(response);
+			emit SendDirectMessage(sendDirectMessage);
+			break;
+		case REMOVE_DIRECT_MESSAGE:
+			Returnables::RemoveDirectMessage *removeDirectMessage;
+			removeDirectMessage = Decipher::RemoveDirectMessage(response);
+			emit RemoveDirectMessage(removeDirectMessage);
+			break;
+		case ADD_FRIENDSHIP:
+			Returnables::AddFriendship *addFriendship;
+			addFriendship = Decipher::AddFriendShip(response);
+			emit AddFriendship(addFriendship);
+			break;
+		case REMOVE_FRIENDSHIP:
+			Returnables::RemoveFriendship *removeFriendship;
+			removeFriendship = Decipher::RemoveFriendship(response);
+			emit RemoveFriendship(removeFriendship);
+			break;
+		case FRIENDSHIP_EXISTS:
+			Returnables::FriendshipExist *friendshipExists;
+			friendshipExists = Decipher::FriendshipExist(response);
+			emit FriendshipExists(friendshipExists);
+			break;
+		case UPDATE_LOCATION:
+			Returnables::UpdateLocation *updateLocation;
+			updateLocation = Decipher::UpdateLocation(response);
+			emit UpdateLocation(updateLocation);
+			break;
+		case DELIVERY_DEVICE:
+			Returnables::DeliveryDevice *deliveryDevice;
+			deliveryDevice = Decipher::DeliveryDevice(response);
+			emit DeliveryDevice(deliveryDevice);
+			break;
+		case API_REQUESTS:
+			Returnables::ApiRequests *apiRequests;
+			apiRequests = Decipher::ApiRequests(response);
+			emit ApiRequests(apiRequests);
+			break;
+		case ADD_FAVORITE:
+			Returnables::AddFavorite *addFavorite;
+			addFavorite = Decipher::AddFavorite(response);
+			emit AddFavorite(addFavorite);
+			break;
+		case REMOVE_FAVORITE:
+			Returnables::RemoveFavorite *removeFavorite;
+			removeFavorite = Decipher::RemoveFavorite(response);
+			emit RemoveFavorite(removeFavorite);
+			break;
 		default:
 			emit OnMessageReceived(response);
 		}
@@ -324,7 +374,7 @@ void Core::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
-void Core::GetFavorites(QString user  /*=""*/, int page  /*=1*/)
+void Core::GetFavorites(QString user  /*=""*/, unsigned int page  /*=1*/)
 {
     QString buildUrl  = GET_FAVORITES_URL;
     
@@ -515,7 +565,7 @@ void Core::SendDirectMessage(QString user, QString text)
     req += "text=";
     req += encodedText;
     
-    MakePostRequest(SEND_NEW_DIRECT_MESSAGE_URL,req);
+    MakePostRequest(SEND_NEW_DIRECT_MESSAGE_URL,req,SEND_DIRECT_MESSAGE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=================================================================================================================
@@ -524,18 +574,23 @@ void Core::RemoveDirectMessage(QString id)
     QString buildUrl = REMOVE_DIRECT_MESSAGE_URL;
     
     buildUrl = buildUrl.replace("[req-id]",id);
-    
-    MakeGetRequest(buildUrl);
+
+	MakePostRequest(buildUrl,"",REMOVE_DIRECT_MESSAGE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
-void Core::AddFriendship(QString user)
+void Core::AddFriendship(QString user, bool follow)
 {
-    QString buildUrl = CREATE_FRIENDSHIP_URL;
-    
-    buildUrl = buildUrl.replace("[req-user]",user);
-    
-    MakeGetRequest(buildUrl);
+    QByteArray req;
+	QString buildUrl;
+
+	buildUrl = CREATE_FRIENDSHIP_URL;
+	buildUrl = buildUrl.replace("[req-user]",user);
+  
+    req = "follow=";
+	req += follow ? "true" : "false";
+      
+	MakePostRequest(buildUrl,req,ADD_FRIENDSHIP);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -545,7 +600,7 @@ void Core::RemoveFriendship(QString user)
     
     buildUrl = buildUrl.replace("[req-user]",user);
     
-    MakeGetRequest(buildUrl);
+	MakePostRequest(buildUrl,"",REMOVE_FRIENDSHIP);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -556,7 +611,7 @@ void Core::FriendshipExist(QString user_a, QString user_b)
     buildUrl += "?user_a="+user_a;
     buildUrl += "&user_b="+user_b;
     
-    MakeGetRequest(buildUrl);
+    MakeGetRequest(buildUrl,FRIENDSHIP_EXISTS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -574,34 +629,34 @@ void Core::UpdateLocation(QString location)
     req = "location=";
     req += encodedText;
     
-    MakePostRequest(UPDATE_LOCATION_URL,req);
+    MakePostRequest(UPDATE_LOCATION_URL,req,UPDATE_LOCATION);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::UpdateDeliveryDevice(SERVER::DEVICES device)
 {
-    QString buildUrl = UPDATE_DELIVERY_DEVICE_URL;
+	QByteArray req;
 
-    switch(device)
+	switch(device)
     {
         case SERVER::SMS:
-            buildUrl += "?device=sms";
+            req = "device=sms";
             break;
         case SERVER::IM:
-            buildUrl += "?device=im";
+            req = "device=im";
            break;
         case SERVER::NONE:
-            buildUrl += "?device=none";
+            req = "device=none";
             break;
     }
     
-    MakeGetRequest(buildUrl);
+	MakePostRequest(UPDATE_DELIVERY_DEVICE_URL,req,DELIVERY_DEVICE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
 void Core::RemainingApiRequests()
 {
-    MakeGetRequest(REMAINING_API_REQUESTS_URL);
+    MakeGetRequest(REMAINING_API_REQUESTS_URL,API_REQUESTS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -611,7 +666,7 @@ void Core::AddFavorite(QString id)
     
     buildUrl = buildUrl.replace("[req-id]",id);
     
-    MakeGetRequest(buildUrl);
+	MakePostRequest(buildUrl,"",ADD_FAVORITE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -621,7 +676,7 @@ void Core::RemoveFavorite(QString id)
     
     buildUrl = buildUrl.replace("[req-id]",id);
     
-    MakeGetRequest(buildUrl);
+	MakePostRequest(buildUrl,"",REMOVE_FAVORITE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================

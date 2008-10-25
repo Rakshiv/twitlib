@@ -44,6 +44,12 @@ QString Decipher::nSenderScreenName = "sender_screen_name";
 QString Decipher::nRecipientScreenName = "recipient_screen_name";
 QString Decipher::nSender = "sender";
 QString Decipher::nRecipient = "recipient";
+QString Decipher::nFriends = "friends";
+QString Decipher::nHash = "hash";
+QString Decipher::nResetTime = "reset-time";
+QString Decipher::nResetTimeSeconds = "reset-time-in-seconds";
+QString Decipher::nRemainingHits = "remaining-hits";
+QString Decipher::nHourlyLimit = "hourly-limit";
 //=====================================================================
 Decipher::Decipher()
 {}
@@ -179,39 +185,68 @@ void Decipher::PopulateDirectHeader(Returnables::DirectHeader &header, const QDo
 	header.text = node.namedItem(nText).toElement().text();
 }
 //=====================================================================
+void Decipher::PopulateApiRequests(Returnables::ApiRequests &apiRequests, const QDomElement &node)
+{
+	apiRequests.hourlyLimit = node.namedItem(nHourlyLimit).toElement().text().toUInt();
+	apiRequests.remainingHits = node.namedItem(nRemainingHits).toElement().text().toUInt();
+	apiRequests.resetTime = node.namedItem(nResetTime).toElement().text();
+	apiRequests.resetTimeSeconds = node.namedItem(nResetTimeSeconds).toElement().text().toUInt();
+}
+//=====================================================================
 Returnables::PublicTimeline* Decipher::PublicTimeline(const QString &xml)
 {
-	Returnables::PublicTimeline *publicTimeline = new Returnables::PublicTimeline();
-	publicTimeline->list = GetStatusUserList(xml);
+	Returnables::PublicTimeline *publicTimeline = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{		
+		publicTimeline = new Returnables::PublicTimeline();
+		publicTimeline->list = list;
+	}
+
 	return publicTimeline;
 }
 //=====================================================================
 Returnables::FriendsTimeline* Decipher::FriendsTimeline(const QString &xml)
 {
-	Returnables::FriendsTimeline *friendsTimeline = new Returnables::FriendsTimeline();
-	friendsTimeline->list = GetStatusUserList(xml);
+	Returnables::FriendsTimeline *friendsTimeline = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{	
+		friendsTimeline = new Returnables::FriendsTimeline();
+		friendsTimeline->list = list;
+	}
+
 	return friendsTimeline;
 }
 //=====================================================================
 Returnables::SingleStatus* Decipher::SingleStatus(const QString &xml)
 {
-	Returnables::SingleStatus *singleStatus = new Returnables::SingleStatus();
-	QDomDocument doc;
-	QDomElement elem;
+	Returnables::SingleStatus *singleStatus = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
 
-	doc.setContent(xml);
-	elem = doc.firstChildElement(nStatus);
-	PopulateStatus(*singleStatus->status,elem);
-	elem = elem.firstChildElement(nUser);
-	PopulateUser(*singleStatus->user,elem);
+	if(!list.isEmpty())
+	{
+		singleStatus = new Returnables::SingleStatus();
+		singleStatus->status = &list.first()->status;
+		singleStatus->user = &list.first()->user;
+	}
 
 	return singleStatus;
 }
 //=====================================================================
 Returnables::FeaturedUsers* Decipher::FeaturedUsers(const QString &xml)
 {
-	Returnables::FeaturedUsers *featuredUsers = new Returnables::FeaturedUsers();
-	featuredUsers->list = GetStatusUserList(xml,USER);
+	Returnables::FeaturedUsers *featuredUsers = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{
+		featuredUsers = new Returnables::FeaturedUsers();
+		featuredUsers->list = list;
+	}
+
 	return featuredUsers;
 }
 //=====================================================================
@@ -224,6 +259,7 @@ Returnables::Login* Decipher::Login(const QString &xml)
 	doc.setContent(xml);
 	elem = doc.namedItem(nAuthorized).toElement();
 	login->authorized = (elem.text().toLower().contains("true")) ? true : false;
+
 	return login;
 }
 //=====================================================================
@@ -236,56 +272,78 @@ Returnables::TwitterUp* Decipher::TwitterUp(const QString &xml)
 	doc.setContent(xml);
 	elem = doc.namedItem(nOk).toElement();
 	twitterUp->up = (elem.text().toLower().contains("true")) ? true : false;
+
 	return twitterUp;
 }
 //=====================================================================
 Returnables::UserTimeline* Decipher::UserTimeline(const QString &xml)
 {
-	Returnables::UserTimeline *userTimeline = new Returnables::UserTimeline();
-	userTimeline->list = GetStatusUserList(xml);
+	Returnables::UserTimeline *userTimeline = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{	
+		userTimeline = new Returnables::UserTimeline();
+		userTimeline->list = list;
+	}
+
 	return userTimeline;
 }
 //=====================================================================
 Returnables::Favorites* Decipher::Favorites(const QString &xml)
 {
-	Returnables::Favorites *favorites = new Returnables::Favorites();
-	favorites->list = GetStatusUserList(xml);
+	Returnables::Favorites *favorites = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{	
+		favorites = new Returnables::Favorites();
+		favorites->list = list;
+	}
+
 	return favorites;
 }
 //=====================================================================
 Returnables::NewStatus* Decipher::NewStatus(const QString &xml)
 {
-	Returnables::NewStatus *newStatus = new Returnables::NewStatus();
-	QDomDocument doc;
-	QDomElement elem;
+	Returnables::NewStatus *newStatus = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
 
-	doc.setContent(xml);
-	elem = doc.firstChildElement(nStatus);
-	PopulateStatus(*newStatus->newStatus,elem);
-	elem = elem.firstChildElement(nUser);
-	PopulateUser(*newStatus->user,elem);
+	if(!list.isEmpty())
+	{
+		newStatus = new Returnables::NewStatus();
+		newStatus->newStatus = &list.first()->status;
+		newStatus->user = &list.first()->user;
+	}
 
 	return newStatus;
 }
 //=====================================================================
 Returnables::RecentReplies* Decipher::RecentReplies(const QString &xml)
 {
-	Returnables::RecentReplies *replies = new Returnables::RecentReplies();
-	replies->list = GetStatusUserList(xml);
+	Returnables::RecentReplies *replies = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{	
+		replies = new Returnables::RecentReplies();
+		replies->list = list;
+	}
+
 	return replies;
 }
 //=====================================================================
 Returnables::RemoveStatus* Decipher::RemoveStatus(const QString &xml)
 {
-	Returnables::RemoveStatus *removedStatus = new Returnables::RemoveStatus();
-	QDomDocument doc;
-	QDomElement elem;
+	Returnables::RemoveStatus *removedStatus = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
 
-	doc.setContent(xml);
-	elem = doc.firstChildElement(nStatus);
-	PopulateStatus(*removedStatus->removedStatus,elem);
-	elem = elem.firstChildElement(nUser);
-	PopulateUser(*removedStatus->user,elem);
+	if(!list.isEmpty())
+	{
+		removedStatus = new Returnables::RemoveStatus();
+		removedStatus->removedStatus = &list.first()->status;
+		removedStatus->user = &list.first()->user;
+	}
 
 	return removedStatus;
 }
@@ -293,15 +351,29 @@ Returnables::RemoveStatus* Decipher::RemoveStatus(const QString &xml)
 //=====================================================================
 Returnables::Friends* Decipher::Friends(const QString &xml)
 {
-	Returnables::Friends *friends = new Returnables::Friends();
-	friends->list = GetStatusUserList(xml,USER);
+	Returnables::Friends *friends = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{
+		friends = new Returnables::Friends();
+		friends->list = list;
+	}
+
 	return friends;
 }
 //=====================================================================
 Returnables::Followers* Decipher::Followers(const QString &xml)
 {
-	Returnables::Followers *followers = new Returnables::Followers();
-	followers->list = GetStatusUserList(xml,USER);
+	Returnables::Followers *followers = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{
+		followers = new Returnables::Followers();
+		followers->list = list;
+	}
+
 	return followers;
 }
 //=====================================================================
@@ -318,31 +390,195 @@ Returnables::UserDetails* Decipher::UserDetails(const QString &xml)
 	elem = elem.firstChildElement(nStatus);
 	PopulateStatus(*userDetails->status,elem);
 
+	if(userDetails->details->createdAt.isEmpty() ||
+		userDetails->status->createdAt.isEmpty() ||
+		userDetails->user->screenName.isEmpty())
+	{
+		delete userDetails;
+		userDetails = NULL;
+	}
+
 	return userDetails;
 }
 //=====================================================================
 Returnables::SentDirectMessages* Decipher::SentDirectMessages(const QString &xml)
 {
-	Returnables::SentDirectMessages *sentDirectMessage = new Returnables::SentDirectMessages();
-	sentDirectMessage->list = GetDirectMessageList(xml);
+	Returnables::SentDirectMessages *sentDirectMessage = NULL;
+	QLinkedList<Returnables::DirectMessage*> list = GetDirectMessageList(xml);
+
+	if(!list.isEmpty())
+	{
+		sentDirectMessage = new Returnables::SentDirectMessages();
+		sentDirectMessage->list = list;
+	}
+
 	return sentDirectMessage;
 }
 //=====================================================================
 Returnables::ReceivedDirectMessages* Decipher::ReceivedDirectMessages(const QString &xml)
 {
-	Returnables::ReceivedDirectMessages *receivedDirectMessages = new Returnables::ReceivedDirectMessages();
-	receivedDirectMessages->list = GetDirectMessageList(xml);
+	Returnables::ReceivedDirectMessages *receivedDirectMessages = NULL;
+	QLinkedList<Returnables::DirectMessage*> list = GetDirectMessageList(xml);
+
+	if(!list.isEmpty())
+	{
+		receivedDirectMessages = new Returnables::ReceivedDirectMessages();
+		receivedDirectMessages->list = list;
+	}
+
 	return receivedDirectMessages;
 }
 //=====================================================================
+Returnables::SendDirectMessage* Decipher::SendDirectMessage(const QString &xml)
+{
+	Returnables::SendDirectMessage *sendDirectMessage = NULL;
+	QLinkedList<Returnables::DirectMessage*> list = GetDirectMessageList(xml);
 
+	if(!list.isEmpty())
+	{
+		sendDirectMessage = new Returnables::SendDirectMessage();
+		sendDirectMessage->headerInfo = &list.first()->headerInfo;
+		sendDirectMessage->recipient = &list.first()->recipient;
+		sendDirectMessage->sender = &list.first()->sender;
+	}
+
+	return sendDirectMessage;
+}
 //=====================================================================
+Returnables::RemoveDirectMessage* Decipher::RemoveDirectMessage(const QString &xml)
+{
+	Returnables::RemoveDirectMessage *removeDirectMessage = NULL;
+	QLinkedList<Returnables::DirectMessage*> list = GetDirectMessageList(xml);
+
+	if(!list.isEmpty())
+	{
+		removeDirectMessage = new Returnables::RemoveDirectMessage();
+		removeDirectMessage->headerInfo = &list.first()->headerInfo;
+		removeDirectMessage->recipient = &list.first()->recipient;
+		removeDirectMessage->sender = &list.first()->sender;
+	}
+
+	return removeDirectMessage;	
+}
 //=====================================================================
+Returnables::AddFriendship* Decipher::AddFriendShip(const QString &xml)
+{
+	Returnables::AddFriendship *addFriendship = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{	
+		addFriendship = new Returnables::AddFriendship();
+		addFriendship->status = &list.first()->status;
+		addFriendship->user = &list.first()->user;
+	}
+
+	return addFriendship;	
+}
 //=====================================================================
+Returnables::RemoveFriendship* Decipher::RemoveFriendship(const QString &xml)
+{
+	Returnables::RemoveFriendship *removeFriendship = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{	
+		removeFriendship = new Returnables::RemoveFriendship();
+		removeFriendship->status = &list.first()->status;
+		removeFriendship->user = &list.first()->user;
+	}
+
+	return removeFriendship;
+}
 //=====================================================================
+Returnables::FriendshipExist* Decipher::FriendshipExist(const QString &xml)
+{
+	Returnables::FriendshipExist* friendshipExists = new Returnables::FriendshipExist();
+	QDomDocument doc;
+	QDomElement elem;
+
+	doc.setContent(xml);
+	elem = doc.namedItem(nFriends).toElement();
+	friendshipExists->friends = (elem.text().toLower().contains("true")) ? true : false;
+
+	return friendshipExists;
+}
 //=====================================================================
+Returnables::UpdateLocation* Decipher::UpdateLocation(const QString &xml)
+{
+	Returnables::UpdateLocation *updateLocation = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{	
+		updateLocation = new Returnables::UpdateLocation();
+		updateLocation->status = &list.first()->status;
+		updateLocation->user = &list.first()->user;
+	}
+
+	return updateLocation;
+}
 //=====================================================================
+Returnables::DeliveryDevice* Decipher::DeliveryDevice(const QString &xml)
+{
+	Returnables::DeliveryDevice *deliveryDevice = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml,USER);
+
+	if(!list.isEmpty())
+	{	
+		deliveryDevice = new Returnables::DeliveryDevice();
+		deliveryDevice->status = &list.first()->status;
+		deliveryDevice->user = &list.first()->user;
+	}
+
+	return deliveryDevice;
+}
 //=====================================================================
+Returnables::ApiRequests* Decipher::ApiRequests(const QString &xml)
+{
+	Returnables::ApiRequests* apiRequests = NULL;
+	QDomDocument doc;
+	QDomElement elem;
+
+	doc.setContent(xml);
+	elem = doc.namedItem(nHash).toElement();
+
+	if(!elem.isNull())
+	{
+		apiRequests = new Returnables::ApiRequests();
+		PopulateApiRequests(*apiRequests,elem);
+	}
+
+	return apiRequests;
+}
 //=====================================================================
+Returnables::AddFavorite* Decipher::AddFavorite(const QString &xml)
+{
+	Returnables::AddFavorite *addFavorite = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{	
+		addFavorite = new Returnables::AddFavorite();
+		addFavorite->status = &list.first()->status;
+		addFavorite->user = &list.first()->user;
+	}
+
+	return addFavorite;
+}
 //=====================================================================
+Returnables::RemoveFavorite* Decipher::RemoveFavorite(const QString &xml)
+{
+	Returnables::RemoveFavorite *removeFavorite = NULL;
+	QLinkedList<Returnables::StatusUser*> list = GetStatusUserList(xml);
+
+	if(!list.isEmpty())
+	{	
+		removeFavorite = new Returnables::RemoveFavorite();
+		removeFavorite->status = &list.first()->status;
+		removeFavorite->user = &list.first()->user;
+	}
+
+	return removeFavorite;
+}
 //=====================================================================

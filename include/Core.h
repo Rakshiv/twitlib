@@ -26,7 +26,7 @@ class Core : public QObject
         void Login(QString user, QString passw);
         void IsTwitterUp();
         void GetUsersTimeline(SERVER::Option2 *opt=NULL);
-        void GetFavorites(QString user="", int page=1);
+        void GetFavorites(QString user="", unsigned int page=1);
         void GetFriendsTimeline(SERVER::Option1 *opt=NULL);
         void PostNewStatus(QString status);
         void GetRecentReplies(SERVER::Option3 *opt=NULL);
@@ -38,7 +38,7 @@ class Core : public QObject
         void GetReceivedDirectMessages(SERVER::Option6 *opt=NULL);
         void SendDirectMessage(QString user, QString text);
         void RemoveDirectMessage(QString id);
-        void AddFriendship(QString user);
+        void AddFriendship(QString user, bool follow=true);
         void RemoveFriendship(QString user);
         void FriendshipExist(QString user_a, QString user_b);
         void VerifyCredentials();
@@ -75,6 +75,17 @@ class Core : public QObject
 		void UserDetails(Returnables::UserDetails *);
 		void SentDirectMessages(Returnables::SentDirectMessages *);
 		void ReceivedDirectMessages(Returnables::ReceivedDirectMessages *);
+		void SendDirectMessage(Returnables::SendDirectMessage *);
+		void RemoveDirectMessage(Returnables::RemoveDirectMessage *);
+		void AddFriendship(Returnables::AddFriendship *);
+		void RemoveFriendship(Returnables::RemoveFriendship *);
+		void FriendshipExists(Returnables::FriendshipExist *);
+		void UpdateLocation(Returnables::UpdateLocation *);
+		void DeliveryDevice(Returnables::DeliveryDevice *);
+		void ApiRequests(Returnables::ApiRequests *);
+		void AddFavorite(Returnables::AddFavorite *);
+		void RemoveFavorite(Returnables::RemoveFavorite *);
+
 
         void QueryDone();
         void OnError(QString error);
@@ -84,7 +95,9 @@ class Core : public QObject
 	private:
 		enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, LOGOUT, FEATURED_USERS, VERIFY_CREDENTIALS, \
 						 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS, RECENT_REPLIES, REMOVE_STATUS, FRIENDS, \
-						 FOLLOWERS, USER_DETAILS, SENT_DIRECT_MESSAGES, RECEIVED_DIRECT_MESSAGES, };
+						 FOLLOWERS, USER_DETAILS, SENT_DIRECT_MESSAGES, RECEIVED_DIRECT_MESSAGES, SEND_DIRECT_MESSAGE, \
+						 REMOVE_DIRECT_MESSAGE, ADD_FRIENDSHIP, REMOVE_FRIENDSHIP, FRIENDSHIP_EXISTS, UPDATE_LOCATION, \
+						 DELIVERY_DEVICE, API_REQUESTS, ADD_FAVORITE, REMOVE_FAVORITE,  };
 		struct Info
 		{
 			Info() { buffer = NULL; }

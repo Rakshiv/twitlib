@@ -84,8 +84,8 @@ void Example::Button5Event()
 // Extra Event
 void Example::Button6Event()
 {	
-	//m_twitLib->GetSingleStatus(970970746); //work is ovah 972857964
-	m_twitLib->GetReceivedDirectMessages();
+	m_twitLib->RemoveFavorite(974728991);
+	//m_twitLib->AddFavorite(974728991);
 }
 //=====================================================================
 void Example::TestReturn(Returnables::ReceivedDirectMessages *direct)
