@@ -47,10 +47,6 @@ class Core : public QObject
         void RemainingApiRequests();
         void AddFavorite(QString id);
         void RemoveFavorite(QString id);
-        void StartFollow(QString user);
-        void StopFollow(QString user);
-        void BlockUser(QString user);
-        void UnBlockUser(QString user);
 		
 	public slots:
         void RequestStarted(int id);
@@ -86,7 +82,6 @@ class Core : public QObject
 		void AddFavorite(Returnables::AddFavorite *);
 		void RemoveFavorite(Returnables::RemoveFavorite *);
 
-
         void QueryDone();
         void OnError(QString error);
         void OnMessageReceived(QString message);
@@ -97,7 +92,7 @@ class Core : public QObject
 						 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS, RECENT_REPLIES, REMOVE_STATUS, FRIENDS, \
 						 FOLLOWERS, USER_DETAILS, SENT_DIRECT_MESSAGES, RECEIVED_DIRECT_MESSAGES, SEND_DIRECT_MESSAGE, \
 						 REMOVE_DIRECT_MESSAGE, ADD_FRIENDSHIP, REMOVE_FRIENDSHIP, FRIENDSHIP_EXISTS, UPDATE_LOCATION, \
-						 DELIVERY_DEVICE, API_REQUESTS, ADD_FAVORITE, REMOVE_FAVORITE,  };
+						 DELIVERY_DEVICE, API_REQUESTS, ADD_FAVORITE, REMOVE_FAVORITE };
 		struct Info
 		{
 			Info() { buffer = NULL; }
@@ -145,10 +140,6 @@ class Core : public QObject
         static QString REMAINING_API_REQUESTS_URL;
         static QString ADD_FAVORITE_URL;
         static QString REMOVE_FAVORITE_URL;
-        static QString START_FOLLOW_URL;
-        static QString STOP_FOLLOW_URL;
-        static QString START_BLOCK_URL;
-        static QString STOP_BLOCK_URL;
 };
 
 #endif // Core_H

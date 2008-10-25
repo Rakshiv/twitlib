@@ -34,11 +34,6 @@ QString Core::UPDATE_DELIVERY_DEVICE_URL = "/account/update_delivery_device.xml"
 QString Core::REMAINING_API_REQUESTS_URL = "/account/rate_limit_status.xml";
 QString Core::ADD_FAVORITE_URL = "/favorites/create/[req-id].xml";
 QString Core::REMOVE_FAVORITE_URL = "/favorites/destroy/[req-id].xml";
-QString Core::START_FOLLOW_URL = "/notifications/follow/[req-user].xml";
-QString Core::STOP_FOLLOW_URL = "/notifications/leave/[req-user].xml";
-QString Core::START_BLOCK_URL = "/blocks/create/[req-user].xml";
-QString Core::STOP_BLOCK_URL = "/blocks/destroy/[req-user].xml";
-
 //=====================================================================
 Core::Core()
 {
@@ -334,7 +329,7 @@ void Core::Logout()
 void Core::Login(QString user, QString passw)
 {
     m_http->setUser(user, passw);
-    MakeGetRequest(VERIFY_CREDENTIALS_URL,VERIFY_CREDENTIALS);
+	VerifyCredentials();
 }
 //=====================================================================
 void Core::IsTwitterUp()
@@ -349,9 +344,9 @@ void Core::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
     
     if(opt)
     {
-        QString user        = opt->user.c_str();
+        QString user        = opt->user;
         QString count      = QString::number(opt->count);
-        QString since       = opt->since.c_str();
+        QString since       = opt->since;
         QString sinceId    = QString::number(opt->sinceId);
         QString page       = QString::number(opt->page);
         
@@ -395,7 +390,7 @@ void Core::GetFriendsTimeline(SERVER::Option1 *opt  /*=NULL*/)
     
     if(opt)
     {       
-        QString since       = opt->since.c_str();
+        QString since       = opt->since;
         QString sinceId    = QString::number(opt->sinceId);
         QString count      = QString::number(opt->count);
         QString page       = QString::number(opt->page);
@@ -429,7 +424,7 @@ void Core::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
     if(opt)
     {       
         QString page       = QString::number(opt->page);
-        QString since       = opt->since.c_str();
+        QString since       = opt->since;
         QString sinceId    = QString::number(opt->sinceId);
         
         buildUrl += "?page="+page;
@@ -456,10 +451,10 @@ void Core::GetFriends(SERVER::Option4 *opt  /*=NULL*/)
     
     if(opt)
     {
-        QString user        = opt->user.c_str();
+        QString user        = opt->user;
         QString page       = QString::number(opt->page);
         QString lite          = opt->lite ? "true" : "false";
-        QString since       = opt->since.c_str();
+        QString since       = opt->since;
         
         if(!user.isEmpty())
             buildUrl.replace("[/opt-user]","/"+user);
@@ -485,7 +480,7 @@ void Core::GetFollowers(SERVER::Option5 *opt  /*=NULL*/)
     
     if(opt)
     {
-        QString user        = opt->user.c_str();
+        QString user        = opt->user;
         QString page       = QString::number(opt->page);
         QString lite          = opt->lite ? "true" : "false";
         
@@ -522,7 +517,7 @@ void Core::GetSentDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
     
     if(opt)
     {       
-        QString since       = opt->since.c_str();
+        QString since       = opt->since;
         QString sinceId    = QString::number(opt->sinceId);
         QString page       = QString::number(opt->page);
         
@@ -541,7 +536,7 @@ void Core::GetReceivedDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
     
     if(opt)
     {       
-        QString since       = opt->since.c_str();
+        QString since       = opt->since;
         QString sinceId    = QString::number(opt->sinceId);
         QString page       = QString::number(opt->page);
         
@@ -617,7 +612,7 @@ void Core::FriendshipExist(QString user_a, QString user_b)
 //=====================================================================
 void Core::VerifyCredentials()
 {
-    MakeGetRequest(VERIFY_CREDENTIALS_URL);
+    MakeGetRequest(VERIFY_CREDENTIALS_URL,VERIFY_CREDENTIALS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -680,50 +675,6 @@ void Core::RemoveFavorite(QString id)
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
-void Core::StartFollow(QString user)
-{
-    QString buildUrl = START_FOLLOW_URL;
-    
-    buildUrl = buildUrl.replace("[req-user]",user);
-    
-    MakeGetRequest(buildUrl);
-    m_eventLoop->exec(QEventLoop::AllEvents);
-}
-//=====================================================================
-void Core::StopFollow(QString user)
-{
-    QString buildUrl = STOP_FOLLOW_URL;
-    
-    buildUrl = buildUrl.replace("[req-user]",user);
-    
-    MakeGetRequest(buildUrl);
-    m_eventLoop->exec(QEventLoop::AllEvents);
-}
-//=====================================================================
-void Core::BlockUser(QString user)
-{
-    QString buildUrl = START_BLOCK_URL;
-    
-    buildUrl = buildUrl.replace("[req-user]",user);
-    
-    MakeGetRequest(buildUrl);
-    m_eventLoop->exec(QEventLoop::AllEvents);
-}
-//=====================================================================
-void Core::UnBlockUser(QString user)
-{
-    QString buildUrl = STOP_BLOCK_URL;
-    
-    buildUrl = buildUrl.replace("[req-user]",user);
-    
-    MakeGetRequest(buildUrl);
-    m_eventLoop->exec(QEventLoop::AllEvents);
-}
-//=====================================================================
-
-
-
-
 
 
 

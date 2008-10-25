@@ -273,14 +273,6 @@ namespace Returnables
 			Status *status;
 			User *user;	
 	};
-	class StartFollow
-	{};
-	class StopFollow
-	{};
-	class BlockUser
-	{};
-	class UnBlockUser
-	{};
 };
 
 

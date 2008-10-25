@@ -41,8 +41,6 @@ class Decipher
 		static Returnables::AddFavorite* AddFavorite(const QString &xml);
 		static Returnables::RemoveFavorite* RemoveFavorite(const QString &xml);
 
-
-
 	private:
 		static enum Parent { USER, STATUS };
 		static QLinkedList<Returnables::StatusUser*> GetStatusUserList(const QString &xml, Parent parent=STATUS);

@@ -4,9 +4,6 @@
 #include <QtCore/QString>
 #include "ui_example.h"
 #include "QTwitLib.h"
-#include "Server.h"
-#include "Returnables.h"
-
 
 class Example : public QWidget
 {
@@ -16,22 +13,44 @@ class Example : public QWidget
 		virtual ~Example();
 	
 	public:
-		void MakeConnections();
 		QString GetUsername();
-		QString GetPassword();
+		QString GetPassword();	
 		
 	public slots:
-		void Button1Event();
-		void Button2Event();
-		void Button3Event();
-		void Button4Event();
-        void Button5Event();
-		void Button6Event();
         void OnError(QString error); 
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP response);
 
-		void TestReturn(Returnables::ReceivedDirectMessages *);
+	public slots:
+		void PublicTimeline(Returnables::PublicTimeline *);
+		void FriendsTimeline(Returnables::FriendsTimeline *);
+		void SingleStatus(Returnables::SingleStatus *);
+		void FeaturedUsers(Returnables::FeaturedUsers *);
+		void Login(Returnables::Login *);
+		void TwitterUp(Returnables::TwitterUp *);
+		void UserTimeline(Returnables::UserTimeline *);
+		void Favorites(Returnables::Favorites *);
+		void NewStatus(Returnables::NewStatus *);
+		void RecentReplies(Returnables::RecentReplies *);
+		void RemoveStatus(Returnables::RemoveStatus *);
+		void Friends(Returnables::Friends *);
+		void Followers(Returnables::Followers *);
+		void UserDetails(Returnables::UserDetails *);
+		void SentDirectMessages(Returnables::SentDirectMessages *);
+		void ReceivedDirectMessages(Returnables::ReceivedDirectMessages *);
+		void SendDirectMessage(Returnables::SendDirectMessage *);
+		void RemoveDirectMessage(Returnables::RemoveDirectMessage *);
+		void AddFriendship(Returnables::AddFriendship *);
+		void RemoveFriendship(Returnables::RemoveFriendship *);
+		void FriendshipExists(Returnables::FriendshipExist *);
+		void UpdateLocation(Returnables::UpdateLocation *);
+		void DeliveryDevice(Returnables::DeliveryDevice *);
+		void ApiRequests(Returnables::ApiRequests *);
+		void AddFavorite(Returnables::AddFavorite *);
+		void RemoveFavorite(Returnables::RemoveFavorite *);
+
+	private:
+		void MakeConnections();
 	
 	private:
 		Ui::Form m_gui;
