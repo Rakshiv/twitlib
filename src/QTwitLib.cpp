@@ -149,24 +149,4 @@ void QTwitLib::RemoveFavorite(unsigned int id)
     Core::RemoveFavorite(QString::number(id));
 }
 //=====================================================================
-void QTwitLib::StartFollow(QString user)
-{
-    Core::StartFollow(user);
-}
-//=====================================================================
-void QTwitLib::StopFollow(QString user)
-{
-    Core::StopFollow(user);
-}
-//=====================================================================
-void QTwitLib::BlockUser(QString user)
-{
-    Core::BlockUser(user);
-}
-//=====================================================================
-void QTwitLib::UnBlockUser(QString user)
-{
-    Core::UnBlockUser(user);
-}
-//=====================================================================
 

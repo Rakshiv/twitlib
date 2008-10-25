@@ -12,154 +12,215 @@
   <property name="windowTitle" >
    <string>Twitter dev app</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" >
-   <item rowspan="2" row="0" column="0" >
-    <layout class="QGridLayout" name="gridLayout" >
-     <property name="sizeConstraint" >
-      <enum>QLayout::SetFixedSize</enum>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>25</number>
      </property>
-     <item row="0" column="0" >
-      <layout class="QVBoxLayout" name="verticalLayout_3" >
-       <property name="sizeConstraint" >
-        <enum>QLayout::SetFixedSize</enum>
-       </property>
-       <item>
-        <widget class="QLabel" name="label" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text" >
-          <string>Username</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0" >
-      <layout class="QVBoxLayout" name="verticalLayout_2" >
-       <property name="sizeConstraint" >
-        <enum>QLayout::SetFixedSize</enum>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_2" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text" >
-          <string>Password</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_2" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="echoMode" >
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item rowspan="4" row="0" column="1" colspan="2" >
-    <widget class="QPlainTextEdit" name="plainTextEdit" />
-   </item>
-   <item row="1" column="2" >
-    <spacer name="horizontalSpacer" >
-     <property name="orientation" >
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>508</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="0" >
-    <spacer name="verticalSpacer" >
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType" >
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>98</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="0" >
-    <layout class="QVBoxLayout" name="verticalLayout" >
-     <item>
-      <widget class="QPushButton" name="pushButton" >
-       <property name="text" >
-        <string>PushButton</string>
+     <widget class="QWidget" name="tabPublicTimeline" >
+      <attribute name="title" >
+       <string>PublicTimeline</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFriendsTimeline" >
+      <attribute name="title" >
+       <string>FriendsTimeline</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabSingleStatus" >
+      <attribute name="title" >
+       <string>SingleStatus</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFeaturedUsers" >
+      <attribute name="title" >
+       <string>FeaturedUsers</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabLogin" >
+      <attribute name="title" >
+       <string>Login</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabTwitterUp" >
+      <attribute name="title" >
+       <string>TwitterUp</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabUserTimeline" >
+      <attribute name="title" >
+       <string>UserTimeline</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFavorites" >
+      <attribute name="title" >
+       <string>Favorites</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabNewStatus" >
+      <attribute name="title" >
+       <string>NewStatus</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabRecentReplies" >
+      <attribute name="title" >
+       <string>RecentReplies</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabRemoveStatus" >
+      <attribute name="title" >
+       <string>RemoveStatus</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFriends" >
+      <attribute name="title" >
+       <string>Friends</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFollowers" >
+      <attribute name="title" >
+       <string>Followers</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabUserDetails" >
+      <attribute name="title" >
+       <string>UserDetails</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabSentDirectMessages" >
+      <attribute name="title" >
+       <string>SentDirectMessages</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabReceivedDirectMessages" >
+      <attribute name="title" >
+       <string>ReceivedDirectMessages</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabSendDirectMessage" >
+      <attribute name="title" >
+       <string>SendDirectMessage</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabRemoveDirectMessage" >
+      <attribute name="title" >
+       <string>RemoveDirectMessage</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabAddFriendship" >
+      <attribute name="title" >
+       <string>AddFriendship</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabRemoveFriendship" >
+      <attribute name="title" >
+       <string>RemoveFriendship</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFriendshipExist" >
+      <attribute name="title" >
+       <string>FriendshipExist</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabUpdateLocation" >
+      <attribute name="title" >
+       <string>UpdateLocation</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabDeliveryDevice" >
+      <attribute name="title" >
+       <string>DeliveryDevice</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabApiRequest" >
+      <attribute name="title" >
+       <string>ApiRequests</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabAddFavorite" >
+      <attribute name="title" >
+       <string>AddFavorite</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabRemoveFavorite" >
+      <attribute name="title" >
+       <string>RemoveFavorite</string>
+      </attribute>
+      <widget class="QPlainTextEdit" name="plainTextEdit" >
+       <property name="geometry" >
+        <rect>
+         <x>150</x>
+         <y>30</y>
+         <width>511</width>
+         <height>391</height>
+        </rect>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_2" >
-       <property name="text" >
-        <string>PushButton</string>
+      <widget class="QLineEdit" name="lineEditUsername" >
+       <property name="geometry" >
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_3" >
-       <property name="text" >
-        <string>PushButton</string>
+      <widget class="QLineEdit" name="lineEditPassword" >
+       <property name="geometry" >
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_4" >
+      <widget class="QLabel" name="labelUsername" >
+       <property name="geometry" >
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
        <property name="text" >
-        <string>PushButton</string>
+        <string>Username</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_5" >
+      <widget class="QLabel" name="labelPassword" >
+       <property name="geometry" >
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="focusPolicy" >
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text" >
-        <string>PushButton</string>
+        <string>Password</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_6" >
+      <widget class="QPushButton" name="pushButtonLogin" >
+       <property name="geometry" >
+        <rect>
+         <x>10</x>
+         <y>130</y>
+         <width>75</width>
+         <height>24</height>
+        </rect>
+       </property>
        <property name="text" >
-        <string>PushButton</string>
+        <string>Login</string>
        </property>
       </widget>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>

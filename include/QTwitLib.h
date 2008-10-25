@@ -218,31 +218,7 @@ class QTwitLib : public Core
          * @param id Required.  The ID of the status to un-favorite.
          */
         EXPORT void RemoveFavorite(unsigned int id);
-//=====================================================================
-        /**
-         * Enables notifications for updates from the specified user to the authenticating user.  Returns the specified user when successful.
-         * @param user Required.  The ID or screen name of the user to follow.
-         */
-        EXPORT void StartFollow(QString user);
-//=====================================================================
-        /**
-         * Disables notifications for updates from the specified user to the authenticating user.  Returns the specified user when successful.
-         * @param user Required.  The ID or screen name of the user to leave.
-         */
-        EXPORT void StopFollow(QString user);
-//=====================================================================
-        /**
-         * Blocks the user specified in the ID parameter as the authenticating user.  Returns the blocked user in the requested format when successful.
-         * @param user Required.  The ID or screen_name of the user to block.
-         */
-        EXPORT void BlockUser(QString user);
-//=====================================================================
-        /**
-         * Un-blocks the user specified in the ID parameter as the authenticating user.  Returns the un-blocked user in the requested format when successful.
-         * @param user Required.  The ID or screen_name of the user to un-block.
-         */
-        EXPORT void UnBlockUser(QString user);
-//=====================================================================      
+//=====================================================================   
 };
 
 
