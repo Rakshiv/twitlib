@@ -191,25 +191,88 @@ namespace Returnables
 			QLinkedList<DirectMessage*> list;
 	};
 	class SendDirectMessage
-	{};
+	{
+		public:
+			SendDirectMessage() { headerInfo = new DirectHeader(); sender = new User(); recipient = new User(); }
+			~SendDirectMessage() { if(headerInfo) delete headerInfo; if(sender) delete sender; if(recipient) delete recipient; }
+			DirectHeader *headerInfo;
+			User *sender;
+			User *recipient;
+	};
 	class RemoveDirectMessage
-	{};
+	{
+		public:
+			RemoveDirectMessage() { headerInfo = new DirectHeader(); sender = new User(); recipient = new User(); }
+			~RemoveDirectMessage() { if(headerInfo) delete headerInfo; if(sender) delete sender; if(recipient) delete recipient; }
+			DirectHeader *headerInfo;
+			User *sender;
+			User *recipient;
+	};
 	class AddFriendship
-	{};
+	{
+		public:
+			AddFriendship() { user = new User(); status = new Status(); }
+			~AddFriendship() { if(user) delete user; if(status) delete status; }
+			User *user;
+			Status *status;
+	};
 	class RemoveFriendship
-	{};
+	{
+		public:
+			RemoveFriendship() { user = new User(); status = new Status(); }
+			~RemoveFriendship() { if(user) delete user; if(status) delete status; }
+			User *user;
+			Status *status;	
+	};
 	class FriendshipExist
-	{};
+	{
+		public:
+			FriendshipExist() {}
+			~FriendshipExist() {}
+			bool friends;
+	};
 	class UpdateLocation
-	{};
-	class UpdateDeliveryDevice
-	{};
-	class RemainingApiRequests
-	{};
+	{
+		public:
+			UpdateLocation() { user = new User(); status = new Status(); }
+			~UpdateLocation() { if(user) delete user; if(status) delete status; }
+			User *user;
+			Status *status;
+	};
+	class DeliveryDevice
+	{
+		public:
+			DeliveryDevice() { user = new User(); status = new Status(); }
+			~DeliveryDevice() { if(user) delete user; if(status) delete status; }
+			User *user;
+			Status *status;
+	};
+	class ApiRequests
+	{
+		public:
+			ApiRequests() {}
+			~ApiRequests() {}
+			QString resetTime;
+			unsigned int resetTimeSeconds;
+			unsigned int remainingHits;
+			unsigned int hourlyLimit;
+	};
 	class AddFavorite
-	{};
+	{
+		public:
+			AddFavorite() { status = new Status(); user = new User(); }
+			~AddFavorite() { if(status) delete status; if(user) delete user; }
+			Status *status;
+			User *user;
+	};
 	class RemoveFavorite
-	{};
+	{
+		public:
+			RemoveFavorite() { status = new Status(); user = new User(); }
+			~RemoveFavorite() { if(status) delete status; if(user) delete user; }
+			Status *status;
+			User *user;	
+	};
 	class StartFollow
 	{};
 	class StopFollow

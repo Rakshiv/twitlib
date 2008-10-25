@@ -30,6 +30,17 @@ class Decipher
 		static Returnables::UserDetails* UserDetails(const QString &xml);
 		static Returnables::SentDirectMessages* SentDirectMessages(const QString &xml);
 		static Returnables::ReceivedDirectMessages* ReceivedDirectMessages(const QString &xml);
+		static Returnables::SendDirectMessage* SendDirectMessage(const QString &xml);
+		static Returnables::RemoveDirectMessage* RemoveDirectMessage(const QString &xml);
+		static Returnables::AddFriendship* AddFriendShip(const QString &xml);
+		static Returnables::RemoveFriendship* RemoveFriendship(const QString &xml);
+		static Returnables::FriendshipExist* FriendshipExist(const QString &xml);
+		static Returnables::UpdateLocation* UpdateLocation(const QString &xml);
+		static Returnables::DeliveryDevice* DeliveryDevice(const QString &xml);
+		static Returnables::ApiRequests* ApiRequests(const QString &xml);
+		static Returnables::AddFavorite* AddFavorite(const QString &xml);
+		static Returnables::RemoveFavorite* RemoveFavorite(const QString &xml);
+
 
 
 	private:
@@ -40,6 +51,7 @@ class Decipher
 		static void PopulateUser(Returnables::User &user, const QDomElement &node);
 		static void PopulateDetails(Returnables::Details &details, const QDomElement &node);
 		static void PopulateDirectHeader(Returnables::DirectHeader &header, const QDomElement &node);
+		static void PopulateApiRequests(Returnables::ApiRequests &apiRequests, const QDomElement &node);
 
 	private:
 		static QString nStatus;
@@ -81,6 +93,12 @@ class Decipher
 		static QString nRecipientScreenName;
 		static QString nSender;
 		static QString nRecipient;
+		static QString nFriends;
+		static QString nHash;
+		static QString nResetTime;
+		static QString nResetTimeSeconds;
+		static QString nRemainingHits;
+		static QString nHourlyLimit;
 };
 
 

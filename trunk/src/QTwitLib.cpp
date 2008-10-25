@@ -104,9 +104,9 @@ void QTwitLib::RemoveDirectMessage(unsigned int id)
     Core::RemoveDirectMessage(QString::number(id));
 }
 //=====================================================================
-void QTwitLib::AddFriendship(QString user)
+void QTwitLib::AddFriendship(QString user, bool follow /*=true*/)
 {
-    Core::AddFriendship(user);
+    Core::AddFriendship(user, follow);
 }
 //=====================================================================
 void QTwitLib::RemoveFriendship(QString user)
