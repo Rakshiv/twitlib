@@ -14,6 +14,7 @@ Example::Example()
 	m_pushButtonExecute->setText("Execute");
 	m_lineEditUsername = new QLineEdit();
 	m_lineEditPassword = new QLineEdit();
+	m_lineEditPassword->setEchoMode(QLineEdit::Password);
 	m_labelUsername = new QLabel();
 	m_labelUsername->setText("Username");
 	m_labelPassword = new QLabel();
@@ -36,32 +37,7 @@ void Example::MakeConnections()
 	connect(m_gui.tabWidget,SIGNAL(currentChanged(int)),this,SLOT(TabChanged(int)));
 	connect(m_pushButtonExecute,SIGNAL(clicked()),this,SLOT(ExecuteClicked()));
 	connect(m_pushButtonLogin,SIGNAL(clicked()),this,SLOT(LoginClicked()));
-	connect(m_twitLib,SIGNAL(PublicTimeline(Returnables::PublicTimeline *)),this,SLOT(PublicTimeline(Returnables::PublicTimeline *)));
-	connect(m_twitLib,SIGNAL(FriendsTimeline(Returnables::FriendsTimeline *)),this,SLOT(FriendsTimeline(Returnables::FriendsTimeline *)));
-	connect(m_twitLib,SIGNAL(SingleStatus(Returnables::SingleStatus *)),this,SLOT(SingleStatus(Returnables::SingleStatus *)));
-	connect(m_twitLib,SIGNAL(FeaturedUsers(Returnables::FeaturedUsers *)),this,SLOT(FeaturedUsers(Returnables::FeaturedUsers *)));
-	connect(m_twitLib,SIGNAL(Login(Returnables::Login *)),this,SLOT(Login(Returnables::Login *)));
-	connect(m_twitLib,SIGNAL(TwitterUp(Returnables::TwitterUp *)),this,SLOT(TwitterUp(Returnables::TwitterUp *)));
-	connect(m_twitLib,SIGNAL(UserTimeline(Returnables::UserTimeline *)),this,SLOT(UserTimeline(Returnables::UserTimeline *)));
-	connect(m_twitLib,SIGNAL(Favorites(Returnables::Favorites *)),this,SLOT(Favorites(Returnables::Favorites *)));
-	connect(m_twitLib,SIGNAL(NewStatus(Returnables::NewStatus *)),this,SLOT(NewStatus(Returnables::NewStatus *)));
-	connect(m_twitLib,SIGNAL(RecentReplies(Returnables::RecentReplies *)),this,SLOT(RecentReplies(Returnables::RecentReplies *)));
-	connect(m_twitLib,SIGNAL(RemoveStatus(Returnables::RemoveStatus *)),this,SLOT(RemoveStatus(Returnables::RemoveStatus *)));
-	connect(m_twitLib,SIGNAL(Friends(Returnables::Friends *)),this,SLOT(Friends(Returnables::Friends *)));
-	connect(m_twitLib,SIGNAL(Followers(Returnables::Followers *)),this,SLOT(Followers(Returnables::Followers *)));
-	connect(m_twitLib,SIGNAL(UserDetails(Returnables::UserDetails *)),this,SLOT(UserDetails(Returnables::UserDetails *)));
-	connect(m_twitLib,SIGNAL(SentDirectMessages(Returnables::SentDirectMessages *)),this,SLOT(SentDirectMessages(Returnables::SentDirectMessages *)));
-	connect(m_twitLib,SIGNAL(ReceivedDirectMessages(Returnables::ReceivedDirectMessages *)),this,SLOT(ReceivedDirectMessages(Returnables::ReceivedDirectMessages *)));
-	connect(m_twitLib,SIGNAL(SendDirectMessage(Returnables::SendDirectMessage *)),this,SLOT(SendDirectMessage(Returnables::SendDirectMessage *)));
-	connect(m_twitLib,SIGNAL(RemoveDirectMessage(Returnables::RemoveDirectMessage *)),this,SLOT(RemoveDirectMessage(Returnables::RemoveDirectMessage *)));
-	connect(m_twitLib,SIGNAL(AddFriendship(Returnables::AddFriendship *)),this,SLOT(AddFriendship(Returnables::AddFriendship *)));
-	connect(m_twitLib,SIGNAL(RemoveFriendship(Returnables::RemoveFriendship *)),this,SLOT(RemoveFriendship(Returnables::RemoveFriendship *)));
-	connect(m_twitLib,SIGNAL(FriendshipExists(Returnables::FriendshipExist *)),this,SLOT(FriendshipExists(Returnables::FriendshipExist *)));
-	connect(m_twitLib,SIGNAL(UpdateLocation(Returnables::UpdateLocation *)),this,SLOT(UpdateLocation(Returnables::UpdateLocation *)));
-	connect(m_twitLib,SIGNAL(DeliveryDevice(Returnables::DeliveryDevice *)),this,SLOT(DeliveryDevice(Returnables::DeliveryDevice *)));
-	connect(m_twitLib,SIGNAL(ApiRequests(Returnables::ApiRequests *)),this,SLOT(ApiRequests(Returnables::ApiRequests *)));
-	connect(m_twitLib,SIGNAL(AddFavorite(Returnables::AddFavorite *)),this,SLOT(AddFavorite(Returnables::AddFavorite *)));
-	connect(m_twitLib,SIGNAL(RemoveFavorite(Returnables::RemoveFavorite *)),this,SLOT(RemoveFavorite(Returnables::RemoveFavorite *)));
+	connect(m_twitLib,SIGNAL(OnResponseReceived(Returnables::Response *)),this,SLOT(OnResponseReceived(Returnables::Response *)));
 }
 //=====================================================================
 void Example::OnError(QString error) 
@@ -79,57 +55,145 @@ void Example::OnStatusReceived(SERVER::RESP response)
     m_plainTextEdit->appendPlainText("STATUS REC "+QString::number(response)); 
 }
 //=====================================================================
-void Example::PublicTimeline(Returnables::PublicTimeline *publicTimeline) {}
-//=====================================================================
-void Example::FriendsTimeline(Returnables::FriendsTimeline *friendsTimeline) {}
-//=====================================================================
-void Example::SingleStatus(Returnables::SingleStatus *singleStatus) {}
-//=====================================================================
-void Example::FeaturedUsers(Returnables::FeaturedUsers *featuredUsers) {}
-//=====================================================================
-void Example::Login(Returnables::Login *login) {}
-//=====================================================================
-void Example::TwitterUp(Returnables::TwitterUp *isTwitterUp) {}
-//=====================================================================
-void Example::UserTimeline(Returnables::UserTimeline *userTimeline) {}
-//=====================================================================
-void Example::Favorites(Returnables::Favorites *favorites) {}
-//=====================================================================
-void Example::NewStatus(Returnables::NewStatus *newStatus) {}
-//=====================================================================
-void Example::RecentReplies(Returnables::RecentReplies *recentReplies) {}
-//=====================================================================
-void Example::RemoveStatus(Returnables::RemoveStatus *removeStatus) {}
-//=====================================================================
-void Example::Friends(Returnables::Friends *friends) {}
-//=====================================================================
-void Example::Followers(Returnables::Followers *followers) {}
-//=====================================================================
-void Example::UserDetails(Returnables::UserDetails *userDetails) {}
-//=====================================================================
-void Example::SentDirectMessages(Returnables::SentDirectMessages *sentDirectMessages) {}
-//=====================================================================
-void Example::ReceivedDirectMessages(Returnables::ReceivedDirectMessages *receivedDirectMessages) {}
-//=====================================================================
-void Example::SendDirectMessage(Returnables::SendDirectMessage *sendDirectMesssage) {}
-//=====================================================================
-void Example::RemoveDirectMessage(Returnables::RemoveDirectMessage *removeDirectMessage) {}
-//=====================================================================
-void Example::AddFriendship(Returnables::AddFriendship *addFriendship) {}
-//=====================================================================
-void Example::RemoveFriendship(Returnables::RemoveFriendship *removeFriendship) {}
-//=====================================================================
-void Example::FriendshipExists(Returnables::FriendshipExist *friendshipExists) {}
-//=====================================================================
-void Example::UpdateLocation(Returnables::UpdateLocation *updateLocation) {}
-//=====================================================================
-void Example::DeliveryDevice(Returnables::DeliveryDevice *deliveryDevice) {}
-//=====================================================================
-void Example::ApiRequests(Returnables::ApiRequests *apiRequests) {}
-//=====================================================================
-void Example::AddFavorite(Returnables::AddFavorite *addFavorite) {}
-//=====================================================================
-void Example::RemoveFavorite(Returnables::RemoveFavorite *removeFavorite) {}
+void Example::OnResponseReceived(Returnables::Response *resp)
+{
+	if(resp)
+    {
+		switch(resp->reqID)
+		{
+		case Returnables::PUBLIC_TIMELINE:
+			{
+				Returnables::PublicTimeline *pTimeline = static_cast<Returnables::PublicTimeline *>(resp);
+				break;
+			}
+		case Returnables::FRIENDS_TIMELINE:
+			{
+				Returnables::FriendsTimeline *fTimeline = static_cast<Returnables::FriendsTimeline *>(resp);
+				break;
+			}
+		case Returnables::SINGLE_STATUS:
+			{
+				Returnables::SingleStatus *singleStatus = static_cast<Returnables::SingleStatus *>(resp);
+				break;
+			}
+		case Returnables::FEATURED_USERS:
+			{
+				Returnables::FeaturedUsers *featuredUsers = static_cast<Returnables::FeaturedUsers *>(resp);
+				break;
+			}
+		case Returnables::LOGIN:
+			{
+				Returnables::Login *login = static_cast<Returnables::Login *>(resp);
+				break;
+			}
+		case Returnables::TWITTER_UP:
+			{
+				Returnables::TwitterUp *twitterUp = static_cast<Returnables::TwitterUp *>(resp);
+				break;
+			}
+		case Returnables::USER_TIMELINE:
+			{
+				Returnables::UserTimeline *userTimeline = static_cast<Returnables::UserTimeline *>(resp);
+				break;
+			}
+		case Returnables::FAVORITES:
+			{
+				Returnables::Favorites *favorites = static_cast<Returnables::Favorites *>(resp);
+				break;
+			}
+		case Returnables::NEW_STATUS:
+			{
+				Returnables::NewStatus *newStatus = static_cast<Returnables::NewStatus *>(resp);
+				break;
+			}
+		case Returnables::RECENT_REPLIES:
+			{
+				Returnables::RecentReplies *replies = static_cast<Returnables::RecentReplies *>(resp);
+				break;
+			}
+		case Returnables::REMOVE_STATUS:
+			{
+				Returnables::RemoveStatus *removedStatus = static_cast<Returnables::RemoveStatus *>(resp);
+				break;
+			}
+		case Returnables::FRIENDS:
+			{
+				Returnables::Friends *friends = static_cast<Returnables::Friends *>(resp);
+				break;
+			}
+		case Returnables::FOLLOWERS:
+			{
+				Returnables::Followers *followers = static_cast<Returnables::Followers *>(resp);
+				break;
+			}
+		case Returnables::USER_DETAILS:
+			{
+				Returnables::UserDetails *userDetails = static_cast<Returnables::UserDetails *>(resp);
+				break;
+			}
+		case Returnables::SENT_DIRECT_MESSAGES:
+			{
+				Returnables::SentDirectMessages *sentDirectMessages = static_cast<Returnables::SentDirectMessages *>(resp);
+				break;
+			}
+		case Returnables::RECEIVED_DIRECT_MESSAGES:
+			{
+				Returnables::ReceivedDirectMessages *receivedDirectMessages = static_cast<Returnables::ReceivedDirectMessages *>(resp);
+				break;
+			}
+		case Returnables::SEND_DIRECT_MESSAGE:
+			{	
+				Returnables::SendDirectMessage *sendDirectMessage = static_cast<Returnables::SendDirectMessage *>(resp);
+				break;
+			}
+		case Returnables::REMOVE_DIRECT_MESSAGE:
+			{
+				Returnables::RemoveDirectMessage *removeDirectMessage = static_cast<Returnables::RemoveDirectMessage *>(resp);
+				break;
+			}
+		case Returnables::ADD_FRIENDSHIP:
+			{
+				Returnables::AddFriendship *addFriendship = static_cast<Returnables::AddFriendship *>(resp);
+				break;
+			}
+		case Returnables::REMOVE_FRIENDSHIP:
+			{
+				Returnables::RemoveFriendship *removeFriendship = static_cast<Returnables::RemoveFriendship *>(resp);
+				break;
+			}
+		case Returnables::FRIENDSHIP_EXISTS:
+			{
+				Returnables::FriendshipExist *friendshipExists = static_cast<Returnables::FriendshipExist *>(resp);
+				break;
+			}
+		case Returnables::UPDATE_LOCATION:
+			{
+				Returnables::UpdateLocation *updateLocation = static_cast<Returnables::UpdateLocation *>(resp);
+				break;
+			}
+		case Returnables::DELIVERY_DEVICE:
+			{
+				Returnables::DeliveryDevice *deliveryDevice = static_cast<Returnables::DeliveryDevice *>(resp);
+				break;
+			}
+		case Returnables::API_REQUESTS:
+			{
+				Returnables::ApiRequests *apiRequests = static_cast<Returnables::ApiRequests *>(resp);
+				break;
+			}
+		case Returnables::ADD_FAVORITE:
+			{
+				Returnables::AddFavorite *addFavorite = static_cast<Returnables::AddFavorite *>(resp);
+				break;
+			}
+		case Returnables::REMOVE_FAVORITE:
+			{
+				Returnables::RemoveFavorite *removeFavorite = static_cast<Returnables::RemoveFavorite *>(resp);
+				break;
+			}
+		}
+	}
+}
 //=====================================================================
 QString Example::GetUsername()
 {
@@ -155,82 +219,86 @@ void Example::ExecuteClicked()
 {
 	switch(m_gui.tabWidget->currentIndex())
 	{
-	case PUBLIC_TIMELINE:
+	case Returnables::PUBLIC_TIMELINE:
 		m_twitLib->GetPublicTimeline();
 		break;
-	case FRIENDS_TIMELINE:
+	case Returnables::FRIENDS_TIMELINE:
 		m_twitLib->GetFriendsTimeline(NULL);
 		break;
-	case SINGLE_STATUS:
+	case Returnables::SINGLE_STATUS:
 		m_twitLib->GetSingleStatus(123);
 		break;
-	case FEATURED_USERS:
+	case Returnables::FEATURED_USERS:
 		m_twitLib->GetFeaturedUsers();
 		break;
-	case LOGIN:
+	case Returnables::LOGIN:
 		m_twitLib->Login(GetUsername(),GetPassword());
 		break;
-	case TWITTER_UP:
+	case Returnables::LOGOUT:
+		break;
+	case Returnables::VERIFY_CREDENTIALS:
+		break;
+	case Returnables::TWITTER_UP:
 		m_twitLib->IsTwitterUp();
 		break;
-	case USER_TIMELINE:
+	case Returnables::USER_TIMELINE:
 		m_twitLib->GetUsersTimeline(NULL);
 		break;
-	case FAVORITES:
+	case Returnables::FAVORITES:
 		m_twitLib->GetFavorites("",1);
 		break;
-	case NEW_STATUS:
+	case Returnables::NEW_STATUS:
 		m_twitLib->PostNewStatus("New Status");
 		break;
-	case RECENT_REPLIES:
+	case Returnables::RECENT_REPLIES:
 		m_twitLib->GetRecentReplies(NULL);
 		break;
-	case REMOVE_STATUS:
+	case Returnables::REMOVE_STATUS:
 		m_twitLib->RemoveStatus(123);
 		break;
-	case FRIENDS:
+	case Returnables::FRIENDS:
 		m_twitLib->GetFriends(NULL);
 		break;
-	case FOLLOWERS:
+	case Returnables::FOLLOWERS:
 		m_twitLib->GetFollowers(NULL);
 		break;
-	case USER_DETAILS:
+	case Returnables::USER_DETAILS:
 		m_twitLib->GetUserDetails("blackey02");
 		break;
-	case SENT_DIRECT_MESSAGES:
+	case Returnables::SENT_DIRECT_MESSAGES:
 		m_twitLib->GetSentDirectMessages(NULL);
 		break;
-	case RECEIVED_DIRECT_MESSAGES:
+	case Returnables::RECEIVED_DIRECT_MESSAGES:
 		m_twitLib->GetReceivedDirectMessages(NULL);
 		break;
-	case SEND_DIRECT_MESSAGE:
+	case Returnables::SEND_DIRECT_MESSAGE:
 		m_twitLib->SendDirectMessage("blackey02","New Test Direct Message");
 		break;
-	case REMOVE_DIRECT_MESAGE:
+	case Returnables::REMOVE_DIRECT_MESSAGE:
 		m_twitLib->RemoveDirectMessage(123);
 		break;
-	case ADD_FRIENDSHIP:
+	case Returnables::ADD_FRIENDSHIP:
 		m_twitLib->AddFriendship("blackey02",true);
 		break;
-	case REMOVE_FRIENDSHIP:
+	case Returnables::REMOVE_FRIENDSHIP:
 		m_twitLib->RemoveFriendship("blackey02");
 		break;
-	case FRIENDSHIP_EXISTS:
+	case Returnables::FRIENDSHIP_EXISTS:
 		m_twitLib->FriendshipExist("blackey02","kevinrose");
 		break;
-	case UPDATE_LOCATION:
+	case Returnables::UPDATE_LOCATION:
 		m_twitLib->UpdateLocation("Pleasanton, CA");
 		break;
-	case DELIVERY_DEVICE:
+	case Returnables::DELIVERY_DEVICE:
 		m_twitLib->UpdateDeliveryDevice(SERVER::NONE);
 		break;
-	case API_REQUESTS:
+	case Returnables::API_REQUESTS:
 		m_twitLib->RemainingApiRequests();
 		break;
-	case ADD_FAVORITE:
+	case Returnables::ADD_FAVORITE:
 		m_twitLib->AddFavorite(123);
 		break;
-	case REMOVE_FAVORITE:
+	case Returnables::REMOVE_FAVORITE:
 		m_twitLib->RemoveFavorite(123);
 		break;
 	default:

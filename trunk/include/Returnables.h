@@ -73,21 +73,35 @@ namespace Returnables
 		User user;
 	};
 
-    class FriendsTimeline
+	enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, FEATURED_USERS, LOGIN, LOGOUT, VERIFY_CREDENTIALS, \
+					 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS, RECENT_REPLIES, REMOVE_STATUS, FRIENDS, \
+					 FOLLOWERS, USER_DETAILS, SENT_DIRECT_MESSAGES, RECEIVED_DIRECT_MESSAGES, SEND_DIRECT_MESSAGE, \
+					 REMOVE_DIRECT_MESSAGE, ADD_FRIENDSHIP, REMOVE_FRIENDSHIP, FRIENDSHIP_EXISTS, UPDATE_LOCATION, \
+					 DELIVERY_DEVICE, API_REQUESTS, ADD_FAVORITE, REMOVE_FAVORITE };
+
+	class Response
+	{
+		public:
+			Response() {}
+			virtual ~Response() {}
+			RequestId reqID;
+	};
+
+	class FriendsTimeline : public Response
     {
 		public:
 			FriendsTimeline() {}
 			~FriendsTimeline() {}
 			QLinkedList<StatusUser*> list;
     };
-	class PublicTimeline
+	class PublicTimeline : public Response
 	{
 		public:
 			PublicTimeline() {}
-			~PublicTimeline() {}
+			virtual ~PublicTimeline() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class SingleStatus
+	class SingleStatus : public Response
 	{
 		public:
 			SingleStatus() { status = new Status(); user = new User(); }
@@ -95,42 +109,42 @@ namespace Returnables
 			Status* status;
 			User* user;
 	};
-	class FeaturedUsers
+	class FeaturedUsers : public Response
 	{
 		public:
 			FeaturedUsers() {}
 			~FeaturedUsers() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class Login
+	class Login : public Response
 	{
 		public:
 			Login() {}
 			~Login() {}
 			bool authorized;
 	};
-	class TwitterUp
+	class TwitterUp : public Response
 	{
 		public:
 			TwitterUp() {}
 			~TwitterUp() {}
 			bool up;
 	};
-	class UserTimeline
+	class UserTimeline : public Response
 	{
 		public:
 			UserTimeline() {}
 			~UserTimeline() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class Favorites
+	class Favorites : public Response
 	{
 		public:
 			Favorites() {}
 			~Favorites() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class NewStatus
+	class NewStatus : public Response
 	{
 		public:
 			NewStatus() { newStatus = new Status(); user = new User(); }
@@ -138,14 +152,14 @@ namespace Returnables
 			Status* newStatus;
 			User* user;
 	};
-	class RecentReplies
+	class RecentReplies : public Response
 	{
 		public:
 			RecentReplies() {}
 			~RecentReplies() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class RemoveStatus
+	class RemoveStatus : public Response
 	{
 		public:
 			RemoveStatus() { removedStatus = new Status(); user = new User(); }
@@ -153,21 +167,21 @@ namespace Returnables
 			Status *removedStatus;
 			User *user;
 	};
-	class Friends
+	class Friends : public Response
 	{
 		public:
 			Friends() {}
 			~Friends() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class Followers
+	class Followers : public Response
 	{
 		public:
 			Followers() {}
 			~Followers() {}
 			QLinkedList<StatusUser*> list;
 	};
-	class UserDetails
+	class UserDetails : public Response
 	{
 		public:
 			UserDetails() { user = new User(); details = new Details(); status = new Status(); }
@@ -176,21 +190,21 @@ namespace Returnables
 			Details *details;
 			Status *status;
 	};
-	class SentDirectMessages
+	class SentDirectMessages : public Response
 	{
 		public:
 			SentDirectMessages() {}
 			~SentDirectMessages() {}
 			QLinkedList<DirectMessage*> list;
 	};
-	class ReceivedDirectMessages
+	class ReceivedDirectMessages : public Response
 	{
 		public:
 			ReceivedDirectMessages() {}
 			~ReceivedDirectMessages() {}
 			QLinkedList<DirectMessage*> list;
 	};
-	class SendDirectMessage
+	class SendDirectMessage : public Response
 	{
 		public:
 			SendDirectMessage() { headerInfo = new DirectHeader(); sender = new User(); recipient = new User(); }
@@ -199,7 +213,7 @@ namespace Returnables
 			User *sender;
 			User *recipient;
 	};
-	class RemoveDirectMessage
+	class RemoveDirectMessage : public Response
 	{
 		public:
 			RemoveDirectMessage() { headerInfo = new DirectHeader(); sender = new User(); recipient = new User(); }
@@ -208,7 +222,7 @@ namespace Returnables
 			User *sender;
 			User *recipient;
 	};
-	class AddFriendship
+	class AddFriendship : public Response
 	{
 		public:
 			AddFriendship() { user = new User(); status = new Status(); }
@@ -216,7 +230,7 @@ namespace Returnables
 			User *user;
 			Status *status;
 	};
-	class RemoveFriendship
+	class RemoveFriendship : public Response
 	{
 		public:
 			RemoveFriendship() { user = new User(); status = new Status(); }
@@ -224,14 +238,14 @@ namespace Returnables
 			User *user;
 			Status *status;	
 	};
-	class FriendshipExist
+	class FriendshipExist : public Response
 	{
 		public:
 			FriendshipExist() {}
 			~FriendshipExist() {}
 			bool friends;
 	};
-	class UpdateLocation
+	class UpdateLocation : public Response
 	{
 		public:
 			UpdateLocation() { user = new User(); status = new Status(); }
@@ -239,7 +253,7 @@ namespace Returnables
 			User *user;
 			Status *status;
 	};
-	class DeliveryDevice
+	class DeliveryDevice : public Response
 	{
 		public:
 			DeliveryDevice() { user = new User(); status = new Status(); }
@@ -247,7 +261,7 @@ namespace Returnables
 			User *user;
 			Status *status;
 	};
-	class ApiRequests
+	class ApiRequests : public Response
 	{
 		public:
 			ApiRequests() {}
@@ -257,7 +271,7 @@ namespace Returnables
 			unsigned int remainingHits;
 			unsigned int hourlyLimit;
 	};
-	class AddFavorite
+	class AddFavorite : public Response
 	{
 		public:
 			AddFavorite() { status = new Status(); user = new User(); }
@@ -265,7 +279,7 @@ namespace Returnables
 			Status *status;
 			User *user;
 	};
-	class RemoveFavorite
+	class RemoveFavorite : public Response
 	{
 		public:
 			RemoveFavorite() { status = new Status(); user = new User(); }
