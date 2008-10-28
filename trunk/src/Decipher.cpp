@@ -231,8 +231,8 @@ Returnables::SingleStatus* Decipher::SingleStatus(const QString &xml)
 	if(!list.isEmpty())
 	{
 		singleStatus = new Returnables::SingleStatus();
-		singleStatus->status = new Returnables::Status(list.first()->status);
-		singleStatus->user = new Returnables::User(list.first()->user);
+		*singleStatus->status = list.first()->status;
+		*singleStatus->user = list.first()->user;
 		singleStatus->reqID = Returnables::SINGLE_STATUS;
 	}
 
@@ -330,8 +330,8 @@ Returnables::NewStatus* Decipher::NewStatus(const QString &xml)
 	if(!list.isEmpty())
 	{
 		newStatus = new Returnables::NewStatus();
-		newStatus->newStatus = new Returnables::Status(list.first()->status);
-		newStatus->user = new Returnables::User(list.first()->user);
+		*newStatus->newStatus = list.first()->status;
+		*newStatus->user = list.first()->user;
 		newStatus->reqID = Returnables::NEW_STATUS;
 	}
 
@@ -361,8 +361,8 @@ Returnables::RemoveStatus* Decipher::RemoveStatus(const QString &xml)
 	if(!list.isEmpty())
 	{
 		removedStatus = new Returnables::RemoveStatus();
-		removedStatus->removedStatus = new Returnables::Status(list.first()->status);
-		removedStatus->user = new Returnables::User(list.first()->user);
+		*removedStatus->removedStatus = list.first()->status;
+		*removedStatus->user = list.first()->user;
 		removedStatus->reqID = Returnables::REMOVE_STATUS;
 	}
 
@@ -464,9 +464,9 @@ Returnables::SendDirectMessage* Decipher::SendDirectMessage(const QString &xml)
 	if(!list.isEmpty())
 	{
 		sendDirectMessage = new Returnables::SendDirectMessage();
-		sendDirectMessage->headerInfo = new Returnables::DirectHeader(list.first()->headerInfo);
-		sendDirectMessage->recipient = new Returnables::User(list.first()->recipient);
-		sendDirectMessage->sender = new Returnables::User(list.first()->sender);
+		*sendDirectMessage->headerInfo = list.first()->headerInfo;
+		*sendDirectMessage->recipient = list.first()->recipient;
+		*sendDirectMessage->sender = list.first()->sender;
 		sendDirectMessage->reqID = Returnables::SEND_DIRECT_MESSAGE;
 	}
 
@@ -481,9 +481,9 @@ Returnables::RemoveDirectMessage* Decipher::RemoveDirectMessage(const QString &x
 	if(!list.isEmpty())
 	{
 		removeDirectMessage = new Returnables::RemoveDirectMessage();
-		removeDirectMessage->headerInfo = new Returnables::DirectHeader(list.first()->headerInfo);
-		removeDirectMessage->recipient = new Returnables::User(list.first()->recipient);
-		removeDirectMessage->sender = new Returnables::User(list.first()->sender);
+		*removeDirectMessage->headerInfo = list.first()->headerInfo;
+		*removeDirectMessage->recipient = list.first()->recipient;
+		*removeDirectMessage->sender = list.first()->sender;
 		removeDirectMessage->reqID = Returnables::REMOVE_DIRECT_MESSAGE;
 	}
 
@@ -498,8 +498,8 @@ Returnables::AddFriendship* Decipher::AddFriendShip(const QString &xml)
 	if(!list.isEmpty())
 	{	
 		addFriendship = new Returnables::AddFriendship();
-		addFriendship->status = new Returnables::Status(list.first()->status);
-		addFriendship->user = new Returnables::User(list.first()->user);
+		*addFriendship->status = list.first()->status;
+		*addFriendship->user = list.first()->user;
 		addFriendship->reqID = Returnables::ADD_FRIENDSHIP;
 	}
 
@@ -514,8 +514,8 @@ Returnables::RemoveFriendship* Decipher::RemoveFriendship(const QString &xml)
 	if(!list.isEmpty())
 	{	
 		removeFriendship = new Returnables::RemoveFriendship();
-		removeFriendship->status = new Returnables::Status(list.first()->status);
-		removeFriendship->user = new Returnables::User(list.first()->user);
+		*removeFriendship->status = list.first()->status;
+		*removeFriendship->user = list.first()->user;
 		removeFriendship->reqID = Returnables::REMOVE_FRIENDSHIP;
 	}
 
@@ -549,8 +549,8 @@ Returnables::UpdateLocation* Decipher::UpdateLocation(const QString &xml)
 	if(!list.isEmpty())
 	{	
 		updateLocation = new Returnables::UpdateLocation();
-		updateLocation->status = new Returnables::Status(list.first()->status);
-		updateLocation->user = new Returnables::User(list.first()->user);
+		*updateLocation->status = list.first()->status;
+		*updateLocation->user = list.first()->user;
 		updateLocation->reqID = Returnables::UPDATE_LOCATION;
 	}
 
@@ -565,8 +565,8 @@ Returnables::DeliveryDevice* Decipher::DeliveryDevice(const QString &xml)
 	if(!list.isEmpty())
 	{	
 		deliveryDevice = new Returnables::DeliveryDevice();
-		deliveryDevice->status = new Returnables::Status(list.first()->status);
-		deliveryDevice->user = new Returnables::User(list.first()->user);
+		*deliveryDevice->status = list.first()->status;
+		*deliveryDevice->user = list.first()->user;
 		deliveryDevice->reqID = Returnables::DELIVERY_DEVICE;
 	}
 
@@ -600,8 +600,8 @@ Returnables::AddFavorite* Decipher::AddFavorite(const QString &xml)
 	if(!list.isEmpty())
 	{	
 		addFavorite = new Returnables::AddFavorite();
-		addFavorite->status = new Returnables::Status(list.first()->status);
-		addFavorite->user = new Returnables::User(list.first()->user);
+		*addFavorite->status = list.first()->status;
+		*addFavorite->user = list.first()->user;
 		addFavorite->reqID = Returnables::ADD_FAVORITE;
 	}
 
@@ -616,8 +616,8 @@ Returnables::RemoveFavorite* Decipher::RemoveFavorite(const QString &xml)
 	if(!list.isEmpty())
 	{	
 		removeFavorite = new Returnables::RemoveFavorite();
-		removeFavorite->status = new Returnables::Status(list.first()->status);
-		removeFavorite->user = new Returnables::User(list.first()->user);
+		*removeFavorite->status = list.first()->status;
+		*removeFavorite->user = list.first()->user;
 		removeFavorite->reqID = Returnables::REMOVE_FAVORITE;
 	}
 
