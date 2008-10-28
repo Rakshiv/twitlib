@@ -73,11 +73,11 @@ namespace Returnables
 		User user;
 	};
 
-	enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, FEATURED_USERS, LOGIN, LOGOUT, VERIFY_CREDENTIALS, \
+	enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, SINGLE_STATUS, FEATURED_USERS, LOGIN, \
 					 TWITTER_UP, USER_TIMELINE, FAVORITES, NEW_STATUS, RECENT_REPLIES, REMOVE_STATUS, FRIENDS, \
 					 FOLLOWERS, USER_DETAILS, SENT_DIRECT_MESSAGES, RECEIVED_DIRECT_MESSAGES, SEND_DIRECT_MESSAGE, \
 					 REMOVE_DIRECT_MESSAGE, ADD_FRIENDSHIP, REMOVE_FRIENDSHIP, FRIENDSHIP_EXISTS, UPDATE_LOCATION, \
-					 DELIVERY_DEVICE, API_REQUESTS, ADD_FAVORITE, REMOVE_FAVORITE };
+					 DELIVERY_DEVICE, API_REQUESTS, ADD_FAVORITE, REMOVE_FAVORITE, LOGOUT, VERIFY_CREDENTIALS };
 
 	class Response
 	{
@@ -104,8 +104,8 @@ namespace Returnables
 	class SingleStatus : public Response
 	{
 		public:
-			SingleStatus() { status = new Status(); user = new User(); }
-			~SingleStatus() { if(status) delete status; if(user) delete user; }
+			SingleStatus() { }
+			virtual ~SingleStatus() { if(status) delete status; if(user) delete user; }
 			Status* status;
 			User* user;
 	};
@@ -147,7 +147,7 @@ namespace Returnables
 	class NewStatus : public Response
 	{
 		public:
-			NewStatus() { newStatus = new Status(); user = new User(); }
+			NewStatus() { }
 			~NewStatus() { if(newStatus) delete newStatus; if(user) delete user; }
 			Status* newStatus;
 			User* user;
@@ -162,7 +162,7 @@ namespace Returnables
 	class RemoveStatus : public Response
 	{
 		public:
-			RemoveStatus() { removedStatus = new Status(); user = new User(); }
+			RemoveStatus() { }
 			~RemoveStatus() { if(removedStatus) delete removedStatus; if(user) delete user; }
 			Status *removedStatus;
 			User *user;
@@ -207,7 +207,7 @@ namespace Returnables
 	class SendDirectMessage : public Response
 	{
 		public:
-			SendDirectMessage() { headerInfo = new DirectHeader(); sender = new User(); recipient = new User(); }
+			SendDirectMessage() { }
 			~SendDirectMessage() { if(headerInfo) delete headerInfo; if(sender) delete sender; if(recipient) delete recipient; }
 			DirectHeader *headerInfo;
 			User *sender;
@@ -216,7 +216,7 @@ namespace Returnables
 	class RemoveDirectMessage : public Response
 	{
 		public:
-			RemoveDirectMessage() { headerInfo = new DirectHeader(); sender = new User(); recipient = new User(); }
+			RemoveDirectMessage() { }
 			~RemoveDirectMessage() { if(headerInfo) delete headerInfo; if(sender) delete sender; if(recipient) delete recipient; }
 			DirectHeader *headerInfo;
 			User *sender;
@@ -225,7 +225,7 @@ namespace Returnables
 	class AddFriendship : public Response
 	{
 		public:
-			AddFriendship() { user = new User(); status = new Status(); }
+			AddFriendship() { }
 			~AddFriendship() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;
@@ -233,7 +233,7 @@ namespace Returnables
 	class RemoveFriendship : public Response
 	{
 		public:
-			RemoveFriendship() { user = new User(); status = new Status(); }
+			RemoveFriendship() { }
 			~RemoveFriendship() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;	
@@ -248,7 +248,7 @@ namespace Returnables
 	class UpdateLocation : public Response
 	{
 		public:
-			UpdateLocation() { user = new User(); status = new Status(); }
+			UpdateLocation() { }
 			~UpdateLocation() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;
@@ -256,7 +256,7 @@ namespace Returnables
 	class DeliveryDevice : public Response
 	{
 		public:
-			DeliveryDevice() { user = new User(); status = new Status(); }
+			DeliveryDevice() { }
 			~DeliveryDevice() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;
@@ -274,7 +274,7 @@ namespace Returnables
 	class AddFavorite : public Response
 	{
 		public:
-			AddFavorite() { status = new Status(); user = new User(); }
+			AddFavorite() { }
 			~AddFavorite() { if(status) delete status; if(user) delete user; }
 			Status *status;
 			User *user;
@@ -282,7 +282,7 @@ namespace Returnables
 	class RemoveFavorite : public Response
 	{
 		public:
-			RemoveFavorite() { status = new Status(); user = new User(); }
+			RemoveFavorite() { }
 			~RemoveFavorite() { if(status) delete status; if(user) delete user; }
 			Status *status;
 			User *user;	
