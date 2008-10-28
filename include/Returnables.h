@@ -104,7 +104,7 @@ namespace Returnables
 	class SingleStatus : public Response
 	{
 		public:
-			SingleStatus() { }
+			SingleStatus() { status = new Returnables::Status(); user = new Returnables::User(); }
 			virtual ~SingleStatus() { if(status) delete status; if(user) delete user; }
 			Status* status;
 			User* user;
@@ -147,7 +147,7 @@ namespace Returnables
 	class NewStatus : public Response
 	{
 		public:
-			NewStatus() { }
+			NewStatus() { newStatus = new Returnables::Status(); user = new Returnables::User(); }
 			~NewStatus() { if(newStatus) delete newStatus; if(user) delete user; }
 			Status* newStatus;
 			User* user;
@@ -162,7 +162,7 @@ namespace Returnables
 	class RemoveStatus : public Response
 	{
 		public:
-			RemoveStatus() { }
+			RemoveStatus() { removedStatus = new Returnables::Status(); user = new Returnables::User(); }
 			~RemoveStatus() { if(removedStatus) delete removedStatus; if(user) delete user; }
 			Status *removedStatus;
 			User *user;
@@ -207,7 +207,7 @@ namespace Returnables
 	class SendDirectMessage : public Response
 	{
 		public:
-			SendDirectMessage() { }
+			SendDirectMessage() { headerInfo = new Returnables::DirectHeader(); sender = new Returnables::User(); recipient = new Returnables::User(); }
 			~SendDirectMessage() { if(headerInfo) delete headerInfo; if(sender) delete sender; if(recipient) delete recipient; }
 			DirectHeader *headerInfo;
 			User *sender;
@@ -216,7 +216,7 @@ namespace Returnables
 	class RemoveDirectMessage : public Response
 	{
 		public:
-			RemoveDirectMessage() { }
+			RemoveDirectMessage() { headerInfo = new Returnables::DirectHeader(); sender = new Returnables::User(); recipient = new Returnables::User(); }
 			~RemoveDirectMessage() { if(headerInfo) delete headerInfo; if(sender) delete sender; if(recipient) delete recipient; }
 			DirectHeader *headerInfo;
 			User *sender;
@@ -225,7 +225,7 @@ namespace Returnables
 	class AddFriendship : public Response
 	{
 		public:
-			AddFriendship() { }
+			AddFriendship() { user = new Returnables::User(); status = new Returnables::Status(); }
 			~AddFriendship() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;
@@ -233,7 +233,7 @@ namespace Returnables
 	class RemoveFriendship : public Response
 	{
 		public:
-			RemoveFriendship() { }
+			RemoveFriendship() { user = new Returnables::User(); status = new Returnables::Status(); }
 			~RemoveFriendship() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;	
@@ -248,7 +248,7 @@ namespace Returnables
 	class UpdateLocation : public Response
 	{
 		public:
-			UpdateLocation() { }
+			UpdateLocation() { user = new Returnables::User(); status = new Returnables::Status(); }
 			~UpdateLocation() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;
@@ -256,7 +256,7 @@ namespace Returnables
 	class DeliveryDevice : public Response
 	{
 		public:
-			DeliveryDevice() { }
+			DeliveryDevice() { user = new Returnables::User(); status = new Returnables::Status(); }
 			~DeliveryDevice() { if(user) delete user; if(status) delete status; }
 			User *user;
 			Status *status;
@@ -274,7 +274,7 @@ namespace Returnables
 	class AddFavorite : public Response
 	{
 		public:
-			AddFavorite() { }
+			AddFavorite() { status = new Returnables::Status(); user = new Returnables::User(); }
 			~AddFavorite() { if(status) delete status; if(user) delete user; }
 			Status *status;
 			User *user;
@@ -282,7 +282,7 @@ namespace Returnables
 	class RemoveFavorite : public Response
 	{
 		public:
-			RemoveFavorite() { }
+			RemoveFavorite() { status = new Returnables::Status(); user = new Returnables::User(); }
 			~RemoveFavorite() { if(status) delete status; if(user) delete user; }
 			Status *status;
 			User *user;	
