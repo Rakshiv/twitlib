@@ -11,45 +11,49 @@ class Decipher
 {
 	private:
 		Decipher();
+		static Decipher *instance; 
 
 	public:
-		~Decipher();
-		static Returnables::FriendsTimeline* FriendsTimeline(const QString &xml);
-		static Returnables::PublicTimeline* PublicTimeline(const QString &xml);
-		static Returnables::SingleStatus* SingleStatus(const QString &xml);
-		static Returnables::FeaturedUsers* FeaturedUsers(const QString &xml);
-		static Returnables::Login* Login(const QString &xml);
-		static Returnables::TwitterUp* TwitterUp(const QString &xml);
-		static Returnables::UserTimeline* UserTimeline(const QString &xml);
-		static Returnables::Favorites* Favorites(const QString &xml);
-		static Returnables::NewStatus* NewStatus(const QString &xml);
-		static Returnables::RecentReplies* RecentReplies(const QString &xml);
-		static Returnables::RemoveStatus* RemoveStatus(const QString &xml);
-		static Returnables::Friends* Friends(const QString &xml);
-		static Returnables::Followers* Followers(const QString &xml);
-		static Returnables::UserDetails* UserDetails(const QString &xml);
-		static Returnables::SentDirectMessages* SentDirectMessages(const QString &xml);
-		static Returnables::ReceivedDirectMessages* ReceivedDirectMessages(const QString &xml);
-		static Returnables::SendDirectMessage* SendDirectMessage(const QString &xml);
-		static Returnables::RemoveDirectMessage* RemoveDirectMessage(const QString &xml);
-		static Returnables::AddFriendship* AddFriendShip(const QString &xml);
-		static Returnables::RemoveFriendship* RemoveFriendship(const QString &xml);
-		static Returnables::FriendshipExist* FriendshipExist(const QString &xml);
-		static Returnables::UpdateLocation* UpdateLocation(const QString &xml);
-		static Returnables::DeliveryDevice* DeliveryDevice(const QString &xml);
-		static Returnables::ApiRequests* ApiRequests(const QString &xml);
-		static Returnables::AddFavorite* AddFavorite(const QString &xml);
-		static Returnables::RemoveFavorite* RemoveFavorite(const QString &xml);
+		virtual ~Decipher();
+		static Decipher *Instance();
+
+	public:
+		Returnables::FriendsTimeline* FriendsTimeline(const QString &xml);
+		Returnables::PublicTimeline* PublicTimeline(const QString &xml);
+		Returnables::SingleStatus* SingleStatus(const QString &xml);
+		Returnables::FeaturedUsers* FeaturedUsers(const QString &xml);
+		Returnables::Login* Login(const QString &xml);
+		Returnables::TwitterUp* TwitterUp(const QString &xml);
+		Returnables::UserTimeline* UserTimeline(const QString &xml);
+		Returnables::Favorites* Favorites(const QString &xml);
+		Returnables::NewStatus* NewStatus(const QString &xml);
+		Returnables::RecentReplies* RecentReplies(const QString &xml);
+		Returnables::RemoveStatus* RemoveStatus(const QString &xml);
+		Returnables::Friends* Friends(const QString &xml);
+		Returnables::Followers* Followers(const QString &xml);
+		Returnables::UserDetails* UserDetails(const QString &xml);
+		Returnables::SentDirectMessages* SentDirectMessages(const QString &xml);
+		Returnables::ReceivedDirectMessages* ReceivedDirectMessages(const QString &xml);
+		Returnables::SendDirectMessage* SendDirectMessage(const QString &xml);
+		Returnables::RemoveDirectMessage* RemoveDirectMessage(const QString &xml);
+		Returnables::AddFriendship* AddFriendShip(const QString &xml);
+		Returnables::RemoveFriendship* RemoveFriendship(const QString &xml);
+		Returnables::FriendshipExist* FriendshipExist(const QString &xml);
+		Returnables::UpdateLocation* UpdateLocation(const QString &xml);
+		Returnables::DeliveryDevice* DeliveryDevice(const QString &xml);
+		Returnables::ApiRequests* ApiRequests(const QString &xml);
+		Returnables::AddFavorite* AddFavorite(const QString &xml);
+		Returnables::RemoveFavorite* RemoveFavorite(const QString &xml);
 
 	private:
 		enum Parent { USER, STATUS };
-		static QLinkedList<Returnables::StatusUser*> GetStatusUserList(const QString &xml, Parent parent=STATUS);
-		static QLinkedList<Returnables::DirectMessage*> GetDirectMessageList(const QString &xml);
-		static void PopulateStatus(Returnables::Status &status, const QDomElement &node);
-		static void PopulateUser(Returnables::User &user, const QDomElement &node);
-		static void PopulateDetails(Returnables::Details &details, const QDomElement &node);
-		static void PopulateDirectHeader(Returnables::DirectHeader &header, const QDomElement &node);
-		static void PopulateApiRequests(Returnables::ApiRequests &apiRequests, const QDomElement &node);
+		QLinkedList<Returnables::StatusUser*> GetStatusUserList(const QString &xml, Parent parent=STATUS);
+		QLinkedList<Returnables::DirectMessage*> GetDirectMessageList(const QString &xml);
+		void PopulateStatus(Returnables::Status &status, const QDomElement &node);
+		void PopulateUser(Returnables::User &user, const QDomElement &node);
+		void PopulateDetails(Returnables::Details &details, const QDomElement &node);
+		void PopulateDirectHeader(Returnables::DirectHeader &header, const QDomElement &node);
+		void PopulateApiRequests(Returnables::ApiRequests &apiRequests, const QDomElement &node);
 
 	private:
 		static QString nStatus;
