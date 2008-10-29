@@ -120,132 +120,132 @@ void Core::ReqFinished(int id, bool error)
 		{
 		case Returnables::PUBLIC_TIMELINE:
 			Returnables::PublicTimeline *pTimeline;
-			pTimeline = Decipher::PublicTimeline(response);
+			pTimeline = Decipher::Instance()->PublicTimeline(response);
 			emit OnResponseReceived(pTimeline);
 			break;
 		case Returnables::FRIENDS_TIMELINE:
 			Returnables::FriendsTimeline *fTimeline;
-			fTimeline = Decipher::FriendsTimeline(response);
+			fTimeline = Decipher::Instance()->FriendsTimeline(response);
 			emit OnResponseReceived(fTimeline);
 			break;
 		case Returnables::SINGLE_STATUS:
 			Returnables::SingleStatus *singleStatus;
-			singleStatus = Decipher::SingleStatus(response);
+			singleStatus = Decipher::Instance()->SingleStatus(response);
 			emit OnResponseReceived(singleStatus);
 			break;
 		case Returnables::FEATURED_USERS:
 			Returnables::FeaturedUsers *featuredUsers;
-			featuredUsers = Decipher::FeaturedUsers(response);
+			featuredUsers = Decipher::Instance()->FeaturedUsers(response);
 			emit OnResponseReceived(featuredUsers);
 			break;
 		case Returnables::VERIFY_CREDENTIALS:
 			Returnables::Login *login;
-			login = Decipher::Login(response);
+			login = Decipher::Instance()->Login(response);
 			emit OnResponseReceived(login);
 			break;
 		case Returnables::TWITTER_UP:
 			Returnables::TwitterUp *twitterUp;
-			twitterUp = Decipher::TwitterUp(response);
+			twitterUp = Decipher::Instance()->TwitterUp(response);
 			emit OnResponseReceived(twitterUp);
 			break;
 		case Returnables::USER_TIMELINE:
 			Returnables::UserTimeline *userTimeline;
-			userTimeline = Decipher::UserTimeline(response);
+			userTimeline = Decipher::Instance()->UserTimeline(response);
 			emit OnResponseReceived(userTimeline);
 			break;
 		case Returnables::FAVORITES:
 			Returnables::Favorites *favorites;
-			favorites = Decipher::Favorites(response);
+			favorites = Decipher::Instance()->Favorites(response);
 			emit OnResponseReceived(favorites);
 			break;
 		case Returnables::NEW_STATUS:
 			Returnables::NewStatus *newStatus;
-			newStatus = Decipher::NewStatus(response);
+			newStatus = Decipher::Instance()->NewStatus(response);
 			emit OnResponseReceived(newStatus);
 			break;
 		case Returnables::RECENT_REPLIES:
 			Returnables::RecentReplies *replies;
-			replies = Decipher::RecentReplies(response);
+			replies = Decipher::Instance()->RecentReplies(response);
 			emit OnResponseReceived(replies);
 			break;
 		case Returnables::REMOVE_STATUS:
 			Returnables::RemoveStatus *removedStatus;
-			removedStatus = Decipher::RemoveStatus(response);
+			removedStatus = Decipher::Instance()->RemoveStatus(response);
 			emit OnResponseReceived(removedStatus);
 			break;
 		case Returnables::FRIENDS:
 			Returnables::Friends *friends;
-			friends = Decipher::Friends(response);
+			friends = Decipher::Instance()->Friends(response);
 			emit OnResponseReceived(friends);
 			break;
 		case Returnables::FOLLOWERS:
 			Returnables::Followers *followers;
-			followers = Decipher::Followers(response);
+			followers = Decipher::Instance()->Followers(response);
 			emit OnResponseReceived(followers);
 			break;
 		case Returnables::USER_DETAILS:
 			Returnables::UserDetails *userDetails;
-			userDetails = Decipher::UserDetails(response);
+			userDetails = Decipher::Instance()->UserDetails(response);
 			emit OnResponseReceived(userDetails);
 			break;
 		case Returnables::SENT_DIRECT_MESSAGES:
 			Returnables::SentDirectMessages *sentDirectMessages;
-			sentDirectMessages = Decipher::SentDirectMessages(response);
+			sentDirectMessages = Decipher::Instance()->SentDirectMessages(response);
 			emit OnResponseReceived(sentDirectMessages);
 			break;
 		case Returnables::RECEIVED_DIRECT_MESSAGES:
 			Returnables::ReceivedDirectMessages *receivedDirectMessages;
-			receivedDirectMessages = Decipher::ReceivedDirectMessages(response);
+			receivedDirectMessages = Decipher::Instance()->ReceivedDirectMessages(response);
 			emit OnResponseReceived(receivedDirectMessages);
 			break;
 		case Returnables::SEND_DIRECT_MESSAGE:
 			Returnables::SendDirectMessage *sendDirectMessage;
-			sendDirectMessage = Decipher::SendDirectMessage(response);
+			sendDirectMessage = Decipher::Instance()->SendDirectMessage(response);
 			emit OnResponseReceived(sendDirectMessage);
 			break;
 		case Returnables::REMOVE_DIRECT_MESSAGE:
 			Returnables::RemoveDirectMessage *removeDirectMessage;
-			removeDirectMessage = Decipher::RemoveDirectMessage(response);
+			removeDirectMessage = Decipher::Instance()->RemoveDirectMessage(response);
 			emit OnResponseReceived(removeDirectMessage);
 			break;
 		case Returnables::ADD_FRIENDSHIP:
 			Returnables::AddFriendship *addFriendship;
-			addFriendship = Decipher::AddFriendShip(response);
+			addFriendship = Decipher::Instance()->AddFriendShip(response);
 			emit OnResponseReceived(addFriendship);
 			break;
 		case Returnables::REMOVE_FRIENDSHIP:
 			Returnables::RemoveFriendship *removeFriendship;
-			removeFriendship = Decipher::RemoveFriendship(response);
+			removeFriendship = Decipher::Instance()->RemoveFriendship(response);
 			emit OnResponseReceived(removeFriendship);
 			break;
 		case Returnables::FRIENDSHIP_EXISTS:
 			Returnables::FriendshipExist *friendshipExists;
-			friendshipExists = Decipher::FriendshipExist(response);
+			friendshipExists = Decipher::Instance()->FriendshipExist(response);
 			emit OnResponseReceived(friendshipExists);
 			break;
 		case Returnables::UPDATE_LOCATION:
 			Returnables::UpdateLocation *updateLocation;
-			updateLocation = Decipher::UpdateLocation(response);
+			updateLocation = Decipher::Instance()->UpdateLocation(response);
 			emit OnResponseReceived(updateLocation);
 			break;
 		case Returnables::DELIVERY_DEVICE:
 			Returnables::DeliveryDevice *deliveryDevice;
-			deliveryDevice = Decipher::DeliveryDevice(response);
+			deliveryDevice = Decipher::Instance()->DeliveryDevice(response);
 			emit OnResponseReceived(deliveryDevice);
 			break;
 		case Returnables::API_REQUESTS:
 			Returnables::ApiRequests *apiRequests;
-			apiRequests = Decipher::ApiRequests(response);
+			apiRequests = Decipher::Instance()->ApiRequests(response);
 			emit OnResponseReceived(apiRequests);
 			break;
 		case Returnables::ADD_FAVORITE:
 			Returnables::AddFavorite *addFavorite;
-			addFavorite = Decipher::AddFavorite(response);
+			addFavorite = Decipher::Instance()->AddFavorite(response);
 			emit OnResponseReceived(addFavorite);
 			break;
 		case Returnables::REMOVE_FAVORITE:
 			Returnables::RemoveFavorite *removeFavorite;
-			removeFavorite = Decipher::RemoveFavorite(response);
+			removeFavorite = Decipher::Instance()->RemoveFavorite(response);
 			emit OnResponseReceived(removeFavorite);
 			break;
 		default:

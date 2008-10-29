@@ -5,6 +5,7 @@
 
 
 //=====================================================================
+Decipher* Decipher::instance = NULL; 
 QString Decipher::nStatus = "status";
 QString Decipher::nCreatedAt = "created_at";
 QString Decipher::nId = "id";
@@ -56,6 +57,16 @@ Decipher::Decipher()
 //=====================================================================
 Decipher::~Decipher()
 {}
+//=====================================================================
+Decipher* Decipher::Instance()
+{
+	if(instance == NULL)
+	{
+		instance = new Decipher();
+	}
+
+	return instance;
+}
 //=====================================================================
 QLinkedList<Returnables::StatusUser*> Decipher::GetStatusUserList(const QString &xml, Parent parent)
 {
