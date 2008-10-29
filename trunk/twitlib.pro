@@ -5,14 +5,15 @@
 unix:TEMPLATE = lib
 win32:TEMPLATE = vclib
 
+CONFIG += debug_and_release
 DEPENDPATH += include generated
 INCLUDEPATH += include generated
-
 QT = core network xml
 TARGET = QTwitLib
 MOC_DIR = generated
 OBJECTS_DIR = intermediates
 DESTDIR = release
+CONFIG += build_all
 
 # Input
 HEADERS += include/Core.h \

@@ -1,6 +1,6 @@
 #include "Decipher.h"
-#include <QtXML/QDomDocument>
-#include <QtXML/QDomNodeList>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomNodeList>
 #include <QtCore/QTextStream>
 
 

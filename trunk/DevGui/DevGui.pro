@@ -4,15 +4,17 @@
 
 unix:TEMPLATE = app
 win32:TEMPLATE =vcapp
+
+CONFIG += debug_and_release
 TARGET = DevGui
 INCLUDEPATH += . include ../include
 DEPENDPATH += . include ../include
 MOC_DIR = generated
 UI_DIR = generated
 RCC_DIR = generated
+DESTDIR = release
 RESOURCES += resource/images.qrc
 OBJECTS_DIR = intermediates
-DESTDIR = release
 unix:LIBS += -L../release -lQTwitLib
 win32:LIBS += -L../debug -lQTwitLib
 
