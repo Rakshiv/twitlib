@@ -9,8 +9,18 @@
     <height>493</height>
    </rect>
   </property>
+  <property name="maximumSize" >
+   <size>
+    <width>705</width>
+    <height>493</height>
+   </size>
+  </property>
   <property name="windowTitle" >
    <string>Twitter dev app</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="../resource/images.qrc" >
+    <normaloff>:/browne/images/browne.png</normaloff>:/browne/images/browne.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" >
@@ -152,6 +162,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource/images.qrc" />
+ </resources>
  <connections/>
 </ui>
