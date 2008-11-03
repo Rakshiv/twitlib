@@ -7,7 +7,6 @@
 #include <QtCore/QMap>
 #include <QtNetwork/QHttp>
 #include "Server.h"
-#include "Decipher.h"
 #include "Returnables.h"
 
 class Core : public QObject

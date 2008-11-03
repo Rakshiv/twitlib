@@ -1,5 +1,5 @@
 #include "Core.h"
-
+#include "Decipher.h"
 #include <QtXml/QDomDocument>
 #include <QtGui/QMessageBox>
 #include <QtCore/QUrl>
