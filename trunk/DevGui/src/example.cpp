@@ -1,5 +1,6 @@
 #include <QtGui/QMessageBox>
 #include <QtGui/QInputDialog>
+#include <QtGui/QScrollBar>
 #include "example.h"
 
 //=====================================================================
@@ -56,6 +57,44 @@ void Example::OnStatusReceived(SERVER::RESP response)
     m_plainTextEdit->appendPlainText("STATUS REC "+QString::number(response)); 
 }
 //=====================================================================
+void Example::DisplayList(QLinkedList<Returnables::StatusUser*> list, QString header)
+{
+	Returnables::StatusUser *statusUser = NULL;
+
+	m_plainTextEdit->appendPlainText("---------------------------------");
+	m_plainTextEdit->appendHtml("<h2>"+header+"</h2>");
+	m_plainTextEdit->appendPlainText("");
+
+	while(!list.isEmpty())
+	{
+		statusUser = list.takeFirst();
+		m_plainTextEdit->appendPlainText("ID: "+QString::number(statusUser->status.id));
+		m_plainTextEdit->appendPlainText("Username: "+statusUser->user.screenName);
+		m_plainTextEdit->appendPlainText("Text: "+statusUser->status.text);
+		m_plainTextEdit->appendPlainText("");
+	}
+}
+//=====================================================================
+void Example::DisplayList(QLinkedList<Returnables::DirectMessage*> list, QString header)
+{
+	Returnables::DirectMessage *directMessage = NULL;
+
+	m_plainTextEdit->appendPlainText("---------------------------------");
+	m_plainTextEdit->appendHtml("<h2>"+header+"</h2>");
+	m_plainTextEdit->appendPlainText("");
+
+	while(!list.isEmpty())
+	{
+		directMessage = list.takeFirst();
+		m_plainTextEdit->appendPlainText("ID: "+QString::number(directMessage->headerInfo.id));
+		m_plainTextEdit->appendPlainText("Sender: "+directMessage->sender.screenName);
+		m_plainTextEdit->appendPlainText("Recipient: "+directMessage->recipient.screenName);
+		m_plainTextEdit->appendPlainText("Created At: "+directMessage->headerInfo.createdAt);
+		m_plainTextEdit->appendPlainText("Text: "+directMessage->headerInfo.text);
+		m_plainTextEdit->appendPlainText("");
+	}
+}
+//=====================================================================
 void Example::OnResponseReceived(Returnables::Response *resp)
 {
 	if(resp)
@@ -65,22 +104,14 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 		case Returnables::PUBLIC_TIMELINE:
 			{
 				Returnables::PublicTimeline *pTimeline = static_cast<Returnables::PublicTimeline *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Public Timeline</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(pTimeline->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+pTimeline->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+pTimeline->list.first()->status.text);
+				DisplayList(pTimeline->list, "Public Timeline");
 				delete pTimeline;
 				break;
 			}
 		case Returnables::FRIENDS_TIMELINE:
 			{
 				Returnables::FriendsTimeline *fTimeline = static_cast<Returnables::FriendsTimeline *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Friends Timeline</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(fTimeline->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+fTimeline->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+fTimeline->list.first()->status.text);
+				DisplayList(fTimeline->list, "Friends Timeline");
 				delete fTimeline;
 				break;
 			}
@@ -88,7 +119,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::SingleStatus *singleStatus = static_cast<Returnables::SingleStatus *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Single Status</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(singleStatus->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+singleStatus->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+singleStatus->status->text);
@@ -98,11 +129,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 		case Returnables::FEATURED_USERS:
 			{
 				Returnables::FeaturedUsers *featuredUsers = static_cast<Returnables::FeaturedUsers *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Featured Users</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(featuredUsers->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+featuredUsers->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+featuredUsers->list.first()->status.text);
+				DisplayList(featuredUsers->list, "Featured Users");
 				delete featuredUsers;
 				break;
 			}
@@ -110,7 +137,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::Login *login = static_cast<Returnables::Login *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Login</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				QString authorized = login->authorized ? "true" : "false";
 				m_plainTextEdit->appendPlainText("Authorized: "+authorized);
 				delete login;
@@ -120,7 +147,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::TwitterUp *twitterUp = static_cast<Returnables::TwitterUp *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Twitter Up</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				QString up = twitterUp->up ? "true" : "false";
 				m_plainTextEdit->appendPlainText("Up: "+up);
 				delete twitterUp;
@@ -129,22 +156,14 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 		case Returnables::USER_TIMELINE:
 			{
 				Returnables::UserTimeline *userTimeline = static_cast<Returnables::UserTimeline *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Users Timeline</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(userTimeline->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+userTimeline->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+userTimeline->list.first()->status.text);
+				DisplayList(userTimeline->list, "Users Timeline");
 				delete userTimeline;
 				break;
 			}
 		case Returnables::FAVORITES:
 			{
 				Returnables::Favorites *favorites = static_cast<Returnables::Favorites *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Favorites</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(favorites->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+favorites->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+favorites->list.first()->status.text);
+				DisplayList(favorites->list, "Favorites");
 				delete favorites;
 				break;
 			}
@@ -152,7 +171,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::NewStatus *newStatus = static_cast<Returnables::NewStatus *>(resp);
 				m_plainTextEdit->appendHtml("<h2>New Status</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(newStatus->newStatus->id));
 				m_plainTextEdit->appendPlainText("Username: "+newStatus->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+newStatus->newStatus->text);
@@ -162,11 +181,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 		case Returnables::RECENT_REPLIES:
 			{
 				Returnables::RecentReplies *replies = static_cast<Returnables::RecentReplies *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Recent Replies</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(replies->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+replies->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+replies->list.first()->status.text);
+				DisplayList(replies->list, "Recent Replies");
 				delete replies;
 				break;
 			}
@@ -174,7 +189,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::RemoveStatus *removedStatus = static_cast<Returnables::RemoveStatus *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Remove Status</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(removedStatus->removedStatus->id));
 				m_plainTextEdit->appendPlainText("Username: "+removedStatus->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+removedStatus->removedStatus->text);
@@ -184,22 +199,14 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 		case Returnables::FRIENDS:
 			{
 				Returnables::Friends *friends = static_cast<Returnables::Friends *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Friends</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(friends->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+friends->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+friends->list.first()->status.text);
+				DisplayList(friends->list, "Friends");
 				delete friends;
 				break;
 			}
 		case Returnables::FOLLOWERS:
 			{
 				Returnables::Followers *followers = static_cast<Returnables::Followers *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Followers</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(followers->list.first()->status.id));
-				m_plainTextEdit->appendPlainText("Username: "+followers->list.first()->user.screenName);
-				m_plainTextEdit->appendPlainText("Text: "+followers->list.first()->status.text);
+				DisplayList(followers->list, "Followers");
 				delete followers;
 				break;
 			}
@@ -207,7 +214,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::UserDetails *userDetails = static_cast<Returnables::UserDetails *>(resp);
 				m_plainTextEdit->appendHtml("<h2>User Details</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(userDetails->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+userDetails->user->screenName);
 				m_plainTextEdit->appendPlainText("Friends: "+QString::number(userDetails->details->friendsCount));
@@ -218,34 +225,22 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 		case Returnables::SENT_DIRECT_MESSAGES:
 			{
 				Returnables::SentDirectMessages *sentDirectMessages = static_cast<Returnables::SentDirectMessages *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Sent Direct Messages</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(sentDirectMessages->list.first()->headerInfo.id));
-				m_plainTextEdit->appendPlainText("Sender: "+sentDirectMessages->list.first()->sender.screenName);
-				m_plainTextEdit->appendPlainText("Recipient: "+sentDirectMessages->list.first()->recipient.screenName);
-				m_plainTextEdit->appendPlainText("Created At: "+sentDirectMessages->list.first()->headerInfo.createdAt);
-				m_plainTextEdit->appendPlainText("Text: "+sentDirectMessages->list.first()->headerInfo.text);
+				DisplayList(sentDirectMessages->list, "Sent Direct Messages");
 				delete sentDirectMessages;
 				break;
 			}
 		case Returnables::RECEIVED_DIRECT_MESSAGES:
 			{
 				Returnables::ReceivedDirectMessages *receivedDirectMessages = static_cast<Returnables::ReceivedDirectMessages *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Received Direct Messages</h2>");
-				m_plainTextEdit->appendHtml("<br>");
-				m_plainTextEdit->appendPlainText("ID: "+QString::number(receivedDirectMessages->list.first()->headerInfo.id));
-				m_plainTextEdit->appendPlainText("Sender: "+receivedDirectMessages->list.first()->sender.screenName);
-				m_plainTextEdit->appendPlainText("Recipient: "+receivedDirectMessages->list.first()->recipient.screenName);
-				m_plainTextEdit->appendPlainText("Created At: "+receivedDirectMessages->list.first()->headerInfo.createdAt);
-				m_plainTextEdit->appendPlainText("Text: "+receivedDirectMessages->list.first()->headerInfo.text);
+				DisplayList(receivedDirectMessages->list, "Received Direct Messages");
 				delete receivedDirectMessages;
 				break;
 			}
 		case Returnables::SEND_DIRECT_MESSAGE:
 			{	
 				Returnables::SendDirectMessage *sendDirectMessage = static_cast<Returnables::SendDirectMessage *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Received Direct Messages</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendHtml("<h2>Send Direct Messages</h2>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(sendDirectMessage->headerInfo->id));
 				m_plainTextEdit->appendPlainText("Sender: "+sendDirectMessage->sender->screenName);
 				m_plainTextEdit->appendPlainText("Recipient: "+sendDirectMessage->recipient->screenName);
@@ -258,7 +253,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::RemoveDirectMessage *removeDirectMessage = static_cast<Returnables::RemoveDirectMessage *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Remove Direct Messages</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(removeDirectMessage->headerInfo->id));
 				m_plainTextEdit->appendPlainText("Sender: "+removeDirectMessage->sender->screenName);
 				m_plainTextEdit->appendPlainText("Recipient: "+removeDirectMessage->recipient->screenName);
@@ -271,7 +266,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::AddFriendship *addFriendship = static_cast<Returnables::AddFriendship *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Add Friendship</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(addFriendship->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+addFriendship->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+addFriendship->status->text);
@@ -282,7 +277,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::RemoveFriendship *removeFriendship = static_cast<Returnables::RemoveFriendship *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Remove Friendship</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(removeFriendship->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+removeFriendship->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+removeFriendship->status->text);
@@ -293,7 +288,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::FriendshipExist *friendshipExists = static_cast<Returnables::FriendshipExist *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Friendship Exist</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				QString friends = friendshipExists->friends ? "true" : "false";
 				m_plainTextEdit->appendPlainText("Are Friends?: "+friends);
 				delete friendshipExists;
@@ -303,7 +298,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::UpdateLocation *updateLocation = static_cast<Returnables::UpdateLocation *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Update Location</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(updateLocation->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+updateLocation->user->screenName);
 				m_plainTextEdit->appendPlainText("Location: "+updateLocation->user->location);
@@ -315,7 +310,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::DeliveryDevice *deliveryDevice = static_cast<Returnables::DeliveryDevice *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Update Delivery Device</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(deliveryDevice->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+deliveryDevice->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+deliveryDevice->status->text);
@@ -326,7 +321,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::ApiRequests *apiRequests = static_cast<Returnables::ApiRequests *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Remaining API requests</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("Hourly Limit: "+QString::number(apiRequests->hourlyLimit));
 				m_plainTextEdit->appendPlainText("Remaining hits: "+QString::number(apiRequests->remainingHits));
 				m_plainTextEdit->appendPlainText("Reset time: "+apiRequests->resetTime);
@@ -338,7 +333,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::AddFavorite *addFavorite = static_cast<Returnables::AddFavorite *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Add Favorite</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(addFavorite->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+addFavorite->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+addFavorite->status->text);
@@ -349,7 +344,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 			{
 				Returnables::RemoveFavorite *removeFavorite = static_cast<Returnables::RemoveFavorite *>(resp);
 				m_plainTextEdit->appendHtml("<h2>Remove Favorite</h2>");
-				m_plainTextEdit->appendHtml("<br>");
+				m_plainTextEdit->appendPlainText("");
 				m_plainTextEdit->appendPlainText("ID: "+QString::number(removeFavorite->status->id));
 				m_plainTextEdit->appendPlainText("Username: "+removeFavorite->user->screenName);
 				m_plainTextEdit->appendPlainText("Text: "+removeFavorite->status->text);
@@ -357,6 +352,7 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 				break;
 			}
 		}
+		m_plainTextEdit->verticalScrollBar()->setSliderPosition(0);
 	}
 }
 //=====================================================================
