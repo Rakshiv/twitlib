@@ -33,6 +33,8 @@ class Example : public QWidget
 
 	private:
 		void MakeConnections();
+		void DisplayList(QLinkedList<Returnables::StatusUser*> list, QString header);
+		void DisplayList(QLinkedList<Returnables::DirectMessage*> list, QString header);
 	
 	private:
 		Ui::Form m_gui;
