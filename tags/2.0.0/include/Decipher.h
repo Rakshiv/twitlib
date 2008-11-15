@@ -1,0 +1,107 @@
+#ifndef Decipher_H
+#define Decipher_H
+
+#include <QtCore/QLinkedList>
+#include <QtCore/QString>
+#include "Returnables.h"
+
+class QDomElement;
+
+class Decipher
+{
+	private:
+		Decipher();
+		static Decipher *instance; 
+
+	public:
+		virtual ~Decipher();
+		static Decipher *Instance();
+
+	public:
+		Returnables::FriendsTimeline* FriendsTimeline(const QString &xml);
+		Returnables::PublicTimeline* PublicTimeline(const QString &xml);
+		Returnables::SingleStatus* SingleStatus(const QString &xml);
+		Returnables::FeaturedUsers* FeaturedUsers(const QString &xml);
+		Returnables::Login* Login(const QString &xml);
+		Returnables::TwitterUp* TwitterUp(const QString &xml);
+		Returnables::UserTimeline* UserTimeline(const QString &xml);
+		Returnables::Favorites* Favorites(const QString &xml);
+		Returnables::NewStatus* NewStatus(const QString &xml);
+		Returnables::RecentReplies* RecentReplies(const QString &xml);
+		Returnables::RemoveStatus* RemoveStatus(const QString &xml);
+		Returnables::Friends* Friends(const QString &xml);
+		Returnables::Followers* Followers(const QString &xml);
+		Returnables::UserDetails* UserDetails(const QString &xml);
+		Returnables::SentDirectMessages* SentDirectMessages(const QString &xml);
+		Returnables::ReceivedDirectMessages* ReceivedDirectMessages(const QString &xml);
+		Returnables::SendDirectMessage* SendDirectMessage(const QString &xml);
+		Returnables::RemoveDirectMessage* RemoveDirectMessage(const QString &xml);
+		Returnables::AddFriendship* AddFriendShip(const QString &xml);
+		Returnables::RemoveFriendship* RemoveFriendship(const QString &xml);
+		Returnables::FriendshipExist* FriendshipExist(const QString &xml);
+		Returnables::UpdateLocation* UpdateLocation(const QString &xml);
+		Returnables::DeliveryDevice* DeliveryDevice(const QString &xml);
+		Returnables::ApiRequests* ApiRequests(const QString &xml);
+		Returnables::AddFavorite* AddFavorite(const QString &xml);
+		Returnables::RemoveFavorite* RemoveFavorite(const QString &xml);
+
+	private:
+		enum Parent { USER, STATUS };
+		QLinkedList<Returnables::StatusUser*> GetStatusUserList(const QString &xml, Parent parent=STATUS);
+		QLinkedList<Returnables::DirectMessage*> GetDirectMessageList(const QString &xml);
+		void PopulateStatus(Returnables::Status &status, const QDomElement &node);
+		void PopulateUser(Returnables::User &user, const QDomElement &node);
+		void PopulateDetails(Returnables::Details &details, const QDomElement &node);
+		void PopulateDirectHeader(Returnables::DirectHeader &header, const QDomElement &node);
+		void PopulateApiRequests(Returnables::ApiRequests &apiRequests, const QDomElement &node);
+
+	private:
+		static QString nStatus;
+		static QString nCreatedAt;
+		static QString nId;
+		static QString nText;
+		static QString nSource;
+		static QString nTruncated;
+		static QString nInReplyToStatusId;
+		static QString nInReplyToUserId;
+		static QString nFavorited;
+		static QString nUser;
+		static QString nName;
+		static QString nScreenName;
+		static QString nDescription;
+		static QString nLocation;
+		static QString nProfileImageUrl;
+		static QString nUrl;
+		static QString nProtected;
+		static QString nFollowersCount;
+		static QString nAuthorized;
+		static QString nOk;
+		static QString nProfileBackgroundColor;
+		static QString nProfileTextColor;
+		static QString nProfileLinkColor;
+		static QString nProfileSidebarFillColor;
+		static QString nProfileSidebarBorderColor;
+		static QString nFriendsCount;
+		static QString nFavoritesCount;
+		static QString nUtcOffset;
+		static QString nTimeZone;
+		static QString nProfileBackgroundImageUrl;
+		static QString nProfileBackgroundTiled;
+		static QString nStatusesCount;
+		static QString nDirectMessage;
+		static QString nSenderId;
+		static QString nRecipientId;
+		static QString nSenderScreenName;
+		static QString nRecipientScreenName;
+		static QString nSender;
+		static QString nRecipient;
+		static QString nFriends;
+		static QString nHash;
+		static QString nResetTime;
+		static QString nResetTimeSeconds;
+		static QString nRemainingHits;
+		static QString nHourlyLimit;
+};
+
+
+#endif //Decipher_H
