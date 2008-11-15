@@ -366,7 +366,7 @@ QString Example::GetPassword()
 	return m_lineEditPassword->text();
 }
 //=====================================================================
-void Example::TabChanged(int tabIdx)
+void Example::TabChanged(int /*tabIdx*/)
 {
 	m_plainTextEdit->clear();
 	SetupBasicUI();
