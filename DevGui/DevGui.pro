@@ -3,7 +3,7 @@
 ######################################################################
 
 unix:TEMPLATE = app
-win32:TEMPLATE =vcapp
+win32:TEMPLATE =app
 
 CONFIG += debug_and_release
 TARGET = DevGui
@@ -16,7 +16,7 @@ DESTDIR = release
 RESOURCES += resource/images.qrc
 OBJECTS_DIR = intermediates
 unix:LIBS += -L../release -lQTwitLib
-win32:LIBS += -L../debug -lQTwitLib
+win32:LIBS += -L../release -lQTwitLib
 
 # Input
 HEADERS += include/example.h
