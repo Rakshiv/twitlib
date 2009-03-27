@@ -9,6 +9,8 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QPlainTextEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QVBoxLayout>
+#include <QtGui/QHBoxLayout>
 
 class Example : public QWidget
 {
@@ -33,8 +35,11 @@ class Example : public QWidget
 
 	private:
 		void MakeConnections();
-		void DisplayList(QLinkedList<Returnables::StatusUser*> list, QString header);
-		void DisplayList(QLinkedList<Returnables::DirectMessage*> list, QString header);
+                void DisplayList(QLinkedList<Returnables::StatusElement*> list, QString header);
+                void DisplayList(QLinkedList<Returnables::BasicUserInfoElement*> list, QString header);
+                void DisplayList(QLinkedList<Returnables::ExtUserInfoElement*> list, QString header);
+                void DisplayList(QLinkedList<Returnables::DirectMessageElement*> list, QString header);
+                void DisplayList(QLinkedList<unsigned int> list, QString header);
 	
 	private:
 		Ui::Form m_gui;
@@ -48,6 +53,9 @@ class Example : public QWidget
 		QLabel *m_labelPassword;
 		QPushButton *m_pushButtonLogin;
 		QPushButton *m_pushButtonExecute;
+
+                QVBoxLayout *leftLayout;
+                QHBoxLayout *mainLayout;
 };
 
 

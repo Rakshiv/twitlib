@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>Form</class>
- <widget class="QWidget" name="Form" >
-  <property name="geometry" >
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,153 +10,203 @@
     <height>493</height>
    </rect>
   </property>
-  <property name="maximumSize" >
+  <property name="minimumSize">
    <size>
     <width>705</width>
     <height>493</height>
    </size>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Twitter dev app</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../resource/images.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../resource/images.qrc">
     <normaloff>:/browne/images/browne.png</normaloff>:/browne/images/browne.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
-   <item row="0" column="0" >
-    <widget class="QTabWidget" name="tabWidget" >
-     <property name="currentIndex" >
-      <number>0</number>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>19</number>
      </property>
-     <widget class="QWidget" name="tabPublicTimeline" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabPublicTimeline">
+      <attribute name="title">
        <string>PublicTimeline</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabFriendsTimeline" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabFriendsTimeline">
+      <attribute name="title">
        <string>FriendsTimeline</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabSingleStatus" >
-      <attribute name="title" >
-       <string>SingleStatus</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabFeaturedUsers" >
-      <attribute name="title" >
-       <string>FeaturedUsers</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabLogin" >
-      <attribute name="title" >
-       <string>Login</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabTwitterUp" >
-      <attribute name="title" >
-       <string>TwitterUp</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabUserTimeline" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabUserTimeline">
+      <attribute name="title">
        <string>UserTimeline</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabFavorites" >
-      <attribute name="title" >
-       <string>Favorites</string>
+     <widget class="QWidget" name="tabSingleStatus">
+      <attribute name="title">
+       <string>SingleStatus</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabNewStatus" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabNewStatus">
+      <attribute name="title">
        <string>NewStatus</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabRecentReplies" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabRecentReplies">
+      <attribute name="title">
        <string>RecentReplies</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabRemoveStatus" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabRemoveStatus">
+      <attribute name="title">
        <string>RemoveStatus</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabFriends" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabFriends">
+      <attribute name="title">
        <string>Friends</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabFollowers" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabFollowers">
+      <attribute name="title">
        <string>Followers</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabUserDetails" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabUserDetails">
+      <attribute name="title">
        <string>UserDetails</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabSentDirectMessages" >
-      <attribute name="title" >
-       <string>SentDirectMessages</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tabReceivedDirectMessages" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabReceivedDirectMessages">
+      <attribute name="title">
        <string>ReceivedDirectMessages</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabSendDirectMessage" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabSentDirectMessages">
+      <attribute name="title">
+       <string>SentDirectMessages</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabSendDirectMessage">
+      <attribute name="title">
        <string>SendDirectMessage</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabRemoveDirectMessage" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabRemoveDirectMessage">
+      <attribute name="title">
        <string>RemoveDirectMessage</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabAddFriendship" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabAddFriendship">
+      <attribute name="title">
        <string>AddFriendship</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabRemoveFriendship" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabRemoveFriendship">
+      <attribute name="title">
        <string>RemoveFriendship</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabFriendshipExist" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabFriendshipExist">
+      <attribute name="title">
        <string>FriendshipExist</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabUpdateLocation" >
-      <attribute name="title" >
-       <string>UpdateLocation</string>
+     <widget class="QWidget" name="tabFriendsIDs">
+      <attribute name="title">
+       <string>FriendsIDs</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabDeliveryDevice" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabFollowersIDs">
+      <attribute name="title">
+       <string>FollowersIDs</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabLogin">
+      <attribute name="title">
+       <string>Login</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabLogout">
+      <attribute name="title">
+       <string>Logout</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabDeliveryDevice">
+      <attribute name="title">
        <string>DeliveryDevice</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabApiRequest" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabProfileColors">
+      <attribute name="title">
+       <string>ProfileColors</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabProfileImage">
+      <attribute name="title">
+       <string>ProfileImage</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabProfileBackgroundImage">
+      <attribute name="title">
+       <string>ProfileBackgroundImage</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabApiRequest">
+      <attribute name="title">
        <string>ApiRequests</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabAddFavorite" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabProfile">
+      <attribute name="title">
+       <string>Profile</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFavorites">
+      <attribute name="title">
+       <string>Favorites</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabAddFavorite">
+      <attribute name="title">
        <string>AddFavorite</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tabRemoveFavorite" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabRemoveFavorite">
+      <attribute name="title">
        <string>RemoveFavorite</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabEnableNotifications">
+      <attribute name="title">
+       <string>EnableNotifications</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabDisableNotifications">
+      <attribute name="title">
+       <string>DisableNotifications</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabBlockUser">
+      <attribute name="title">
+       <string>BlockUser</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabUnBlockUser">
+      <attribute name="title">
+       <string>UnBlockUser</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabTwitterUp">
+      <attribute name="title">
+       <string>TwitterUp</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFeaturedUsers">
+      <attribute name="title">
+       <string>FeaturedUsers</string>
       </attribute>
      </widget>
     </widget>
@@ -163,7 +214,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../resource/images.qrc" />
+  <include location="../resource/images.qrc"/>
  </resources>
  <connections/>
 </ui>
