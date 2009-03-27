@@ -39,17 +39,31 @@ class Decipher
 		Returnables::AddFriendship* AddFriendShip(const QString &xml);
 		Returnables::RemoveFriendship* RemoveFriendship(const QString &xml);
 		Returnables::FriendshipExist* FriendshipExist(const QString &xml);
-		Returnables::UpdateLocation* UpdateLocation(const QString &xml);
 		Returnables::DeliveryDevice* DeliveryDevice(const QString &xml);
 		Returnables::ApiRequests* ApiRequests(const QString &xml);
 		Returnables::AddFavorite* AddFavorite(const QString &xml);
 		Returnables::RemoveFavorite* RemoveFavorite(const QString &xml);
+                Returnables::ProfileColors* ProfileColors(const QString &xml);
+                Returnables::ProfileImage* ProfileImage(const QString &xml);
+                Returnables::ProfileBackgroundImage* ProfileBackgroundImage(const QString &xml);
+                Returnables::Profile* Profile(const QString &xml);
+                Returnables::EnableNotifications* EnableNotifications(const QString &xml);
+                Returnables::DisableNotifications* DisableNotifications(const QString &xml);
+                Returnables::BlockUser* BlockUser(const QString &xml);
+                Returnables::UnBlockUser* UnBlockUser(const QString &xml);
+                Returnables::FriendsIDs* FriendsIDs(const QString &xml);
+                Returnables::FollowersIDs* FollowersIDs(const QString &xml);
 
 	private:
 		enum Parent { USER, STATUS };
-		QLinkedList<Returnables::StatusUser*> GetStatusUserList(const QString &xml, Parent parent=STATUS);
-		QLinkedList<Returnables::DirectMessage*> GetDirectMessageList(const QString &xml);
-		void PopulateStatus(Returnables::Status &status, const QDomElement &node);
+                QLinkedList<Returnables::StatusElement*> GetStatusElementList(const QString &xml);
+                QLinkedList<Returnables::BasicUserInfoElement*> GetBasicUserInfoElementList(const QString &xml);
+                QLinkedList<Returnables::ExtUserInfoElement*> GetExtUserInfoElementList(const QString &xml);
+                QLinkedList<unsigned int> GetIDsList(const QString &xml);
+                QLinkedList<Returnables::DirectMessageElement*> GetDirectMessageList(const QString &xml);
+
+                void Populate_seStatus(Returnables::seStatus &status, const QDomElement &node);
+                void Populate_biStatus(Returnables::biStatus &status, const QDomElement &node);
 		void PopulateUser(Returnables::User &user, const QDomElement &node);
 		void PopulateDetails(Returnables::Details &details, const QDomElement &node);
 		void PopulateDirectHeader(Returnables::DirectHeader &header, const QDomElement &node);
@@ -74,7 +88,6 @@ class Decipher
 		static QString nUrl;
 		static QString nProtected;
 		static QString nFollowersCount;
-		static QString nAuthorized;
 		static QString nOk;
 		static QString nProfileBackgroundColor;
 		static QString nProfileTextColor;
@@ -101,6 +114,10 @@ class Decipher
 		static QString nResetTimeSeconds;
 		static QString nRemainingHits;
 		static QString nHourlyLimit;
+                static QString nInReplyToScreenName;
+                static QString nFollowing;
+                static QString nNotifications;
+                static QString nID;
 };
 
 

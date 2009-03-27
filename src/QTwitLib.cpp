@@ -54,9 +54,9 @@ void QTwitLib::GetFriendsTimeline(SERVER::Option1 *opt  /*=NULL*/)
     Core::GetFriendsTimeline(opt);
 }
 //=====================================================================
-void QTwitLib::PostNewStatus(QString status)                                                
+void QTwitLib::PostNewStatus(QString status, unsigned int in_reply_to_status_id, QString source)
 {
-    Core::PostNewStatus(status);
+    Core::PostNewStatus(status, QString::number(in_reply_to_status_id), source);
 }
 //=====================================================================
 void QTwitLib::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
@@ -74,22 +74,22 @@ void QTwitLib::GetFriends(SERVER::Option4 *opt  /*=NULL*/)
     Core::GetFriends(opt);
 }
 //=====================================================================
-void QTwitLib::GetFollowers(SERVER::Option5 *opt  /*=NULL*/)
+void QTwitLib::GetFollowers(SERVER::Option4 *opt  /*=NULL*/)
 {
     Core::GetFollowers(opt);
 }
 //=====================================================================
-void QTwitLib::GetUserDetails(QString user)
+void QTwitLib::GetUserDetails(QString id, unsigned int user_id, QString screen_name)
 {
-    Core::GetUserDetails(user);
+    Core::GetUserDetails(id, QString::number(user_id), screen_name);
 }
 //=====================================================================
-void QTwitLib::GetSentDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
+void QTwitLib::GetSentDirectMessages(SERVER::Option5 *opt  /*=NULL*/)
 {
     Core::GetSentDirectMessages(opt);
 }
 //=====================================================================
-void QTwitLib::GetReceivedDirectMessages(SERVER::Option6 *opt  /*=NULL*/)
+void QTwitLib::GetReceivedDirectMessages(SERVER::Option5 *opt  /*=NULL*/)
 {
     Core::GetReceivedDirectMessages(opt);
 }
@@ -124,11 +124,6 @@ void QTwitLib::VerifyCredentials()
     Core::VerifyCredentials();
 }
 //=====================================================================
-void QTwitLib::UpdateLocation(QString location)
-{
-    Core::UpdateLocation(location);
-}
-//=====================================================================
 void QTwitLib::UpdateDeliveryDevice(SERVER::DEVICES device)
 {
     Core::UpdateDeliveryDevice(device);
@@ -149,4 +144,55 @@ void QTwitLib::RemoveFavorite(unsigned int id)
     Core::RemoveFavorite(QString::number(id));
 }
 //=====================================================================
+void QTwitLib::UpdateProfileColors(QString background_color, QString text_color, QString link_color, QString sidebar_fill_color , QString sidebar_border_color)
+{
+    Core::UpdateProfileColors(background_color, text_color,link_color,sidebar_fill_color, sidebar_border_color);
+}
+//=====================================================================
+void QTwitLib::UpdateProfileImage(QString image)
+{
+    Core::UpdateProfileImage(image);
+}
+//=====================================================================
+void QTwitLib::UpdateProfileBackgroundImage(QString image, bool tile)
+{
+    QString isTile = tile ? "true" : "false";
+    Core::UpdateProfileBackgroundImage(image, isTile);
+}
+//=====================================================================
+void QTwitLib::UpdateProfile(QString name, QString email, QString url, QString location, QString description)
+{
+    Core::UpdateProfile(name, email, url, location, description);
+}
+//=====================================================================
+void QTwitLib::EnableNotifications(QString id)
+{
+    Core::EnableNotifications(id);
+}
+//=====================================================================
+void QTwitLib::DisableNotifications(QString id)
+{
+    Core::DisableNotifications(id);
+}
+//=====================================================================
+void QTwitLib::BlockUser(QString id)
+{
+    Core::BlockUser(id);
+}
+//=====================================================================
+void QTwitLib::UnBlockUser(QString id)
+{
+    Core::UnBlockUser(id);
+}
+//=====================================================================
+void QTwitLib::GetFriendsIDs(QString id, QString user_id, QString screen_name)
+{
+    Core::GetFriendsIDs(id, user_id, screen_name);
+}
+//=====================================================================
 
+void QTwitLib::GetFollowersIDs(QString id,QString user_id, QString screen_name)
+{
+    Core::GetFollowersIDs(id, user_id, screen_name);
+}
+//=====================================================================
