@@ -3,7 +3,7 @@
 ######################################################################
 
 unix:TEMPLATE = lib
-win32:TEMPLATE = vclib
+win32:TEMPLATE = lib
 
 CONFIG += debug_and_release
 DEPENDPATH += include generated
