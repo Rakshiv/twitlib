@@ -296,11 +296,11 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 				delete newStatus;
 				break;
 			}
-		case Returnables::RECENT_REPLIES:
+                case Returnables::RECENT_MENTIONS:
 			{
-				Returnables::RecentReplies *replies = static_cast<Returnables::RecentReplies *>(resp);
-				DisplayList(replies->list, "Recent Replies");
-				delete replies;
+                                Returnables::RecentMentions *mentions = static_cast<Returnables::RecentMentions *>(resp);
+                                DisplayList(mentions->list, "Recent Mentions");
+                                delete mentions;
 				break;
 			}
 		case Returnables::REMOVE_STATUS:
@@ -335,13 +335,13 @@ void Example::OnResponseReceived(Returnables::Response *resp)
 				delete userDetails;
 				break;
 			}
-                case Returnables::LOGIN:
+                case Returnables::VERIFY_CREDENTIALS:
                         {
-                                Returnables::Login *login = static_cast<Returnables::Login *>(resp);
+                                Returnables::VerifyCredentials *verifyCredentials = static_cast<Returnables::VerifyCredentials *>(resp);
                                 QLinkedList<Returnables::ExtUserInfoElement *> list;
-                                list.append(login->userExt);
-                                DisplayList(list, "Login");
-                                delete login;
+                                list.append(verifyCredentials->userExt);
+                                DisplayList(list, "Verify Credentials");
+                                delete verifyCredentials;
                                 break;
                         }
 		case Returnables::SENT_DIRECT_MESSAGES:
@@ -563,6 +563,9 @@ void Example::TabChanged(int /*tabIdx*/)
 void Example::LoginClicked()
 {
 	m_twitLib->Login(GetUsername(),GetPassword());
+        //OR
+        //m_twitLib->SetLoginInfo(GetUsername(),GetPassword());
+        //m_twitLib->VerifyCredentials();
 }
 //=====================================================================
 void Example::ExecuteClicked()
@@ -588,8 +591,11 @@ void Example::ExecuteClicked()
 	case Returnables::FEATURED_USERS:
 		m_twitLib->GetFeaturedUsers();
 		break;
-	case Returnables::LOGIN:
-		m_twitLib->Login(GetUsername(),GetPassword());
+        case Returnables::VERIFY_CREDENTIALS:
+                m_twitLib->SetLoginInfo(GetUsername(),GetPassword());
+                m_twitLib->VerifyCredentials();
+                //OR
+                //m_twitLib->Login(GetUsername(),GetPassword());
 		break;
 	case Returnables::TWITTER_UP:
 		m_twitLib->IsTwitterUp();
@@ -607,8 +613,8 @@ void Example::ExecuteClicked()
 		if(!text.isEmpty())
                         m_twitLib->PostNewStatus(text, text2.toUInt(), text3);
 		break;
-	case Returnables::RECENT_REPLIES:
-		m_twitLib->GetRecentReplies();
+        case Returnables::RECENT_MENTIONS:
+                m_twitLib->GetRecentMentions();
 		break;
 	case Returnables::REMOVE_STATUS:
 		num = QInputDialog::getText(m_plainTextEdit,"Remove Status ID","Enter status ID to remove").toUInt();
