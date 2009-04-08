@@ -4,17 +4,6 @@
 #include <QtCore/QLinkedList>
 #include <QtCore/QMap>
 #include "Server.h"
-//depre
-//update_location
-
-//New
-//PROFILE_COLORS, PROFILE_IMAGE, PROFILE_BACKGROUND_IMAGE, PROFILE
-//ENABLE_NOTIFICATIONS, DISABLE_NOTIFICATIONS, BLOCK_USER, UNBLOCK_USER,
-//FRIENDS_IDS, FOLLOWERS_IDS
-
-//NOT WORK
-//RECENT_REPLIES
-
 
 namespace Returnables
 {
@@ -116,13 +105,13 @@ namespace Returnables
         };
 
         enum RequestId { PUBLIC_TIMELINE, FRIENDS_TIMELINE, USER_TIMELINE, SINGLE_STATUS, NEW_STATUS,\
-                         RECENT_REPLIES, REMOVE_STATUS, FRIENDS, FOLLOWERS, USER_DETAILS,\
+                         RECENT_MENTIONS, REMOVE_STATUS, FRIENDS, FOLLOWERS, USER_DETAILS,\
                          RECEIVED_DIRECT_MESSAGES, SENT_DIRECT_MESSAGES, SEND_DIRECT_MESSAGE, REMOVE_DIRECT_MESSAGE,\
-                         ADD_FRIENDSHIP, REMOVE_FRIENDSHIP, FRIENDSHIP_EXISTS, FRIENDS_IDS, FOLLOWERS_IDS, LOGIN, LOGOUT,\
+                         ADD_FRIENDSHIP, REMOVE_FRIENDSHIP, FRIENDSHIP_EXISTS, FRIENDS_IDS, FOLLOWERS_IDS, VERIFY_CREDENTIALS, LOGOUT,\
                          DELIVERY_DEVICE, PROFILE_COLORS, PROFILE_IMAGE, PROFILE_BACKGROUND_IMAGE,\
                          API_REQUESTS, PROFILE, FAVORITES, ADD_FAVORITE, REMOVE_FAVORITE,\
                          ENABLE_NOTIFICATIONS, DISABLE_NOTIFICATIONS, BLOCK_USER, UNBLOCK_USER,\
-                         TWITTER_UP, FEATURED_USERS, VERIFY_CREDENTIALS \
+                         TWITTER_UP, FEATURED_USERS \
         };
 
 	class Response
@@ -171,12 +160,12 @@ namespace Returnables
                         ~NewStatus() { if(status) delete status; }
                         StatusElement* status;
         };
-//replies
-        class RecentReplies : public Response
+//mentions
+        class RecentMentions : public Response
         {
                 public:
-                        RecentReplies() {}
-                        ~RecentReplies() {}
+                        RecentMentions() {}
+                        ~RecentMentions() {}
                         QLinkedList<StatusElement*> list;
         };
 //destroy
@@ -302,11 +291,11 @@ namespace Returnables
 //Account Methods
 //==================================================================================================
 //verify_credentials
-        class Login : public Response
+        class VerifyCredentials : public Response
         {
                 public:
-                        Login() { userExt = new ExtUserInfoElement; }
-                        ~Login() { if(userExt) delete userExt; }
+                        VerifyCredentials() { userExt = new ExtUserInfoElement; }
+                        ~VerifyCredentials() { if(userExt) delete userExt; }
                         ExtUserInfoElement *userExt;
         };
 //update_delivery_device

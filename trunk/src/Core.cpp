@@ -18,7 +18,7 @@ QString Core::USERS_TIMELINE_URL = "/statuses/user_timeline[/opt-user].xml";
 QString Core::GET_FAVORITES_URL = "/favorites[/opt-user].xml";
 QString Core::FRIENDS_TIMELINE_URL = "/statuses/friends_timeline.xml";
 QString Core::POST_NEW_STATUS_URL = "/statuses/update.xml";
-QString Core::GET_REPLIES_URL = "/statuses/replies.xml";
+QString Core::GET_MENTIONS_URL = "/statuses/mentions.xml";
 QString Core::REMOVE_STATUS_URL = "/statuses/destroy/[req-id].xml";
 QString Core::GET_FRIENDS_URL = "/statuses/friends[/opt-user].xml";
 QString Core::GET_FOLLOWERS_URL = "/statuses/followers[/opt-user].xml";
@@ -50,7 +50,6 @@ Core::Core()
     m_eventLoop = new QEventLoop(this);
 	m_http = new QHttp(TWITTER_HOST);
 
-
 	MakeConnections();
 }
 //=====================================================================
@@ -81,6 +80,11 @@ void Core::SetProxy(SERVER::PROXY_TYPE type, const QString hostName, \
 
     QNetworkProxy m_proxy = QNetworkProxy(proxy_type, hostName, port, user, password);
     m_http->setProxy(m_proxy);
+}
+//=====================================================================
+void Core::Abort()
+{
+    m_http->abort();
 }
 //=====================================================================
 void Core::MakeConnections()   
@@ -138,22 +142,23 @@ void Core::ReqFinished(int id, bool error)
     QString response;
     QHttpResponseHeader head;
 
-	if(error)
-	{
-		emit OnError(m_http->errorString());
-	}
-    
-	head = m_http->lastResponse(); 
-    if(head.isValid())
-        responseHeaderReceived(head);
-     
+        if(error)
+        {
+                emit OnErrorString(m_http->errorString());
+                emit OnError(m_http->error());
+        }
+
 	if(m_buffer[id].buffer)
 		response = QString(m_buffer[id].buffer->data());
 	else
 		response = QString::null;
      
 	if(!response.isNull())
-    {
+        {
+                head = m_http->lastResponse();
+                if(head.isValid())
+                    responseHeaderReceived(head);
+
 		switch(m_buffer[id].requestid)
 		{
 		case Returnables::PUBLIC_TIMELINE:
@@ -177,9 +182,9 @@ void Core::ReqFinished(int id, bool error)
 			emit OnResponseReceived(featuredUsers);
 			break;
 		case Returnables::VERIFY_CREDENTIALS:
-			Returnables::Login *login;
-			login = Decipher::Instance()->Login(response);
-			emit OnResponseReceived(login);
+                        Returnables::VerifyCredentials *verifyCredentials;
+                        verifyCredentials = Decipher::Instance()->VerifyCredentials(response);
+                        emit OnResponseReceived(verifyCredentials);
 			break;
 		case Returnables::TWITTER_UP:
 			Returnables::TwitterUp *twitterUp;
@@ -201,10 +206,10 @@ void Core::ReqFinished(int id, bool error)
 			newStatus = Decipher::Instance()->NewStatus(response);
 			emit OnResponseReceived(newStatus);
 			break;
-		case Returnables::RECENT_REPLIES:
-			Returnables::RecentReplies *replies;
-			replies = Decipher::Instance()->RecentReplies(response);
-			emit OnResponseReceived(replies);
+                case Returnables::RECENT_MENTIONS:
+                        Returnables::RecentMentions *mentions;
+                        mentions = Decipher::Instance()->RecentMentions(response);
+                        emit OnResponseReceived(mentions);
 			break;
 		case Returnables::REMOVE_STATUS:
 			Returnables::RemoveStatus *removedStatus;
@@ -402,17 +407,22 @@ void Core::GetFeaturedUsers()
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
-void Core::Logout()
-{
-    m_http->setUser("","");
-	MakePostRequest(LOGOUT_URL,"",Returnables::LOGOUT);
-    m_eventLoop->exec(QEventLoop::AllEvents);
-}
-//=====================================================================
 void Core::Login(QString user, QString passw)
 {
     m_http->setUser(user, passw);
-	VerifyCredentials();
+    VerifyCredentials();
+}
+//=====================================================================
+void Core::Logout()
+{
+    m_http->setUser("","");
+    MakePostRequest(LOGOUT_URL,"",Returnables::LOGOUT);
+    m_eventLoop->exec(QEventLoop::AllEvents);
+}
+//=====================================================================
+void Core::SetLoginInfo(QString user, QString passw)
+{
+    m_http->setUser(user, passw);
 }
 //=====================================================================
 void Core::IsTwitterUp()
@@ -430,11 +440,9 @@ void Core::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
         QString id        = opt->id;
         QString user_id = QString::number(opt->user_id);
         QString screen_name = opt->screen_name;
-        QString sinceId    = QString::number(opt->sinceId);
+        QString since_id    = QString::number(opt->since_id);
         QString max_id = QString::number(opt->max_id);
         QString page       = QString::number(opt->page);
-        QString since       = opt->since;
-
         
         if(!id.isEmpty())
             buildUrl.replace("[/opt-user]","/"+id);
@@ -443,11 +451,9 @@ void Core::GetUsersTimeline(SERVER::Option2 *opt  /*=NULL*/)
         
         buildUrl += "?user_id="+user_id;
         buildUrl += "&screen_name="+screen_name;
-        buildUrl += "&since_id="+sinceId;
+        buildUrl += "&since_id="+since_id;
         buildUrl += "&max_id="+max_id;
         buildUrl += "&page="+page;
-        buildUrl += "&since="+since;
-
     }
     else
     {
@@ -469,7 +475,7 @@ void Core::GetFavorites(QString user  /*=""*/, unsigned int page  /*=1*/)
     
 	buildUrl += "?page="+QString::number(page);
 
-    MakeGetRequest(buildUrl,Returnables::FAVORITES);    
+    MakeGetRequest(buildUrl,Returnables::FAVORITES);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -479,14 +485,12 @@ void Core::GetFriendsTimeline(SERVER::Option1 *opt  /*=NULL*/)
     
     if(opt)
     {       
-        QString since       = opt->since;
-        QString sinceId    = QString::number(opt->sinceId);
+        QString since_id    = QString::number(opt->since_id);
         QString max_id = QString::number(opt->max_id);
         QString count      = QString::number(opt->count);
         QString page       = QString::number(opt->page);
         
-        buildUrl += "?since="+since;
-        buildUrl += "&since_id="+sinceId;
+        buildUrl += "&since_id="+since_id;
         buildUrl += "&max_id="+max_id;
         buildUrl += "&count="+count;
         buildUrl += "&page="+page;
@@ -520,24 +524,22 @@ void Core::PostNewStatus(QString status, QString in_reply_to_status_id, QString 
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
-void Core::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
+void Core::GetRecentMentions(SERVER::Option3 *opt  /*=NULL*/)
 {
-    QString buildUrl = GET_REPLIES_URL;
+    QString buildUrl = GET_MENTIONS_URL;
     
     if(opt)
     {
-        QString sinceId    = QString::number(opt->sinceId);
+        QString since_id    = QString::number(opt->since_id);
         QString max_id = QString::number(opt->max_id);
-        QString since       = opt->since;
         QString page       = QString::number(opt->page);
 
-        buildUrl += "?sinceId="+sinceId;
+        buildUrl += "?since_id="+since_id;
         buildUrl += "&max_id="+max_id;
-        buildUrl += "&since="+since;
         buildUrl += "&page="+page;
     }
 
-    MakeGetRequest(buildUrl,Returnables::RECENT_REPLIES);
+    MakeGetRequest(buildUrl,Returnables::RECENT_MENTIONS);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -640,12 +642,10 @@ void Core::GetSentDirectMessages(SERVER::Option5 *opt  /*=NULL*/)
     
     if(opt)
     {       
-        QString since       = opt->since;
-        QString sinceId    = QString::number(opt->sinceId);
+        QString since_id    = QString::number(opt->since_id);
         QString page       = QString::number(opt->page);
         
-        buildUrl += "?since="+since;
-        buildUrl += "&sinceId="+sinceId;
+        buildUrl += "&since_id="+since_id;
         buildUrl += "&page="+page;
     }
 
@@ -659,12 +659,10 @@ void Core::GetReceivedDirectMessages(SERVER::Option5 *opt  /*=NULL*/)
     
     if(opt)
     {       
-        QString since       = opt->since;
-        QString sinceId    = QString::number(opt->sinceId);
+        QString since_id    = QString::number(opt->since_id);
         QString page       = QString::number(opt->page);
         
-        buildUrl += "?since="+since;
-        buildUrl += "&sinceId="+sinceId;
+        buildUrl += "&since_id="+since_id;
         buildUrl += "&page="+page;
     }
 
@@ -693,7 +691,7 @@ void Core::RemoveDirectMessage(QString id)
     
     buildUrl = buildUrl.replace("[req-id]",id);
 
-	MakePostRequest(buildUrl,"",Returnables::REMOVE_DIRECT_MESSAGE);
+    MakePostRequest(buildUrl,"",Returnables::REMOVE_DIRECT_MESSAGE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -708,7 +706,7 @@ void Core::AddFriendship(QString user, bool follow)
         req = "follow=";
 	req += follow ? "true" : "false";
       
-	MakePostRequest(buildUrl,req,Returnables::ADD_FRIENDSHIP);
+    MakePostRequest(buildUrl,req,Returnables::ADD_FRIENDSHIP);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -772,7 +770,7 @@ void Core::AddFavorite(QString id)
     
     buildUrl = buildUrl.replace("[req-id]",id);
     
-	MakePostRequest(buildUrl,"",Returnables::ADD_FAVORITE);
+    MakePostRequest(buildUrl,"",Returnables::ADD_FAVORITE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
@@ -782,7 +780,7 @@ void Core::RemoveFavorite(QString id)
     
     buildUrl = buildUrl.replace("[req-id]",id);
     
-	MakePostRequest(buildUrl,"",Returnables::REMOVE_FAVORITE);
+    MakePostRequest(buildUrl,"",Returnables::REMOVE_FAVORITE);
     m_eventLoop->exec(QEventLoop::AllEvents);
 }
 //=====================================================================
