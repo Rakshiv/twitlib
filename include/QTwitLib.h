@@ -39,15 +39,35 @@ class QTwitLib : public Core
         EXPORT void GetFeaturedUsers();
 //=====================================================================
         /**
+         * Attempts to establish an authorized connection with Twitter.
+         * See SetLoginInfo(QString user, QString password) and VerifyCredentials();
+         */
+        EXPORT void Login(QString user, QString password);
+//=====================================================================
+        /**
          * Ends the session of the authenticating user, returning a null cookie.
          * Use this method to sign users out of client-facing applications like widgets.
          */
         EXPORT void Logout();
 //=====================================================================
         /**
-         * Attempts to establish an authorized connection with Twitter.
+         * Aborts the current request and deletes all scheduled requests.
          */
-        EXPORT void Login(QString user, QString password);
+        EXPORT void Abort();
+//=====================================================================
+        /**
+         * Sets the user name and password for establish an authorized connection with Twitter.
+         */
+        EXPORT void SetLoginInfo(QString user, QString password);
+//=====================================================================
+        /**
+         * NOTE: Use only after "SetLoginInfo(QString user, QString password)" method!
+         *
+         * Returns an HTTP 200 OK response code and a representation of the requesting user if
+         * authentication was successful; returns a 401 status code and an error message if not.
+         * Use this method to test if supplied user credentials are valid.
+         */
+        EXPORT void VerifyCredentials();
 //=====================================================================
         /**
          * Use proxy for connection with Twitter.
@@ -128,10 +148,10 @@ class QTwitLib : public Core
         EXPORT void PostNewStatus(QString status, unsigned int in_reply_to_status_id = NULL, QString source = "");
 //=====================================================================
         /**
-         * Returns the 20 most recent @replies (status updates prefixed with @username) for the authenticating user.
+         * Returns the 20 most recent mentions (status containing @username) for the authenticating user.
          * @param opt Optional.  Options which can be user specified.
          */
-        EXPORT void GetRecentReplies(SERVER::Option3 *opt=NULL); 
+        EXPORT void GetRecentMentions(SERVER::Option3 *opt=NULL);
 //=====================================================================
         /**
          * Destroys the status specified by the required ID parameter.  The authenticating user must be the author of the specified status.
@@ -221,12 +241,6 @@ class QTwitLib : public Core
         EXPORT void FriendshipExist(QString user_a, QString user_b);
 //=====================================================================
         /**
-         * Returns an HTTP 200 OK response code and a format-specific response if authentication was successful.
-         * Use this method to test if supplied user credentials are valid with minimal overhead.
-         */
-        EXPORT void VerifyCredentials();
-//=====================================================================
-        /**
          * Sets which device Twitter delivers updates to for the authenticating user.
          * Sending none as the device parameter will disable IM or SMS updates.
          * @param device Required.  Must be one of: sms, im, none.
@@ -258,10 +272,7 @@ class QTwitLib : public Core
          * One or more of the following parameters must be present.
          * Each parameter's value must be a valid hexidecimal value,
          * and may be either three or six characters (ex: #fff or #ffffff).
-         * You can set default values:
-         * background_color="#709397"; text_color="#333333";
-         * link_color="#FF3300"; sidebar_fill_color="#A0C5C7";
-         * sidebar_border_color="#86A4A6";
+         *
          * @param profile_background_color  Optional.
          * @param profile_text_color  Optional.
          * @param profile_link_color  Optional.

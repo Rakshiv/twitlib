@@ -24,14 +24,24 @@ void QTwitLib::GetFeaturedUsers()
     Core::GetFeaturedUsers();
 }
 //=====================================================================
+void QTwitLib::Login(QString user, QString password)
+{
+    Core::Login(user, password);
+}
+//=====================================================================
 void QTwitLib::Logout()
 {
     Core::Logout();
 }
 //=====================================================================
-void QTwitLib::Login(QString user, QString password)
+void QTwitLib::Abort()
 {
-    Core::Login(user, password);
+    Core::Abort();
+}
+//=====================================================================
+void QTwitLib::SetLoginInfo(QString user, QString password)
+{
+    Core::SetLoginInfo(user, password);
 }
 //=====================================================================
 void QTwitLib::IsTwitterUp()
@@ -59,9 +69,9 @@ void QTwitLib::PostNewStatus(QString status, unsigned int in_reply_to_status_id,
     Core::PostNewStatus(status, QString::number(in_reply_to_status_id), source);
 }
 //=====================================================================
-void QTwitLib::GetRecentReplies(SERVER::Option3 *opt  /*=NULL*/)
+void QTwitLib::GetRecentMentions(SERVER::Option3 *opt  /*=NULL*/)
 {
-    Core::GetRecentReplies(opt);
+    Core::GetRecentMentions(opt);
 }
 //=====================================================================
 void QTwitLib::RemoveStatus(unsigned int id)

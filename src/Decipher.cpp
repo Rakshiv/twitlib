@@ -329,18 +329,18 @@ Returnables::FeaturedUsers* Decipher::FeaturedUsers(const QString &xml)
 	return featuredUsers;
 }
 //=====================================================================
-Returnables::Login* Decipher::Login(const QString &xml)
+Returnables::VerifyCredentials* Decipher::VerifyCredentials(const QString &xml)
 {
-        Returnables::Login *login = NULL;
+        Returnables::VerifyCredentials *verifyCredentials = NULL;
         QLinkedList<Returnables::ExtUserInfoElement*> list = GetExtUserInfoElementList(xml);
 
         if(!list.isEmpty())
         {
-            login = new Returnables::Login;
-            login->userExt = list.first();
-            login->reqID = Returnables::LOGIN;
+            verifyCredentials = new Returnables::VerifyCredentials;
+            verifyCredentials->userExt = list.first();
+            verifyCredentials->reqID = Returnables::VERIFY_CREDENTIALS;
         }
-        return login;
+        return verifyCredentials;
 }
 //=====================================================================
 Returnables::TwitterUp* Decipher::TwitterUp(const QString &xml)
@@ -407,19 +407,19 @@ Returnables::NewStatus* Decipher::NewStatus(const QString &xml)
 	return newStatus;
 }
 //=====================================================================
-Returnables::RecentReplies* Decipher::RecentReplies(const QString &xml)
+Returnables::RecentMentions* Decipher::RecentMentions(const QString &xml)
 {
-	Returnables::RecentReplies *replies = NULL;
+        Returnables::RecentMentions *mentions = NULL;
         QLinkedList<Returnables::StatusElement*> list = GetStatusElementList(xml);
 
 	if(!list.isEmpty())
 	{	
-		replies = new Returnables::RecentReplies();
-		replies->list = list;
-		replies->reqID = Returnables::RECENT_REPLIES;
+                mentions = new Returnables::RecentMentions();
+                mentions->list = list;
+                mentions->reqID = Returnables::RECENT_MENTIONS;
 	}
 
-	return replies;
+        return mentions;
 }
 //=====================================================================
 Returnables::RemoveStatus* Decipher::RemoveStatus(const QString &xml)

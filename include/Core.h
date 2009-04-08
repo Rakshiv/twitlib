@@ -21,8 +21,10 @@ class Core : public QObject
         void GetPublicTimeline();
         void GetSingleStatus(QString id);
         void GetFeaturedUsers();
-        void Logout();
         void Login(QString user, QString passw);
+        void Logout();
+        void Abort();
+        void SetLoginInfo(QString user, QString passw);
         void SetProxy(SERVER::PROXY_TYPE type = SERVER::NO_PROXY, const QString hostName = QString(), \
                     quint16 port = 0, const QString user = QString(), const QString password = QString());
         void IsTwitterUp();
@@ -30,7 +32,7 @@ class Core : public QObject
         void GetFavorites(QString user="", unsigned int page=1);
         void GetFriendsTimeline(SERVER::Option1 *opt=NULL);
         void PostNewStatus(QString status, QString in_reply_to_status_id = "", QString source = "");
-        void GetRecentReplies(SERVER::Option3 *opt=NULL);
+        void GetRecentMentions(SERVER::Option3 *opt=NULL);
         void RemoveStatus(QString id);
         void GetFriends(SERVER::Option4 *opt=NULL);
         void GetFollowers(SERVER::Option4 *opt=NULL);
@@ -67,7 +69,8 @@ class Core : public QObject
         
     signals:
         void QueryDone();
-        void OnError(QString error);
+        void OnErrorString(QString error);
+        void OnError(QHttp::Error error);
         void OnMessageReceived(QString message);
         void OnStatusReceived(SERVER::RESP resp);
 		void OnResponseReceived(Returnables::Response *resp);
@@ -104,7 +107,7 @@ class Core : public QObject
                 static QString GET_FAVORITES_URL;
                 static QString FRIENDS_TIMELINE_URL;
                 static QString POST_NEW_STATUS_URL;
-                static QString GET_REPLIES_URL;
+                static QString GET_MENTIONS_URL;
                 static QString REMOVE_STATUS_URL;
                 static QString GET_FRIENDS_URL;
                 static QString GET_FOLLOWERS_URL;

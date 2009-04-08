@@ -22,12 +22,12 @@ class Decipher
 		Returnables::PublicTimeline* PublicTimeline(const QString &xml);
 		Returnables::SingleStatus* SingleStatus(const QString &xml);
 		Returnables::FeaturedUsers* FeaturedUsers(const QString &xml);
-		Returnables::Login* Login(const QString &xml);
+                Returnables::VerifyCredentials* VerifyCredentials(const QString &xml);
 		Returnables::TwitterUp* TwitterUp(const QString &xml);
 		Returnables::UserTimeline* UserTimeline(const QString &xml);
 		Returnables::Favorites* Favorites(const QString &xml);
 		Returnables::NewStatus* NewStatus(const QString &xml);
-		Returnables::RecentReplies* RecentReplies(const QString &xml);
+                Returnables::RecentMentions* RecentMentions(const QString &xml);
 		Returnables::RemoveStatus* RemoveStatus(const QString &xml);
 		Returnables::Friends* Friends(const QString &xml);
 		Returnables::Followers* Followers(const QString &xml);
