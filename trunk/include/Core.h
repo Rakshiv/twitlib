@@ -23,7 +23,6 @@ class Core : public QObject
         void GetFeaturedUsers();
         void Login(QString user, QString passw);
         void Logout();
-        void Abort();
         void SetLoginInfo(QString user, QString passw);
         void SetProxy(SERVER::PROXY_TYPE type = SERVER::NO_PROXY, const QString hostName = QString(), \
                     quint16 port = 0, const QString user = QString(), const QString password = QString());
@@ -66,6 +65,7 @@ class Core : public QObject
 		void ReqFinished(int id, bool error);
         void DataReadProgress(int done, int total);
         void Done(bool error);
+        void Abort();
         
     signals:
         void QueryDone();
