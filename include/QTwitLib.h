@@ -2,9 +2,9 @@
 #define QTWITLIB_H
 
 #ifdef WIN32
-	#define EXPORT __declspec(dllexport)
+        #define EXPORT __declspec(dllexport)
 #else
-	#define EXPORT
+        #define EXPORT
 #endif
 
 #include <QtCore/QString>
@@ -16,7 +16,7 @@ class QTwitLib : public Core
     public:
         EXPORT QTwitLib();
         virtual ~QTwitLib();
-        
+
 //=====================================================================
         // Unauthenticated Methods
 //=====================================================================
@@ -30,7 +30,7 @@ class QTwitLib : public Core
          * Returns a single status, specified by the id parameter below.  The status's author will be returned inline.
          * @param id Required.  The numerical ID of the status you're trying to retrieve.
          */
-        EXPORT void GetSingleStatus(unsigned int id);
+        EXPORT void GetSingleStatus(quint64 id);
 //=====================================================================
         /**
          * WARNING!!! Not described in API
@@ -130,7 +130,7 @@ class QTwitLib : public Core
 //=====================================================================
         /**
          * Returns the 20 most recent statuses posted by the authenticating user and that user's friends.
-         * This is the equivalent of /home on the Web. 
+         * This is the equivalent of /home on the Web.
          * @param opt Optional.  Options which can be user specified.
          */
         EXPORT void GetFriendsTimeline(SERVER::Option1 *opt=NULL);
@@ -145,7 +145,7 @@ class QTwitLib : public Core
          * WARNING!!! Not described in API.
          * @param source Optional. Twitter client name, must be registered at http://twitter.com/help/request_source
          */
-        EXPORT void PostNewStatus(QString status, unsigned int in_reply_to_status_id = NULL, QString source = "");
+        EXPORT void PostNewStatus(QString status, quint64 in_reply_to_status_id = NULL, QString source = "");
 //=====================================================================
         /**
          * Returns the 20 most recent mentions (status containing @username) for the authenticating user.
@@ -157,7 +157,7 @@ class QTwitLib : public Core
          * Destroys the status specified by the required ID parameter.  The authenticating user must be the author of the specified status.
          * @param id Required.  The ID of the status to destroy.
          */
-        EXPORT void RemoveStatus(unsigned int id);
+        EXPORT void RemoveStatus(quint64 id);
 //=====================================================================
         /**
          * Returns up to 100 of the authenticating user's friends who have most recently updated, each with current status inline.
@@ -195,7 +195,7 @@ class QTwitLib : public Core
         EXPORT void GetSentDirectMessages(SERVER::Option5 *opt=NULL);
 //=====================================================================
         /**
-         * Returns a list of the 20 most recent direct messages sent to the authenticating user.  
+         * Returns a list of the 20 most recent direct messages sent to the authenticating user.
          * The XML and JSON versions include detailed information about the sending and recipient users.
          * @param opt Optional.  Options which can be user specified.
          */
@@ -216,7 +216,7 @@ class QTwitLib : public Core
          * The authenticating user must be the recipient of the specified direct message.
          * @param id Required.  The ID of the direct message to destroy.
          */
-        EXPORT void RemoveDirectMessage(unsigned int id);
+        EXPORT void RemoveDirectMessage(quint64 id);
 //=====================================================================
         /**
          * Befriends the user specified in the ID parameter as the authenticating user.
@@ -257,14 +257,14 @@ class QTwitLib : public Core
          * Favorites the status specified in the ID parameter as the authenticating user.  Returns the favorite status when successful.
          * @param id  Required.  The ID of the status to favorite.
          */
-        EXPORT void AddFavorite(unsigned int id);
+        EXPORT void AddFavorite(quint64 id);
 //=====================================================================
         /**
          * Un-favorites the status specified in the ID parameter as the authenticating user.
          * Returns the un-favorited status in the requested format when successful.
          * @param id Required.  The ID of the status to un-favorite.
          */
-        EXPORT void RemoveFavorite(unsigned int id);
+        EXPORT void RemoveFavorite(quint64 id);
 //=====================================================================
         /**
          * Sets one or more hex values that control the color scheme of the authenticating
