@@ -8,20 +8,20 @@
 namespace Returnables
 {
         struct User
-	{
-		unsigned int id;
-		QString name;
-		QString screenName;
+        {
+                unsigned int id;
+                QString name;
+                QString screenName;
                 QString description;
                 QString location;
                 QString profileImageUrl;
-		QString url;
-		bool isProtected;
-		unsigned int followersCount;
-	};
+                QString url;
+                bool isProtected;
+                unsigned int followersCount;
+        };
 
-	struct Details
-	{
+        struct Details
+        {
                 QString profileBackgroundColor;
                 QString profileTextColor;
                 QString profileLinkColor;
@@ -37,52 +37,52 @@ namespace Returnables
                 bool following;
                 bool notifications;
                 unsigned int statusesCount;
-	};
+        };
 
 //Status for "Status element"
         struct seStatus
-	{
-		QString createdAt;
-		unsigned int id;
-		QString text;
-		QString source;
-		bool truncated;
-		unsigned int inReplyToStatusId;
-		unsigned int inReplyToUserId;
-		bool favorited;
-	};
+        {
+                QString createdAt;
+                quint64 id;
+                QString text;
+                QString source;
+                bool truncated;
+                quint64 inReplyToStatusId;
+                quint64 inReplyToUserId;
+                bool favorited;
+        };
 
 //Status for "Basic user information element"
         struct biStatus
         {
                 QString createdAt;
-                unsigned int id;
+                quint64 id;
                 QString text;
                 QString source;
                 bool truncated;
-                unsigned int inReplyToStatusId;
-                unsigned int inReplyToUserId;
+                quint64 inReplyToStatusId;
+                quint64 inReplyToUserId;
                 bool favorited;
                 QString inReplyToScreenName;
         };
 
-	struct DirectHeader
+        struct DirectHeader
         {
-		unsigned int id;
-		unsigned int senderId;
-		QString text;
-		unsigned int recipientId;
-		QString createdAt;
-		QString senderScreenName;
-		QString recipientScreenName;
-	};
+                quint64 id;
+                unsigned int senderId;
+                QString text;
+                unsigned int recipientId;
+                QString createdAt;
+                QString senderScreenName;
+                QString recipientScreenName;
+        };
 
         struct DirectMessageElement
-	{
-		DirectHeader headerInfo;
+        {
+                DirectHeader headerInfo;
                 User sender;
                 User recipient;
-	};
+        };
 
 //"Status element"
         struct StatusElement
@@ -114,13 +114,13 @@ namespace Returnables
                          TWITTER_UP, FEATURED_USERS \
         };
 
-	class Response
-	{
-		public:
-			Response() {}
-			virtual ~Response() {}
-			RequestId reqID;
-	};
+        class Response
+        {
+                public:
+                        Response() {}
+                        virtual ~Response() {}
+                        RequestId reqID;
+        };
 //Status Methods
 //==================================================================================================
         class PublicTimeline : public Response
@@ -132,9 +132,9 @@ namespace Returnables
         };
         class FriendsTimeline : public Response
         {
-		public:
-			FriendsTimeline() {}
-			~FriendsTimeline() {}
+                public:
+                        FriendsTimeline() {}
+                        ~FriendsTimeline() {}
                         QLinkedList<StatusElement*> list;
         };
         class UserTimeline : public Response
@@ -145,13 +145,13 @@ namespace Returnables
                         QLinkedList<StatusElement*> list;
         };
 //show
-	class SingleStatus : public Response
-	{
-		public:
+        class SingleStatus : public Response
+        {
+                public:
                         SingleStatus() { status = new StatusElement; }
                         ~SingleStatus() { if(status) delete status;}
                         StatusElement *status;
-	};
+        };
 //update
         class NewStatus : public Response
         {
@@ -422,13 +422,13 @@ namespace Returnables
 //Help Methods
 //==================================================================================================
 //test
-	class TwitterUp : public Response
-	{
-		public:
-			TwitterUp() {}
-			~TwitterUp() {}
-			bool up;
-	};
+        class TwitterUp : public Response
+        {
+                public:
+                        TwitterUp() {}
+                        ~TwitterUp() {}
+                        bool up;
+        };
 //==================================================================================================
 
 //Not in API

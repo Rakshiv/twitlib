@@ -6,53 +6,53 @@
 //=====================================================================
 Example::Example()
 {
-	m_gui.setupUi(this);
+        m_gui.setupUi(this);
 
-	m_twitLib = new QTwitLib();
-	m_plainTextEdit = new QPlainTextEdit();
-	m_pushButtonExecute = new QPushButton();
-	m_pushButtonExecute->setText("Execute");
-	m_lineEditUsername = new QLineEdit();
-	m_lineEditPassword = new QLineEdit();
-	m_lineEditPassword->setEchoMode(QLineEdit::Password);
-	m_labelUsername = new QLabel();
-	m_labelUsername->setText("Username");
-	m_labelPassword = new QLabel();
-	m_labelPassword->setText("Password");
-	m_pushButtonLogin = new QPushButton();
-	m_pushButtonLogin->setText("Login");
+        m_twitLib = new QTwitLib();
+        m_plainTextEdit = new QPlainTextEdit();
+        m_pushButtonExecute = new QPushButton();
+        m_pushButtonExecute->setText("Execute");
+        m_lineEditUsername = new QLineEdit();
+        m_lineEditPassword = new QLineEdit();
+        m_lineEditPassword->setEchoMode(QLineEdit::Password);
+        m_labelUsername = new QLabel();
+        m_labelUsername->setText("Username");
+        m_labelPassword = new QLabel();
+        m_labelPassword->setText("Password");
+        m_pushButtonLogin = new QPushButton();
+        m_pushButtonLogin->setText("Login");
 
-	MakeConnections();
-	SetupBasicUI();
+        MakeConnections();
+        SetupBasicUI();
 }
 //=====================================================================
 Example::~Example()
 {
-	if(m_twitLib)
-		delete m_twitLib;
+        if(m_twitLib)
+                delete m_twitLib;
 }
 //=====================================================================
 void Example::MakeConnections()
 {
-	connect(m_gui.tabWidget,SIGNAL(currentChanged(int)),this,SLOT(TabChanged(int)));
-	connect(m_pushButtonExecute,SIGNAL(clicked()),this,SLOT(ExecuteClicked()));
-	connect(m_pushButtonLogin,SIGNAL(clicked()),this,SLOT(LoginClicked()));
-	connect(m_twitLib,SIGNAL(OnResponseReceived(Returnables::Response *)),this,SLOT(OnResponseReceived(Returnables::Response *)));
+        connect(m_gui.tabWidget,SIGNAL(currentChanged(int)),this,SLOT(TabChanged(int)));
+        connect(m_pushButtonExecute,SIGNAL(clicked()),this,SLOT(ExecuteClicked()));
+        connect(m_pushButtonLogin,SIGNAL(clicked()),this,SLOT(LoginClicked()));
+        connect(m_twitLib,SIGNAL(OnResponseReceived(Returnables::Response *)),this,SLOT(OnResponseReceived(Returnables::Response *)));
 }
 //=====================================================================
-void Example::OnError(QString error) 
-{ 
-    m_plainTextEdit->appendPlainText("ERROR "+error); 
+void Example::OnError(QString error)
+{
+    m_plainTextEdit->appendPlainText("ERROR "+error);
 }
 //=====================================================================
 void Example::OnMessageReceived(QString message)
-{ 
-    m_plainTextEdit->appendPlainText("MESSAGE "+message); 
+{
+    m_plainTextEdit->appendPlainText("MESSAGE "+message);
 }
 //=====================================================================
 void Example::OnStatusReceived(SERVER::RESP response)
 {
-    m_plainTextEdit->appendPlainText("STATUS REC "+QString::number(response)); 
+    m_plainTextEdit->appendPlainText("STATUS REC "+QString::number(response));
 }
 //=====================================================================
 void Example::DisplayList(QLinkedList<Returnables::StatusElement*> list, QString header)
@@ -60,12 +60,12 @@ void Example::DisplayList(QLinkedList<Returnables::StatusElement*> list, QString
         Returnables::StatusElement *element = NULL;
 
         m_plainTextEdit->appendPlainText("----------------StatusElement-----------------");
-	m_plainTextEdit->appendHtml("<h2>"+header+"</h2>");
-	m_plainTextEdit->appendPlainText("");
+        m_plainTextEdit->appendHtml("<h2>"+header+"</h2>");
+        m_plainTextEdit->appendPlainText("");
         QString boolText;
 
-	while(!list.isEmpty())
-	{
+        while(!list.isEmpty())
+        {
                 element = list.takeFirst();
                 m_plainTextEdit->appendPlainText("<status>");
                 m_plainTextEdit->appendPlainText("created_at: " + element->status.createdAt);
@@ -89,8 +89,8 @@ void Example::DisplayList(QLinkedList<Returnables::StatusElement*> list, QString
                     boolText = element->user.isProtected ? "true" : "false";
                 m_plainTextEdit->appendPlainText("protected: " + boolText);
                 m_plainTextEdit->appendPlainText("followers_count: " + QString::number(element->user.followersCount));
-		m_plainTextEdit->appendPlainText("");
-	}
+                m_plainTextEdit->appendPlainText("");
+        }
 }
 void Example::DisplayList(QLinkedList<Returnables::BasicUserInfoElement*> list, QString header)
 {
@@ -211,130 +211,130 @@ void Example::DisplayList(QLinkedList<Returnables::DirectMessageElement*> list, 
 {
         Returnables::DirectMessageElement *directMessage = NULL;
 
-	m_plainTextEdit->appendPlainText("---------------------------------");
-	m_plainTextEdit->appendHtml("<h2>"+header+"</h2>");
-	m_plainTextEdit->appendPlainText("");
+        m_plainTextEdit->appendPlainText("---------------------------------");
+        m_plainTextEdit->appendHtml("<h2>"+header+"</h2>");
+        m_plainTextEdit->appendPlainText("");
 
-	while(!list.isEmpty())
-	{
-		directMessage = list.takeFirst();
-		m_plainTextEdit->appendPlainText("ID: "+QString::number(directMessage->headerInfo.id));
-		m_plainTextEdit->appendPlainText("Sender: "+directMessage->sender.screenName);
-		m_plainTextEdit->appendPlainText("Recipient: "+directMessage->recipient.screenName);
-		m_plainTextEdit->appendPlainText("Created At: "+directMessage->headerInfo.createdAt);
-		m_plainTextEdit->appendPlainText("Text: "+directMessage->headerInfo.text);
-		m_plainTextEdit->appendPlainText("");
-	}
+        while(!list.isEmpty())
+        {
+                directMessage = list.takeFirst();
+                m_plainTextEdit->appendPlainText("ID: "+QString::number(directMessage->headerInfo.id));
+                m_plainTextEdit->appendPlainText("Sender: "+directMessage->sender.screenName);
+                m_plainTextEdit->appendPlainText("Recipient: "+directMessage->recipient.screenName);
+                m_plainTextEdit->appendPlainText("Created At: "+directMessage->headerInfo.createdAt);
+                m_plainTextEdit->appendPlainText("Text: "+directMessage->headerInfo.text);
+                m_plainTextEdit->appendPlainText("");
+        }
 }
 //=====================================================================
 void Example::OnResponseReceived(Returnables::Response *resp)
 {
-	if(resp)
+        if(resp)
     {
-		switch(resp->reqID)
-		{
-		case Returnables::PUBLIC_TIMELINE:
-			{
-				Returnables::PublicTimeline *pTimeline = static_cast<Returnables::PublicTimeline *>(resp);
-				DisplayList(pTimeline->list, "Public Timeline");
-				delete pTimeline;
-				break;
-			}
-		case Returnables::FRIENDS_TIMELINE:
-			{
-				Returnables::FriendsTimeline *fTimeline = static_cast<Returnables::FriendsTimeline *>(resp);
-				DisplayList(fTimeline->list, "Friends Timeline");
-				delete fTimeline;
-				break;
-			}
-		case Returnables::SINGLE_STATUS:
-			{
-				Returnables::SingleStatus *singleStatus = static_cast<Returnables::SingleStatus *>(resp);
+                switch(resp->reqID)
+                {
+                case Returnables::PUBLIC_TIMELINE:
+                        {
+                                Returnables::PublicTimeline *pTimeline = static_cast<Returnables::PublicTimeline *>(resp);
+                                DisplayList(pTimeline->list, "Public Timeline");
+                                delete pTimeline;
+                                break;
+                        }
+                case Returnables::FRIENDS_TIMELINE:
+                        {
+                                Returnables::FriendsTimeline *fTimeline = static_cast<Returnables::FriendsTimeline *>(resp);
+                                DisplayList(fTimeline->list, "Friends Timeline");
+                                delete fTimeline;
+                                break;
+                        }
+                case Returnables::SINGLE_STATUS:
+                        {
+                                Returnables::SingleStatus *singleStatus = static_cast<Returnables::SingleStatus *>(resp);
                                 QLinkedList<Returnables::StatusElement *> list;
                                 list.append(singleStatus->status);
                                 DisplayList(list, "Single Status");
-				delete singleStatus;
-				break;
-			}
-		case Returnables::FEATURED_USERS:
-			{
-				Returnables::FeaturedUsers *featuredUsers = static_cast<Returnables::FeaturedUsers *>(resp);
-				DisplayList(featuredUsers->list, "Featured Users");
-				delete featuredUsers;
-				break;
-			}
-		case Returnables::TWITTER_UP:
-			{
-				Returnables::TwitterUp *twitterUp = static_cast<Returnables::TwitterUp *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Twitter Up</h2>");
-				m_plainTextEdit->appendPlainText("");
-				QString up = twitterUp->up ? "true" : "false";
-				m_plainTextEdit->appendPlainText("Up: "+up);
-				delete twitterUp;
-				break;
-			}
-		case Returnables::USER_TIMELINE:
-			{
-				Returnables::UserTimeline *userTimeline = static_cast<Returnables::UserTimeline *>(resp);
-				DisplayList(userTimeline->list, "Users Timeline");
-				delete userTimeline;
-				break;
-			}
-		case Returnables::FAVORITES:
-			{
-				Returnables::Favorites *favorites = static_cast<Returnables::Favorites *>(resp);
-				DisplayList(favorites->list, "Favorites");
-				delete favorites;
-				break;
-			}
-		case Returnables::NEW_STATUS:
-			{
-				Returnables::NewStatus *newStatus = static_cast<Returnables::NewStatus *>(resp);
+                                delete singleStatus;
+                                break;
+                        }
+                case Returnables::FEATURED_USERS:
+                        {
+                                Returnables::FeaturedUsers *featuredUsers = static_cast<Returnables::FeaturedUsers *>(resp);
+                                DisplayList(featuredUsers->list, "Featured Users");
+                                delete featuredUsers;
+                                break;
+                        }
+                case Returnables::TWITTER_UP:
+                        {
+                                Returnables::TwitterUp *twitterUp = static_cast<Returnables::TwitterUp *>(resp);
+                                m_plainTextEdit->appendHtml("<h2>Twitter Up</h2>");
+                                m_plainTextEdit->appendPlainText("");
+                                QString up = twitterUp->up ? "true" : "false";
+                                m_plainTextEdit->appendPlainText("Up: "+up);
+                                delete twitterUp;
+                                break;
+                        }
+                case Returnables::USER_TIMELINE:
+                        {
+                                Returnables::UserTimeline *userTimeline = static_cast<Returnables::UserTimeline *>(resp);
+                                DisplayList(userTimeline->list, "Users Timeline");
+                                delete userTimeline;
+                                break;
+                        }
+                case Returnables::FAVORITES:
+                        {
+                                Returnables::Favorites *favorites = static_cast<Returnables::Favorites *>(resp);
+                                DisplayList(favorites->list, "Favorites");
+                                delete favorites;
+                                break;
+                        }
+                case Returnables::NEW_STATUS:
+                        {
+                                Returnables::NewStatus *newStatus = static_cast<Returnables::NewStatus *>(resp);
                                 QLinkedList<Returnables::StatusElement*> list;
                                 list.append(newStatus->status);
                                 DisplayList(list, "New Status");
-				delete newStatus;
-				break;
-			}
+                                delete newStatus;
+                                break;
+                        }
                 case Returnables::RECENT_MENTIONS:
-			{
+                        {
                                 Returnables::RecentMentions *mentions = static_cast<Returnables::RecentMentions *>(resp);
                                 DisplayList(mentions->list, "Recent Mentions");
                                 delete mentions;
-				break;
-			}
-		case Returnables::REMOVE_STATUS:
-			{
-				Returnables::RemoveStatus *removedStatus = static_cast<Returnables::RemoveStatus *>(resp);
+                                break;
+                        }
+                case Returnables::REMOVE_STATUS:
+                        {
+                                Returnables::RemoveStatus *removedStatus = static_cast<Returnables::RemoveStatus *>(resp);
                                 QLinkedList<Returnables::StatusElement*> list;
                                 list.append(removedStatus->status);
                                 DisplayList(list, "Remove Status");
-				delete removedStatus;
-				break;
-			}
-		case Returnables::FRIENDS:
-			{
-				Returnables::Friends *friends = static_cast<Returnables::Friends *>(resp);
-				DisplayList(friends->list, "Friends");
-				delete friends;
-				break;
-			}
-		case Returnables::FOLLOWERS:
-			{
-				Returnables::Followers *followers = static_cast<Returnables::Followers *>(resp);
-				DisplayList(followers->list, "Followers");
-				delete followers;
-				break;
-			}
-		case Returnables::USER_DETAILS:
-			{
-				Returnables::UserDetails *userDetails = static_cast<Returnables::UserDetails *>(resp);
+                                delete removedStatus;
+                                break;
+                        }
+                case Returnables::FRIENDS:
+                        {
+                                Returnables::Friends *friends = static_cast<Returnables::Friends *>(resp);
+                                DisplayList(friends->list, "Friends");
+                                delete friends;
+                                break;
+                        }
+                case Returnables::FOLLOWERS:
+                        {
+                                Returnables::Followers *followers = static_cast<Returnables::Followers *>(resp);
+                                DisplayList(followers->list, "Followers");
+                                delete followers;
+                                break;
+                        }
+                case Returnables::USER_DETAILS:
+                        {
+                                Returnables::UserDetails *userDetails = static_cast<Returnables::UserDetails *>(resp);
                                 QLinkedList<Returnables::ExtUserInfoElement*> list;
                                 list.append(userDetails->userExt);
                                 DisplayList(list, "User Details");
-				delete userDetails;
-				break;
-			}
+                                delete userDetails;
+                                break;
+                        }
                 case Returnables::VERIFY_CREDENTIALS:
                         {
                                 Returnables::VerifyCredentials *verifyCredentials = static_cast<Returnables::VerifyCredentials *>(resp);
@@ -344,113 +344,113 @@ void Example::OnResponseReceived(Returnables::Response *resp)
                                 delete verifyCredentials;
                                 break;
                         }
-		case Returnables::SENT_DIRECT_MESSAGES:
-			{
-				Returnables::SentDirectMessages *sentDirectMessages = static_cast<Returnables::SentDirectMessages *>(resp);
-				DisplayList(sentDirectMessages->list, "Sent Direct Messages");
-				delete sentDirectMessages;
-				break;
-			}
-		case Returnables::RECEIVED_DIRECT_MESSAGES:
-			{
-				Returnables::ReceivedDirectMessages *receivedDirectMessages = static_cast<Returnables::ReceivedDirectMessages *>(resp);
-				DisplayList(receivedDirectMessages->list, "Received Direct Messages");
-				delete receivedDirectMessages;
-				break;
-			}
-		case Returnables::SEND_DIRECT_MESSAGE:
-			{	
-				Returnables::SendDirectMessage *sendDirectMessage = static_cast<Returnables::SendDirectMessage *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Send Direct Messages</h2>");
-				m_plainTextEdit->appendPlainText("");
+                case Returnables::SENT_DIRECT_MESSAGES:
+                        {
+                                Returnables::SentDirectMessages *sentDirectMessages = static_cast<Returnables::SentDirectMessages *>(resp);
+                                DisplayList(sentDirectMessages->list, "Sent Direct Messages");
+                                delete sentDirectMessages;
+                                break;
+                        }
+                case Returnables::RECEIVED_DIRECT_MESSAGES:
+                        {
+                                Returnables::ReceivedDirectMessages *receivedDirectMessages = static_cast<Returnables::ReceivedDirectMessages *>(resp);
+                                DisplayList(receivedDirectMessages->list, "Received Direct Messages");
+                                delete receivedDirectMessages;
+                                break;
+                        }
+                case Returnables::SEND_DIRECT_MESSAGE:
+                        {
+                                Returnables::SendDirectMessage *sendDirectMessage = static_cast<Returnables::SendDirectMessage *>(resp);
+                                m_plainTextEdit->appendHtml("<h2>Send Direct Messages</h2>");
+                                m_plainTextEdit->appendPlainText("");
                                 m_plainTextEdit->appendPlainText("ID: "+QString::number(sendDirectMessage->message->headerInfo.id));
                                 m_plainTextEdit->appendPlainText("Sender: "+sendDirectMessage->message->sender.screenName);
                                 m_plainTextEdit->appendPlainText("Recipient: "+sendDirectMessage->message->recipient.screenName);
                                 m_plainTextEdit->appendPlainText("Created At: "+sendDirectMessage->message->headerInfo.createdAt);
                                 m_plainTextEdit->appendPlainText("Text: "+sendDirectMessage->message->headerInfo.text);
-				delete sendDirectMessage;
-				break;
-			}
-		case Returnables::REMOVE_DIRECT_MESSAGE:
-			{
-				Returnables::RemoveDirectMessage *removeDirectMessage = static_cast<Returnables::RemoveDirectMessage *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Remove Direct Messages</h2>");
-				m_plainTextEdit->appendPlainText("");
+                                delete sendDirectMessage;
+                                break;
+                        }
+                case Returnables::REMOVE_DIRECT_MESSAGE:
+                        {
+                                Returnables::RemoveDirectMessage *removeDirectMessage = static_cast<Returnables::RemoveDirectMessage *>(resp);
+                                m_plainTextEdit->appendHtml("<h2>Remove Direct Messages</h2>");
+                                m_plainTextEdit->appendPlainText("");
                                 m_plainTextEdit->appendPlainText("ID: "+QString::number(removeDirectMessage->message->headerInfo.id));
                                 m_plainTextEdit->appendPlainText("Sender: "+removeDirectMessage->message->sender.screenName);
                                 m_plainTextEdit->appendPlainText("Recipient: "+removeDirectMessage->message->recipient.screenName);
                                 m_plainTextEdit->appendPlainText("Created At: "+removeDirectMessage->message->headerInfo.createdAt);
                                 m_plainTextEdit->appendPlainText("Text: "+removeDirectMessage->message->headerInfo.text);
-				delete removeDirectMessage;
-				break;
-			}
-		case Returnables::ADD_FRIENDSHIP:
-			{
-				Returnables::AddFriendship *addFriendship = static_cast<Returnables::AddFriendship *>(resp);
+                                delete removeDirectMessage;
+                                break;
+                        }
+                case Returnables::ADD_FRIENDSHIP:
+                        {
+                                Returnables::AddFriendship *addFriendship = static_cast<Returnables::AddFriendship *>(resp);
                                 QLinkedList<Returnables::BasicUserInfoElement*> list;
                                 list.append(addFriendship->user);
                                 DisplayList(list, "Add Friendship");
-				delete addFriendship;
-				break;
-			}
-		case Returnables::REMOVE_FRIENDSHIP:
-			{
-				Returnables::RemoveFriendship *removeFriendship = static_cast<Returnables::RemoveFriendship *>(resp);
+                                delete addFriendship;
+                                break;
+                        }
+                case Returnables::REMOVE_FRIENDSHIP:
+                        {
+                                Returnables::RemoveFriendship *removeFriendship = static_cast<Returnables::RemoveFriendship *>(resp);
                                 QLinkedList<Returnables::BasicUserInfoElement*> list;
                                 list.append(removeFriendship->user);
                                 DisplayList(list, "Remove Friendship");
-				delete removeFriendship;
-				break;
-			}
-		case Returnables::FRIENDSHIP_EXISTS:
-			{
-				Returnables::FriendshipExist *friendshipExists = static_cast<Returnables::FriendshipExist *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Friendship Exist</h2>");
-				m_plainTextEdit->appendPlainText("");
-				QString friends = friendshipExists->friends ? "true" : "false";
-				m_plainTextEdit->appendPlainText("Are Friends?: "+friends);
-				delete friendshipExists;
-				break;
-			}
-		case Returnables::DELIVERY_DEVICE:
-			{
-				Returnables::DeliveryDevice *deliveryDevice = static_cast<Returnables::DeliveryDevice *>(resp);
+                                delete removeFriendship;
+                                break;
+                        }
+                case Returnables::FRIENDSHIP_EXISTS:
+                        {
+                                Returnables::FriendshipExist *friendshipExists = static_cast<Returnables::FriendshipExist *>(resp);
+                                m_plainTextEdit->appendHtml("<h2>Friendship Exist</h2>");
+                                m_plainTextEdit->appendPlainText("");
+                                QString friends = friendshipExists->friends ? "true" : "false";
+                                m_plainTextEdit->appendPlainText("Are Friends?: "+friends);
+                                delete friendshipExists;
+                                break;
+                        }
+                case Returnables::DELIVERY_DEVICE:
+                        {
+                                Returnables::DeliveryDevice *deliveryDevice = static_cast<Returnables::DeliveryDevice *>(resp);
                                 QLinkedList<Returnables::BasicUserInfoElement*> list;
                                 list.append(deliveryDevice->user);
                                 DisplayList(list, "Update Delivery Device");
-				delete deliveryDevice;
-				break;
-			}
-		case Returnables::API_REQUESTS:
-			{
-				Returnables::ApiRequests *apiRequests = static_cast<Returnables::ApiRequests *>(resp);
-				m_plainTextEdit->appendHtml("<h2>Remaining API requests</h2>");
-				m_plainTextEdit->appendPlainText("");
-				m_plainTextEdit->appendPlainText("Hourly Limit: "+QString::number(apiRequests->hourlyLimit));
-				m_plainTextEdit->appendPlainText("Remaining hits: "+QString::number(apiRequests->remainingHits));
-				m_plainTextEdit->appendPlainText("Reset time: "+apiRequests->resetTime);
-				m_plainTextEdit->appendPlainText("Reset time in seconds: "+QString::number(apiRequests->resetTimeSeconds));
-				delete apiRequests;
-				break;
-			}
-		case Returnables::ADD_FAVORITE:
-			{
-				Returnables::AddFavorite *addFavorite = static_cast<Returnables::AddFavorite *>(resp);
+                                delete deliveryDevice;
+                                break;
+                        }
+                case Returnables::API_REQUESTS:
+                        {
+                                Returnables::ApiRequests *apiRequests = static_cast<Returnables::ApiRequests *>(resp);
+                                m_plainTextEdit->appendHtml("<h2>Remaining API requests</h2>");
+                                m_plainTextEdit->appendPlainText("");
+                                m_plainTextEdit->appendPlainText("Hourly Limit: "+QString::number(apiRequests->hourlyLimit));
+                                m_plainTextEdit->appendPlainText("Remaining hits: "+QString::number(apiRequests->remainingHits));
+                                m_plainTextEdit->appendPlainText("Reset time: "+apiRequests->resetTime);
+                                m_plainTextEdit->appendPlainText("Reset time in seconds: "+QString::number(apiRequests->resetTimeSeconds));
+                                delete apiRequests;
+                                break;
+                        }
+                case Returnables::ADD_FAVORITE:
+                        {
+                                Returnables::AddFavorite *addFavorite = static_cast<Returnables::AddFavorite *>(resp);
                                 QLinkedList<Returnables::StatusElement*> list;
                                 list.append(addFavorite->status);
                                 DisplayList(list, "Add Favorite");
-				delete addFavorite;
-				break;
-			}
-		case Returnables::REMOVE_FAVORITE:
-			{
-				Returnables::RemoveFavorite *removeFavorite = static_cast<Returnables::RemoveFavorite *>(resp);
+                                delete addFavorite;
+                                break;
+                        }
+                case Returnables::REMOVE_FAVORITE:
+                        {
+                                Returnables::RemoveFavorite *removeFavorite = static_cast<Returnables::RemoveFavorite *>(resp);
                                 QLinkedList<Returnables::StatusElement*> list;
                                 list.append(removeFavorite->status);
                                 DisplayList(list, "Remove Favorite");
-				delete removeFavorite;
-				break;
-			}
+                                delete removeFavorite;
+                                break;
+                        }
                 case Returnables::PROFILE_COLORS:
                         {
                                 Returnables::ProfileColors *profileColors = static_cast<Returnables::ProfileColors*>(resp);
@@ -537,32 +537,32 @@ void Example::OnResponseReceived(Returnables::Response *resp)
                             delete unBlockUser;
                             break;
                         }
-		}
-		m_plainTextEdit->verticalScrollBar()->setSliderPosition(0);
-	}
+                }
+                m_plainTextEdit->verticalScrollBar()->setSliderPosition(0);
+        }
 }
 //=====================================================================
 QString Example::GetUsername()
 {
-	return m_lineEditUsername->text();
+        return m_lineEditUsername->text();
 }
 //=====================================================================
 QString Example::GetPassword()
 {
-	return m_lineEditPassword->text();
+        return m_lineEditPassword->text();
 }
 //=====================================================================
 void Example::TabChanged(int /*tabIdx*/)
 {
-	m_plainTextEdit->clear();
+        m_plainTextEdit->clear();
         delete leftLayout;
         delete mainLayout;
-	SetupBasicUI();
+        SetupBasicUI();
 }
 //=====================================================================
 void Example::LoginClicked()
 {
-	m_twitLib->Login(GetUsername(),GetPassword());
+        m_twitLib->Login(GetUsername(),GetPassword());
         //OR
         //m_twitLib->SetLoginInfo(GetUsername(),GetPassword());
         //m_twitLib->VerifyCredentials();
@@ -570,127 +570,127 @@ void Example::LoginClicked()
 //=====================================================================
 void Example::ExecuteClicked()
 {
-	m_plainTextEdit->clear();
-	unsigned int num = 0;
+        m_plainTextEdit->clear();
+        unsigned int num = 0;
         QString text, text2, text3;
         QColor color;
 
         switch(m_gui.tabWidget->currentIndex())
-	{
-	case Returnables::PUBLIC_TIMELINE:
-		m_twitLib->GetPublicTimeline();
-		break;
-	case Returnables::FRIENDS_TIMELINE:
-		m_twitLib->GetFriendsTimeline();
-		break;
-	case Returnables::SINGLE_STATUS:
-		num = QInputDialog::getText(m_plainTextEdit,"Status ID","Enter status ID").toUInt();
-		if(num != 0)
-			m_twitLib->GetSingleStatus(num);
-		break;
-	case Returnables::FEATURED_USERS:
-		m_twitLib->GetFeaturedUsers();
-		break;
+        {
+        case Returnables::PUBLIC_TIMELINE:
+                m_twitLib->GetPublicTimeline();
+                break;
+        case Returnables::FRIENDS_TIMELINE:
+                m_twitLib->GetFriendsTimeline();
+                break;
+        case Returnables::SINGLE_STATUS:
+                num = QInputDialog::getText(m_plainTextEdit,"Status ID","Enter status ID").toULongLong();
+                if(num != 0)
+                        m_twitLib->GetSingleStatus(num);
+                break;
+        case Returnables::FEATURED_USERS:
+                m_twitLib->GetFeaturedUsers();
+                break;
         case Returnables::VERIFY_CREDENTIALS:
                 m_twitLib->SetLoginInfo(GetUsername(),GetPassword());
                 m_twitLib->VerifyCredentials();
                 //OR
                 //m_twitLib->Login(GetUsername(),GetPassword());
-		break;
-	case Returnables::TWITTER_UP:
-		m_twitLib->IsTwitterUp();
-		break;
-	case Returnables::USER_TIMELINE:
-		m_twitLib->GetUsersTimeline();
-		break;
-	case Returnables::FAVORITES:
-		m_twitLib->GetFavorites();
-		break;
-	case Returnables::NEW_STATUS:
-		text = QInputDialog::getText(m_plainTextEdit,"New Status","Enter new status");
+                break;
+        case Returnables::TWITTER_UP:
+                m_twitLib->IsTwitterUp();
+                break;
+        case Returnables::USER_TIMELINE:
+                m_twitLib->GetUsersTimeline();
+                break;
+        case Returnables::FAVORITES:
+                m_twitLib->GetFavorites();
+                break;
+        case Returnables::NEW_STATUS:
+                text = QInputDialog::getText(m_plainTextEdit,"New Status","Enter new status");
                 text2 = QInputDialog::getText(m_plainTextEdit,"in_reply_to_status_id","Enter ID of an existing status that the status to be posted is in reply to.");
                 text3 = QInputDialog::getText(m_plainTextEdit,"Source","Enter twitter client name");
-		if(!text.isEmpty())
-                        m_twitLib->PostNewStatus(text, text2.toUInt(), text3);
-		break;
+                if(!text.isEmpty())
+                        m_twitLib->PostNewStatus(text, text2.toULongLong(), text3);
+                break;
         case Returnables::RECENT_MENTIONS:
                 m_twitLib->GetRecentMentions();
-		break;
-	case Returnables::REMOVE_STATUS:
-		num = QInputDialog::getText(m_plainTextEdit,"Remove Status ID","Enter status ID to remove").toUInt();
-		if(num != 0)
-			m_twitLib->RemoveStatus(num);
-		break;
-	case Returnables::FRIENDS:
-		m_twitLib->GetFriends();
-		break;
-	case Returnables::FOLLOWERS:
-		m_twitLib->GetFollowers();
-		break;
-	case Returnables::USER_DETAILS:
+                break;
+        case Returnables::REMOVE_STATUS:
+                num = QInputDialog::getText(m_plainTextEdit,"Remove Status ID","Enter status ID to remove").toULongLong();
+                if(num != 0)
+                        m_twitLib->RemoveStatus(num);
+                break;
+        case Returnables::FRIENDS:
+                m_twitLib->GetFriends();
+                break;
+        case Returnables::FOLLOWERS:
+                m_twitLib->GetFollowers();
+                break;
+        case Returnables::USER_DETAILS:
                 text = QInputDialog::getText(m_plainTextEdit,"User Details","Enter ID or screen name of a user.");
                 text2 = QInputDialog::getText(m_plainTextEdit,"User Details","Enter ID of the user to return.");
                 text3 = QInputDialog::getText(m_plainTextEdit,"User Details","Enter screen name of the user to return.");
                 m_twitLib->GetUserDetails(text, text2.toUInt(), text3);
-		break;
-	case Returnables::SENT_DIRECT_MESSAGES:
-		m_twitLib->GetSentDirectMessages();
-		break;
-	case Returnables::RECEIVED_DIRECT_MESSAGES:
-		m_twitLib->GetReceivedDirectMessages();
-		break;
-	case Returnables::SEND_DIRECT_MESSAGE:
-		text = QInputDialog::getText(m_plainTextEdit,"Send Direct Message","Enter username to send to");
-		text2 = QInputDialog::getText(m_plainTextEdit,"Send Direct Message","Enter new message");
-		if(!text.isEmpty() && !text2.isEmpty())
-			m_twitLib->SendDirectMessage(text,text2);
-		break;
-	case Returnables::REMOVE_DIRECT_MESSAGE:
-		num = QInputDialog::getText(m_plainTextEdit,"Remove Direct Message","Enter status ID to remove").toUInt();
-		if(num != 0)
-			m_twitLib->RemoveDirectMessage(num);
-		break;
-	case Returnables::ADD_FRIENDSHIP:
-		text = QInputDialog::getText(m_plainTextEdit,"Add Friendship","Enter username to befriend");
-		if(!text.isEmpty())
-			m_twitLib->AddFriendship(text);
-		break;
-	case Returnables::REMOVE_FRIENDSHIP:
-		text = QInputDialog::getText(m_plainTextEdit,"Remove Friendship","Enter username to remove as a friend");
-		if(!text.isEmpty())
-			m_twitLib->RemoveFriendship(text);
-		break;
-	case Returnables::FRIENDSHIP_EXISTS:
-		text = QInputDialog::getText(m_plainTextEdit,"Friendship Exists","Enter first username");
-		text2 = QInputDialog::getText(m_plainTextEdit,"Friendship Exists","Enter second username");
-		if(!text.isEmpty() && !text2.isEmpty())
-			m_twitLib->FriendshipExist(text,text2);
-		break;
-	case Returnables::DELIVERY_DEVICE:
-		text = QInputDialog::getText(m_plainTextEdit,"Update Delivery Device","Enter new device (SMS, IM, NONE)");
-		if(!text.isEmpty())
-		{
-			if(text.toLower().contains("sms"))
-				m_twitLib->UpdateDeliveryDevice(SERVER::SMS);
-			else if(text.toLower().contains("im"))
-				m_twitLib->UpdateDeliveryDevice(SERVER::IM);
-			else if(text.toLower().contains("none"))
-				m_twitLib->UpdateDeliveryDevice(SERVER::NONE);
-		}
-		break;
-	case Returnables::API_REQUESTS:
-		m_twitLib->RemainingApiRequests();
-		break;
-	case Returnables::ADD_FAVORITE:
-		num = QInputDialog::getText(m_plainTextEdit,"Add Favorite","Enter status ID to favorite").toUInt();
-		if(num != 0)
-			m_twitLib->AddFavorite(num);
-		break;
-	case Returnables::REMOVE_FAVORITE:
-		num = QInputDialog::getText(m_plainTextEdit,"Remove Favorite","Enter status ID to remove as a favorite").toUInt();
-		if(num != 0)
-			m_twitLib->RemoveFavorite(num);
-		break;
+                break;
+        case Returnables::SENT_DIRECT_MESSAGES:
+                m_twitLib->GetSentDirectMessages();
+                break;
+        case Returnables::RECEIVED_DIRECT_MESSAGES:
+                m_twitLib->GetReceivedDirectMessages();
+                break;
+        case Returnables::SEND_DIRECT_MESSAGE:
+                text = QInputDialog::getText(m_plainTextEdit,"Send Direct Message","Enter username to send to");
+                text2 = QInputDialog::getText(m_plainTextEdit,"Send Direct Message","Enter new message");
+                if(!text.isEmpty() && !text2.isEmpty())
+                        m_twitLib->SendDirectMessage(text,text2);
+                break;
+        case Returnables::REMOVE_DIRECT_MESSAGE:
+                num = QInputDialog::getText(m_plainTextEdit,"Remove Direct Message","Enter status ID to remove").toULongLong();
+                if(num != 0)
+                        m_twitLib->RemoveDirectMessage(num);
+                break;
+        case Returnables::ADD_FRIENDSHIP:
+                text = QInputDialog::getText(m_plainTextEdit,"Add Friendship","Enter username to befriend");
+                if(!text.isEmpty())
+                        m_twitLib->AddFriendship(text);
+                break;
+        case Returnables::REMOVE_FRIENDSHIP:
+                text = QInputDialog::getText(m_plainTextEdit,"Remove Friendship","Enter username to remove as a friend");
+                if(!text.isEmpty())
+                        m_twitLib->RemoveFriendship(text);
+                break;
+        case Returnables::FRIENDSHIP_EXISTS:
+                text = QInputDialog::getText(m_plainTextEdit,"Friendship Exists","Enter first username");
+                text2 = QInputDialog::getText(m_plainTextEdit,"Friendship Exists","Enter second username");
+                if(!text.isEmpty() && !text2.isEmpty())
+                        m_twitLib->FriendshipExist(text,text2);
+                break;
+        case Returnables::DELIVERY_DEVICE:
+                text = QInputDialog::getText(m_plainTextEdit,"Update Delivery Device","Enter new device (SMS, IM, NONE)");
+                if(!text.isEmpty())
+                {
+                        if(text.toLower().contains("sms"))
+                                m_twitLib->UpdateDeliveryDevice(SERVER::SMS);
+                        else if(text.toLower().contains("im"))
+                                m_twitLib->UpdateDeliveryDevice(SERVER::IM);
+                        else if(text.toLower().contains("none"))
+                                m_twitLib->UpdateDeliveryDevice(SERVER::NONE);
+                }
+                break;
+        case Returnables::API_REQUESTS:
+                m_twitLib->RemainingApiRequests();
+                break;
+        case Returnables::ADD_FAVORITE:
+                num = QInputDialog::getText(m_plainTextEdit,"Add Favorite","Enter status ID to favorite").toULongLong();
+                if(num != 0)
+                        m_twitLib->AddFavorite(num);
+                break;
+        case Returnables::REMOVE_FAVORITE:
+                num = QInputDialog::getText(m_plainTextEdit,"Remove Favorite","Enter status ID to remove as a favorite").toULongLong();
+                if(num != 0)
+                        m_twitLib->RemoveFavorite(num);
+                break;
         case Returnables::PROFILE_COLORS:
             {
                 QString background_color="",text_color="",link_color="",sidebar_fill_color="",sidebar_border_color="";
@@ -778,34 +778,34 @@ void Example::ExecuteClicked()
                 if(!text.isEmpty())
                     m_twitLib->UnBlockUser(text);
                 break;
-	default:
-		break;
-	}
+        default:
+                break;
+        }
 }
 //=====================================================================
 void Example::SetupBasicUI()
 {
-	QWidget *tab = m_gui.tabWidget->currentWidget();
-	
+        QWidget *tab = m_gui.tabWidget->currentWidget();
+
         m_plainTextEdit->setParent(tab);
         m_plainTextEdit->show();
 
-	m_lineEditUsername->setParent(tab);
+        m_lineEditUsername->setParent(tab);
         m_lineEditUsername->show();
 
-	m_lineEditPassword->setParent(tab);
+        m_lineEditPassword->setParent(tab);
         m_lineEditPassword->show();
 
-	m_labelUsername->setParent(tab);
+        m_labelUsername->setParent(tab);
         m_labelUsername->show();
 
         m_labelPassword->setParent(tab);
         m_labelPassword->show();
 
-	m_pushButtonLogin->setParent(tab);
+        m_pushButtonLogin->setParent(tab);
         m_pushButtonLogin->show();
 
-	m_pushButtonExecute->setParent(tab);
+        m_pushButtonExecute->setParent(tab);
         m_pushButtonExecute->show();
 
         leftLayout = new QVBoxLayout();
